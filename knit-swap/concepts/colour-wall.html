@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colour Wall Swap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--fleece:#e9e9e2;--paper:#f6f6f1;--peat:#1f1c1a;--cobalt:#1b3fa0;--yolk:#f2b705;--ox:#6d1420;--mute:#4a4742;
+--disp:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+--stripe:repeating-linear-gradient(118deg,rgba(255,255,255,.14) 0 2px,rgba(0,0,0,.14) 2px 4px)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#e9e9e2;color:#1f1c1a;font:400 16px/1.5 var(--disp);overflow-x:hidden}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--peat);outline-offset:2px;box-shadow:0 0 0 2px var(--yolk)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+header.top{background:var(--cobalt);color:#f4f3ec;padding-top:28px}
+.top-row{display:flex;flex-wrap:wrap;gap:20px 48px;align-items:flex-end;justify-content:space-between}
+h1{font-size:clamp(46px,10vw,104px);line-height:.88;font-weight:800;margin:0;letter-spacing:-.025em;font-stretch:100%}
+.top p{margin:14px 0 0;max-width:44ch;font-size:17px}
+.tally{font:400 13px/1.6 var(--mono);margin:0;display:grid;grid-template-columns:auto auto;gap:0 18px}
+.tally dt{color:#c9d3f0}.tally dd{margin:0;text-align:right;font-weight:600}
+#band{display:block;margin-top:30px;width:100%;height:52px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:20px 40px;padding:28px 0 40px}
+@media(max-width:960px){.layout{grid-template-columns:minmax(0,1fr)}}
+.panel{border-top:6px solid var(--peat);padding-top:10px;margin-bottom:40px}
+.panel.p1{border-color:var(--cobalt)}.panel.p2{border-color:var(--yolk)}.panel.p3{border-color:var(--ox)}
+.k{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0}
+h2{font:800 30px/1.05 var(--disp);margin:2px 0 14px;letter-spacing:-.01em}
+.hint{color:var(--mute);margin:8px 0}
+.filt{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:4px 12px;margin:0 0 8px}
+.lab{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 14px var(--disp);border:2px solid var(--peat);background:var(--paper);padding:4px 10px;min-height:40px;cursor:pointer;border-radius:0}
+.chip[aria-pressed=true]{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+@media(max-width:560px){.filt{grid-template-columns:minmax(0,1fr)}.lab{padding-top:6px}}
+#count{font:400 13px var(--mono);margin:14px 0 8px;color:var(--mute)}
+.wall{display:grid;gap:3px;padding:3px;grid-template-columns:repeat(4,minmax(0,1fr)) 2.4rem;
+background-color:#dedfd6;background-image:linear-gradient(rgba(31,28,26,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(31,28,26,.08) 1px,transparent 1px);background-size:10px 8px}
+.cub{display:flex;flex-direction:column;text-align:left;padding:0;border:0;background:var(--paper);box-shadow:0 0 0 1.5px var(--peat);cursor:pointer;min-width:0;border-radius:0}
+.cub:hover{background:#fff}
+.cub[aria-current=true]{background:var(--yolk)}
+.skn{position:relative;display:block;height:clamp(46px,8vw,88px);background-color:var(--c);background-image:var(--stripe)}
+.skn::after{content:"";position:absolute;left:43%;right:43%;top:0;bottom:0;background:rgba(246,246,241,.88)}
+.pk{position:absolute;left:0;top:0;z-index:1;background:var(--peat);color:#fff;font:600 11px var(--mono);padding:1px 6px}
+.lbl{display:block;padding:5px 6px 7px}
+.nm{display:block;font-weight:600;font-size:13px;line-height:1.15;overflow-wrap:anywhere}
+.mt{display:block;font:400 11px/1.3 var(--mono);color:var(--mute);margin-top:3px}
+.cub[aria-current=true] .mt{color:var(--peat)}
+.cub:disabled{background:repeating-linear-gradient(135deg,#d9d9d0 0 2px,#e9e9e2 2px 6px);cursor:default;color:#55524d}
+.cub:disabled .skn{opacity:.22}.cub:disabled .mt{color:#55524d}
+.rn{font:400 12px var(--mono);align-self:center;padding-left:8px;color:var(--mute)}
+.cap{font:400 13px/1.5 var(--mono);color:var(--mute);margin:10px 0 0;max-width:62ch}
+.banner{height:96px;background-color:var(--c);background-image:var(--stripe);position:relative}
+.banner::after{content:"";position:absolute;left:43%;right:43%;top:0;bottom:0;background:rgba(246,246,241,.88)}
+h3{font:800 36px/1 var(--disp);margin:14px 0 2px;letter-spacing:-.01em}
+h3:focus{outline:none}
+.sub{font:400 13px var(--mono);color:var(--mute);margin:0}
+dl.spec{display:grid;grid-template-columns:6.4rem minmax(0,1fr);gap:7px 12px;margin:16px 0}
+dl.spec dt{font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;padding-top:4px}
+dl.spec dd{margin:0}
+.wpi{display:inline-flex;gap:2px;align-items:flex-end;vertical-align:middle;margin-left:8px}
+.wpi i{display:block;width:3px;height:14px;background:var(--peat)}
+.quote{border-left:4px solid var(--peat);margin:14px 0;padding:2px 0 2px 12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{font:600 15px var(--disp);background:var(--peat);color:#f4f3ec;border:2px solid var(--peat);padding:8px 14px;min-height:44px;cursor:pointer;border-radius:0}
+.btn.alt{background:transparent;color:var(--peat)}
+.btn.go{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.btn.ox{background:var(--ox);border-color:var(--ox);color:#fff}
+.legend{margin:0 0 14px;padding:0;list-style:none;border-top:2px solid var(--peat)}
+.legend li{display:grid;grid-template-columns:2.2rem 34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--peat);min-height:46px}
+.legend .sy{font:600 14px var(--mono)}
+.legend .cc{height:24px;border:1px solid var(--peat);background-color:var(--c);background-image:var(--stripe)}
+.legend small{display:block;font:400 11px var(--mono);color:var(--mute)}
+.legend .rm{font:600 13px var(--mono);background:none;border:2px solid var(--peat);min-width:44px;min-height:36px;cursor:pointer;border-radius:0}
+.legend .empty{color:var(--mute)}
+.motifs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0 0 10px}
+.mo{border:2px solid var(--peat);background:var(--paper);padding:6px;text-align:left;cursor:pointer;border-radius:0;min-width:0}
+.mo[aria-pressed=true]{background:var(--yolk)}
+.mo canvas{display:block;max-width:100%;margin-bottom:4px}
+.mo span{font-size:13px;font-weight:600;line-height:1.15;display:block}
+#swc{display:block;margin:12px 0 6px;max-width:100%}
+.notes{margin:10px 0 0;padding:0;list-style:none;font-size:15px}
+.notes li{padding:6px 0 6px 12px;border-left:4px solid var(--cobalt);margin-bottom:6px}
+.notes li.warn{border-color:var(--ox)}
+fieldset{border:0;padding:0;margin:0 0 16px;min-width:0}
+legend{font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:0;margin-bottom:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #b9b9ae;min-height:40px;cursor:pointer}
+.opt input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--cobalt);flex:none}
+.opt .cc{display:inline-block;width:18px;height:14px;border:1px solid var(--peat);background-color:var(--c);margin-right:6px;vertical-align:-1px}
+.opt small{display:block;font:400 12px var(--mono);color:var(--mute)}
+.fld{display:block;margin-bottom:14px;font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.fld select,.fld textarea{display:block;width:100%;margin-top:6px;border:2px solid var(--peat);background:var(--paper);padding:8px;font:400 16px var(--disp);text-transform:none;letter-spacing:0;border-radius:0}
+.sum{border:2px solid var(--peat);display:grid;grid-template-columns:1fr 1fr;margin:0 0 12px;background:var(--paper)}
+.sum>div{padding:8px 10px;min-width:0}
+.sum>div+div{border-left:2px solid var(--peat)}
+.sum h4{margin:0 0 4px;font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.sum ul{margin:0;padding:0;list-style:none;font-size:14px}.sum li{margin-bottom:3px}
+.sum .fit{grid-column:1/-1;border-top:2px solid var(--peat);border-left:0!important;font-size:14px;background:#fff}
+.err{color:var(--ox);font-weight:600;min-height:1.5em;margin:0 0 8px}
+.sent{border:2px solid var(--ox);padding:12px}.sent:focus{outline:none}
+footer{border-top:6px solid var(--peat);padding:14px 0 40px;font:400 13px/1.6 var(--mono);color:var(--mute);max-width:80ch}
+@media(prefers-reduced-motion:no-preference){.cub,.chip,.btn,.mo{transition:background-color .12s}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="wrap">
+  <div class="top-row">
+   <div>
+    <h1>Colour Wall</h1>
+    <p>Odds and ends from other people's stashes: half a skein, a few balls, one pair of 3.25s. Pick a colour, check it against your project, offer something back.</p>
+   </div>
+   <dl class="tally" id="tally"></dl>
+  </div>
+  <canvas id="band" aria-hidden="true"></canvas>
+ </div>
+</header>
+<div class="wrap">
+<main class="layout">
+ <section aria-labelledby="wallH">
+  <p class="k">The wall, sorted by hue</p>
+  <h2 id="wallH">Twenty skeins</h2>
+  <div id="filters"></div>
+  <p id="count" aria-live="polite"></p>
+  <div class="wall" id="wall"></div>
+  <p class="cap">Read it like a chart: start at the bottom right, work right to left, then up. Row numbers sit on the right. Hue runs red to violet; dark, grey and undyed fleece colours fill the top row. Hatched cubbies don't match the filters.</p>
+ </section>
+ <aside>
+  <section class="panel p1" aria-labelledby="dName" id="detail"></section>
+  <section class="panel p2" aria-labelledby="swH" id="swatch">
+   <p class="k">Will it work together?</p>
+   <h2 id="swH">Swatch</h2>
+   <div id="swBody"></div>
+  </section>
+  <section class="panel p3" aria-labelledby="spH" id="swap">
+   <p class="k">Ask for it</p>
+   <h2 id="spH" tabindex="-1">Propose a swap</h2>
+   <div id="swapBody"></div>
+  </section>
+ </aside>
+</main>
+<footer>Dye lots rarely match between balls bought months apart. Where a lot number is listed, compare it with your own before you agree. Weights are as posted by the owner; weigh again when it arrives.</footer>
+</div>
+<script>
+(()=>{
+'use strict';
+const $=s=>document.querySelector(s);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function h(t,a,...k){const e=document.createElement(t);for(const n in(a||{})){const v=a[n];if(v==null||v===false)continue;
+ if(n==='class')e.className=v;else if(n==='style')e.style.cssText=v;else if(n.slice(0,2)==='on')e.addEventListener(n.slice(2),v);
+ else if(n==='checked'||n==='disabled'||n==='value')e[n]=v;else e.setAttribute(n,v===true?'':v)}
+ const add=c=>{if(c==null||c===false)return;if(Array.isArray(c))c.forEach(add);else e.append(c.nodeType?c:document.createTextNode(c))};k.forEach(add);return e}
+
+const WT={shet:{n:'2-ply jumper weight',mm:'3.0 to 3.25',us:'2.5 to 3',wpi:19,mg:4.6,ball:25,short:'Jumper wt'},
+ fing:{n:'Fingering',mm:'2.75 to 3.25',us:'2 to 3',wpi:16,mg:4,short:'Fingering'},
+ dk:{n:'DK',mm:'3.75 to 4.0',us:'5 to 6',wpi:12,mg:2.24,short:'DK'},
+ wor:{n:'Worsted',mm:'4.5',us:'7',wpi:10,mg:2,short:'Worsted'},
+ aran:{n:'Aran',mm:'5.0',us:'8',wpi:9,mg:1.7,short:'Aran'}};
+const RAW=[
+['madder','Madder','#7a1c1c','Voe Spinning Co.','shet','Shetland','100% Shetland wool',75,'VS-2209','Ishbel','Lerwick',['yarn','needles'],'Left from a hap. Dyed with real madder; it bled once and I have washed it twice since.'],
+['rowan','Rowan','#c4402a','Fenwick Dye Works','fing','Merino & BFL','75% superwash merino, 25% nylon',62,'FD-0413, batch 2','Hannah','Hebden Bridge',['pattern','yarn'],'Left over from a pair of socks. 62 g of the 100, weighed this morning.'],
+['moorit','Moorit','#6e4a30','Quoy Wool','shet','Shetland','100% Shetland, undyed moorit',75,'QW-91','Ishbel','Lerwick',['yarn','needles'],'Natural brown from my uncle\'s own sheep. Slightly woolly, which is what you want for steeking.'],
+['bracken','Bracken','#b5651d','Tarn & Teal','dk','Merino & BFL','100% Bluefaced Leicester',88,'TT-114','Dev','Leicester',['needles'],'More orange in daylight than it looks on a screen. One ball is a little darker than the other; I\'d put it in the middle of a jumper, not at the hem.'],
+['gorse','Gorse','#f0b800','Voe Spinning Co.','shet','Shetland','100% Shetland wool',50,'VS-2231','Cathal','Kirkwall',['needles','pattern'],'Bright in the ball. Knits down to a proper egg yolk.'],
+['tormentil','Tormentil','#d9c64a','Nine Stones Dyeworks','dk','Blends','70% wool, 30% alpaca',100,'NS-77','Marit','Bergen',['yarn'],'Bought for a Selbu mitten and then changed my mind. Soft, with a slight halo.'],
+['lichen','Lichen','#9aa84a','Brae Wool Co.','fing','Blends','60% Corriedale, 40% Wensleydale',100,'BW-0612','Nell','Hexham',['pattern','yarn'],'Full skein, wound but not knitted. It has a faint sheen from the Wensleydale.'],
+['bladderwrack','Bladderwrack','#5b6a25','Voe Spinning Co.','shet','Shetland','100% Shetland wool',50,'VS-2217','Kirsty','Stornoway',['yarn'],'Olive-brown green, close to a tidal-line seaweed. Two balls, same lot.'],
+['spruce','Spruce','#1f4a3a','Calder Bank','wor','Other breeds','100% Wensleydale',85,'CB-208','Gwen','Aberystwyth',['needles'],'Lustrous and a bit slippery. Needs a firm hand in colourwork.'],
+['tarn','Tarn','#1f6b73','Tarn & Teal','fing','Blends','80% merino, 20% silk',45,'TT-302','Siobhán','Galway',['pattern'],'Half a skein from a shawl. Silk gives it drape, so it will not hold a steek well.'],
+['kingfisher','Kingfisher','#1d4fbf','Fenwick Dye Works','fing','Merino & BFL','100% superwash merino',100,'FD-0388','Tom','Whitby',['yarn','needles'],'Unwound skein. A true cobalt with no purple in it. Dyed in one pot, so lot is even.'],
+['indigo','Indigo Pot','#1f2f6b','Cullen Hill Yarn','aran','Other breeds','100% Romney',100,'CH-55','Jonas','Trondheim',['needles','pattern'],'Rustic and a bit hairy. Crocks slightly on first wash, so wash it alone.'],
+['sloe','Sloe','#3d2a55','Calder Bank','dk','Other breeds','100% Polwarth',100,'CB-190','Bea','Frome',['pattern','needles'],'Dark purple that goes nearly black in artificial light.'],
+['heather','Heather','#7b4f86','Quoy Wool','shet','Shetland','100% Shetland wool',75,'QW-93','Ruth','Ullapool',['yarn'],'Three balls, bought for an Unst-style lace scarf and never started.'],
+['dulse','Dulse','#7a2a45','Nine Stones Dyeworks','fing','Merino & BFL','100% Bluefaced Leicester',70,'NS-81','Yusuf','Glasgow',['yarn'],'Reddish wine. Wound into a cake, 70 g after a pair of mitts.'],
+['thrift','Thrift','#d98aa3','Fenwick Dye Works','fing','Merino & BFL','75% merino, 25% nylon',38,'FD-0420','Morag','Inverness',['pattern'],'A sock-toe\'s worth. Good as a small accent colour.'],
+['peat','Peat','#26221f','Voe Spinning Co.','shet','Shetland','100% Shetland wool',100,'VS-2200','Cathal','Kirkwall',['needles'],'Four balls, one lot. Dark enough that you will want daylight to knit it.'],
+['shaela','Shaela','#7a7873','Quoy Wool','shet','Shetland','100% Shetland, undyed shaela',50,'QW-90','Hannah','Hebden Bridge',['pattern'],'Natural grey, no dye. Fairly crisp; it softens after washing.'],
+['haar','Haar','#a9bcc6','Brae Wool Co.','shet','Shetland','100% Shetland lambswool',25,'BW-0540','Aileen','Dundee',['yarn','pattern'],'One ball only. Pale grey-blue, good as a background for a peerie band.'],
+['natural','Natural White','#ebe8dd','Voe Spinning Co.','shet','Shetland','100% Shetland wool, undyed',125,'VS-2190','Ruth','Ullapool',['yarn'],'Five balls of undyed fleece white, all one lot. The sort of thing every stranded jumper needs more of.']];
+const SK=RAW.map(r=>{const o={id:r[0],name:r[1],hex:r[2],maker:r[3],w:r[4],fg:r[5],fibre:r[6],g:r[7],lot:r[8],who:r[9],where:r[10],wants:r[11],note:r[12]};o.m=Math.round(o.g*WT[o.w].mg);return o});
+const BYID=Object.fromEntries(SK.map(s=>[s.id,s]));
+
+const MINE=[
+{id:'o1',kind:'yarn',hex:'#4a2536',name:'Bramble, fingering',d:'100% BFL, about 70 g',m:280},
+{id:'o2',kind:'yarn',hex:'#8c8f93',name:'Ash, DK',d:'100% wool, 100 g',m:224},
+{id:'o3',kind:'yarn',hex:'#e5e0d0',name:'Natural 2-ply Shetland',d:'4 x 25 g balls',m:460},
+{id:'o4',kind:'needles',name:'3.25 mm (US 3) circular',d:'80 cm, steel tips, one kink in the cable',m:0},
+{id:'o5',kind:'needles',name:'2.5 mm (US 1.5) DPNs',d:'Set of five, birch',m:0},
+{id:'o6',kind:'pattern',name:'Sanquhar-style mitts, knitted sample',d:'DK, with printed pattern',m:0}];
+const WANTN={yarn:'yarn',needles:'needles',pattern:'pattern samples'};
+
+/* colour helpers */
+const rgb=x=>{const n=parseInt(x.slice(1),16);return[n>>16&255,n>>8&255,n&255]};
+function hsv(x){const[r,g,b]=rgb(x).map(v=>v/255),mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let hh=0;if(d){if(mx===r)hh=((g-b)/d+6)%6;else if(mx===g)hh=(b-r)/d+2;else hh=(r-g)/d+4;hh*=60}return[hh,mx?d/mx:0,mx]}
+function lum(x){const c=rgb(x).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+const ratio=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+const shade=(x,k)=>'rgb('+rgb(x).map(v=>Math.round(v*k)).join(',')+')';
+const ORDER=(()=>{const c=[],n=[];SK.forEach(s=>{const v=hsv(s.hex);(v[1]<.2?n:c).push([s,v])});
+ c.sort((a,b)=>a[1][0]-b[1][0]);n.sort((a,b)=>a[1][2]-b[1][2]);return c.concat(n).map(x=>x[0])})();
+
+/* motifs: . ground (A), # main (B), o accent (C) */
+const pad=r=>{const b='.'.repeat(r[0].length+2);return[b,...r.map(x=>'.'+x+'.'),b]};
+const half=['.....#.....','..#..o..#..','...#.#.#...','....###....','.#..#o#..#.'];
+const MOTIFS=[
+{k:'peerie',n:'Peerie band',drop:0,t:['........','...##...','..#oo#..','.#o..o#.','..#oo#..','...##...','........']},
+{k:'oxo',n:'OXO',drop:0,t:['o.o.o.o.o.o.','.###..o...o.','#...#..o.o..','#...#...o...','#...#..o.o..','.###..o...o.','............']},
+{k:'star',n:'Snowflake star',drop:1,t:pad([...half,'#o#.o#o.#o#',...half.slice().reverse()])}];
+function build(m,W,H){const t=m.t,th=t.length,tw=t[0].length,out=[];
+ for(let dy=0;dy<H;dy++){const r=H-1-dy,tr=t[th-1-(r%th)],off=m.drop&&(Math.floor(r/th)%2)?Math.floor(tw/2):0,row=[];
+  for(let x=0;x<W;x++){const c=tr[(x+off)%tw];row.push(c==='#'?1:c==='o'?2:0)}out.push(row)}return out}
+
+/* canvas painter. rows top-down; mode flat | chart | knit */
+function paint(cv,rows,pal,cw,mode,nums){
+ const H=rows.length,W=rows[0].length,ch=cw*.8,pd=nums?32:0,dpr=Math.min(window.devicePixelRatio||1,2),w=W*cw+pd,hh=H*ch;
+ cv.width=Math.round(w*dpr);cv.height=Math.round(hh*dpr);cv.style.width=w+'px';cv.style.height=hh+'px';
+ const x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,w,hh);
+ for(let r=0;r<H;r++)for(let c=0;c<W;c++){const px=c*cw,py=r*ch,col=pal[rows[r][c]];
+  if(mode==='knit'){x.save();x.beginPath();x.rect(px,py,cw,ch);x.clip();x.fillStyle=shade(col,.5);x.fillRect(px,py,cw,ch);
+   x.strokeStyle=col;x.lineWidth=cw*.52;x.lineCap='round';x.beginPath();x.moveTo(px+cw*.27,py+ch*.22);x.lineTo(px+cw*.5,py+ch*.82);
+   x.moveTo(px+cw*.73,py+ch*.22);x.lineTo(px+cw*.5,py+ch*.82);x.stroke();x.restore()}
+  else{x.fillStyle=col;x.fillRect(px,py,cw+.5,ch+.5);
+   if(mode==='chart'&&cw>=8&&rows[r][c]){const k=rows[r][c],dk=lum(col)>.35?'rgba(31,28,26,.8)':'rgba(255,255,255,.9)';x.strokeStyle=dk;x.fillStyle=dk;x.lineWidth=1.3;
+    if(k===1){x.beginPath();x.moveTo(px+cw*.3,py+ch*.28);x.lineTo(px+cw*.7,py+ch*.72);x.moveTo(px+cw*.7,py+ch*.28);x.lineTo(px+cw*.3,py+ch*.72);x.stroke()}
+    else{x.beginPath();x.arc(px+cw/2,py+ch/2,cw*.14,0,7);x.fill()}}}}
+ if(mode==='chart'){x.lineWidth=1;for(let c=0;c<=W;c++){x.strokeStyle=c%5?'rgba(31,28,26,.28)':'rgba(31,28,26,.7)';x.beginPath();x.moveTo(c*cw+.5,0);x.lineTo(c*cw+.5,hh);x.stroke()}
+  for(let r=0;r<=H;r++){const fromBottom=H-r;x.strokeStyle=fromBottom%5?'rgba(31,28,26,.28)':'rgba(31,28,26,.7)';x.beginPath();x.moveTo(0,r*ch+.5);x.lineTo(W*cw,r*ch+.5);x.stroke()}}
+ if(nums){x.fillStyle='#1f1c1a';x.font='11px "JetBrains Mono",ui-monospace,monospace';x.textBaseline='middle';
+  for(let r=0;r<H;r++){const n=H-r;if(n===1||n%5===0)x.fillText(String(n),W*cw+7,r*ch+ch/2)}}
+}
+
+/* state */
+const st={sel:'kingfisher',picks:['natural','kingfisher','gorse'],motif:0,view:'chart',f:{w:'all',f:'all',want:'all'},offer:new Set(),also:new Set(),sent:null};
+const FILT=[
+{key:'w',label:'Weight',o:[['all','All'],['shet','2-ply jumper'],['fing','Fingering'],['dk','DK'],['wor','Worsted'],['aran','Aran']]},
+{key:'f',label:'Fibre',o:[['all','All'],['Shetland','Shetland'],['Merino & BFL','Merino & BFL'],['Blends','Blends'],['Other breeds','Other breeds']]},
+{key:'want',label:'Will swap for',o:[['all','Anything'],['yarn','Yarn'],['needles','Needles'],['pattern','Pattern samples']]}];
+const match=s=>(st.f.w==='all'||s.w===st.f.w)&&(st.f.f==='all'||s.fg===st.f.f)&&(st.f.want==='all'||s.wants.includes(st.f.want));
+const have=s=>(s.w==='shet'?(s.g/25)+' x 25 g balls':s.g+' g')+', about '+s.m+' m';
+
+function buildFilters(){const root=$('#filters');root.replaceChildren();
+ FILT.forEach(f=>{const id='fl-'+f.key;root.append(h('div',{class:'filt',role:'group','aria-labelledby':id},h('span',{class:'lab',id},f.label),
+  h('div',{class:'chips'},f.o.map(([v,t])=>h('button',{type:'button',class:'chip','data-k':f.key,'data-v':v,'aria-pressed':String(st.f[f.key]===v),onclick:e=>{st.f[f.key]=v;
+   root.querySelectorAll('[data-k="'+f.key+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));renderWall()}},t)))))})}
+
+function renderWall(){
+ const wall=$('#wall'),fid=document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.id;wall.replaceChildren();
+ const rows=Math.ceil(ORDER.length/4);let n=0;
+ ORDER.forEach((s,i)=>{const ok=match(s);if(ok)n++;const pi=st.picks.indexOf(s.id);
+  wall.append(h('button',{type:'button',class:'cub','data-id':s.id,disabled:!ok,'aria-current':st.sel===s.id?'true':null,style:'grid-column:'+(4-i%4)+';grid-row:'+(rows-Math.floor(i/4)),
+   'aria-label':s.name+', '+WT[s.w].n+', '+s.g+' grams, from '+s.who+(pi>=0?', in swatch as '+'ABC'[pi]:''),onclick:()=>choose(s.id)},
+   h('span',{class:'skn',style:'--c:'+s.hex},pi>=0&&h('span',{class:'pk'},'ABC'[pi])),
+   h('span',{class:'lbl'},h('span',{class:'nm'},s.name),h('span',{class:'mt'},WT[s.w].short+' / '+s.g+' g'))))});
+ for(let r=1;r<=rows;r++)wall.append(h('span',{class:'rn','aria-hidden':'true',style:'grid-column:5;grid-row:'+(rows-r+1)},r));
+ $('#count').textContent=n+' of '+SK.length+' skeins match';
+ if(fid){const b=wall.querySelector('[data-id="'+fid+'"]');if(b&&!b.disabled)b.focus()}}
+
+function choose(id){st.sel=id;st.also=new Set();st.sent=null;renderWall();renderDetail();renderSwap();
+ if(innerWidth<=960){const d=$('#dName');if(d){d.focus({preventScroll:true});$('#detail').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}}}
+
+function renderDetail(){
+ const root=$('#detail');root.replaceChildren();const s=BYID[st.sel];
+ if(!s){root.append(h('p',{class:'k'},'Skein'),h('h2',{id:'dName',tabindex:'-1'},'Pick a colour'),h('p',{class:'hint'},'Choose a cubby on the wall to see who has it and what they want in return.'));return}
+ const w=WT[s.w],inP=st.picks.includes(s.id);
+ root.append(h('div',{class:'banner',style:'--c:'+s.hex,role:'img','aria-label':'Swatch of '+s.name}),
+  h('h3',{id:'dName',tabindex:'-1'},s.name),h('p',{class:'sub'},s.maker+' / '+s.hex.toUpperCase()),
+  h('dl',{class:'spec'},
+   h('dt',null,'Weight'),h('dd',null,w.n),
+   h('dt',null,'Fibre'),h('dd',null,s.fibre),
+   h('dt',null,'On offer'),h('dd',null,have(s)),
+   h('dt',null,'Dye lot'),h('dd',null,s.lot),
+   h('dt',null,'Needles'),h('dd',null,w.mm+' mm / US '+w.us),
+   h('dt',null,'WPI'),h('dd',null,w.wpi+' wraps per inch',h('span',{class:'wpi','aria-hidden':'true'},Array.from({length:w.wpi},()=>h('i')))),
+   h('dt',null,'From'),h('dd',null,s.who+', '+s.where),
+   h('dt',null,'Swaps for'),h('dd',null,s.wants.map(k=>WANTN[k]).join(', '))),
+  h('p',{class:'quote'},s.note),
+  h('div',{class:'row'},
+   h('button',{type:'button',class:'btn go','aria-pressed':String(inP),onclick:()=>togglePick(s.id)},inP?'Remove from swatch':'Add to swatch'),
+   h('button',{type:'button',class:'btn alt',onclick:()=>{const t=$('#spH');t.focus({preventScroll:true});$('#swap').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}},'Propose a swap')),
+  h('p',{class:'sub',id:'pickMsg',role:'status','aria-live':'polite',style:'margin-top:8px'}))}
+function togglePick(id){const i=st.picks.indexOf(id);let msg='';
+ if(i>=0)st.picks.splice(i,1);else if(st.picks.length>=3)msg='Three skeins at most. Remove one from the swatch first.';else st.picks.push(id);
+ renderWall();renderDetail();renderSwatch();const m=$('#pickMsg');if(m&&msg)m.textContent=msg;const b=document.querySelector('#detail .btn.go');if(b)b.focus()}
+
+function renderSwatch(){
+ const root=$('#swBody');root.replaceChildren();const P=st.picks.map(i=>BYID[i]),SYM=['A','B','C'],ROLE=['ground','main','accent'],SM=['blank','cross','dot'];
+ root.append(h('ul',{class:'legend','aria-label':'Chart legend'},[0,1,2].map(i=>{const s=P[i];
+  return h('li',null,h('span',{class:'sy'},SYM[i]),h('span',{class:'cc',style:s?'--c:'+s.hex:'background:transparent;border-style:dashed'}),
+   h('span',{class:s?'':'empty'},s?h('span',null,s.name,h('small',null,ROLE[i]+' / '+WT[s.w].short+' / '+s.hex.toUpperCase())):h('span',null,'Empty',h('small',null,ROLE[i]+(i===2?' (optional)':'')))),
+   s?h('button',{type:'button',class:'rm','aria-label':'Remove '+s.name+' from swatch',onclick:()=>togglePick(s.id)},'x'):h('span'))})));
+ root.append(h('div',{class:'motifs',role:'group','aria-label':'Motif'},MOTIFS.map((m,i)=>{const cv=h('canvas',{'aria-hidden':'true'});
+  const b=h('button',{type:'button',class:'mo','aria-pressed':String(st.motif===i),onclick:()=>{st.motif=i;renderSwatch()}},cv,h('span',null,m.n));
+  const pal=P.length>=2?[P[0].hex,P[1].hex,(P[2]||P[1]).hex]:['#1b3fa0','#ebe8dd','#f2b705'];
+  setTimeout(()=>paint(cv,build(m,22,Math.max(m.t.length,12)),pal,4,'flat',false),0);return b})));
+ root.append(h('div',{class:'row',style:'margin:0 0 4px'},
+  ['chart','knit'].map(v=>h('button',{type:'button',class:'chip','aria-pressed':String(st.view===v),onclick:()=>{st.view=v;renderSwatch()}},v==='chart'?'Chart view':'Knitted view')),
+  P.length>=2&&h('button',{type:'button',class:'chip',onclick:()=>{[st.picks[0],st.picks[1]]=[st.picks[1],st.picks[0]];renderWall();renderSwatch();renderDetail()}},'Swap A and B')));
+ if(P.length<2){root.append(h('p',{class:'hint'},'Add two or three skeins from the wall (use "Add to swatch" on a skein) and they are worked into the motif here.'));return}
+ const m=MOTIFS[st.motif],H=m.t.length*Math.round(28/m.t.length),W=40,rows=build(m,W,H),n=P.length;
+ if(n<3)rows.forEach(r=>r.forEach((v,i)=>{if(v===2)r[i]=1}));
+ const pal=[P[0].hex,P[1].hex,(P[2]||P[1]).hex];
+ const cv=h('canvas',{id:'swc',role:'img','aria-label':m.n+', '+W+' stitches by '+H+' rows. A '+P[0].name+', B '+P[1].name+(P[2]?', C '+P[2].name:'')+'.'});
+ root.append(cv);
+ const avail=root.clientWidth||340,cw=Math.max(5,Math.min(14,Math.floor((avail-32)/W)));paint(cv,rows,pal,cw,st.view,true);
+ root.append(h('p',{class:'sub'},W+' sts x '+H+' rows, each cell 5:4. Row 1 at the bottom, read right to left.'));
+ /* analysis */
+ let mf=0,cnt=[0,0,0],tot=0;rows.forEach(r=>{const set=new Set(r);r.forEach(v=>{cnt[v]++;tot++});if(set.size<2)return;let run=1;for(let i=1;i<=r.length;i++){if(i<r.length&&r[i]===r[i-1])run++;else{mf=Math.max(mf,run);run=1}}});
+ let lo=99,lp='';for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){const q=ratio(P[i].hex,P[j].hex);if(q<lo){lo=q;lp=SYM[i]+' ('+P[i].name+') and '+SYM[j]+' ('+P[j].name+')'}}
+ const ws=[...new Set(P.map(s=>s.w))],notes=[];
+ notes.push([mf>5,'Longest float '+mf+' stitches. '+(mf>5?'Over five: catch the idle yarn behind the work.':'Short enough to carry loose.')]);
+ notes.push([lo<1.6,lp+' sit at '+lo.toFixed(1)+' to 1. '+(lo<1.6?'Too close in value, so the motif will blur into texture. Try a lighter or darker skein for one of them.':lo<3?'Readable at arm\'s length.':'Reads clearly.')]);
+ notes.push(ws.length>1?[true,'Mixed weights: '+P.map(s=>SYM[P.indexOf(s)]+' is '+WT[s.w].short).join(', ')+'. The thicker yarn will pucker the thinner. Swatch in the round before committing.']:[false,'All '+WT[ws[0]].n+'. Start with '+WT[ws[0]].mm+' mm (US '+WT[ws[0]].us+').']);
+ notes.push([false,'Yarn use in this swatch: '+cnt.slice(0,n).map((c,i)=>SYM[i]+' '+Math.round(c/tot*100)+'%').join(', ')+'. Buy more of whichever has the biggest share.']);
+ root.append(h('ul',{class:'notes'},notes.map(([w,t])=>h('li',{class:w?'warn':''},t))))}
+
+function renderSwap(){
+ const root=$('#swapBody');root.replaceChildren();const s=BYID[st.sel];
+ if(!s){root.append(h('p',{class:'hint'},'Choose a skein on the wall first.'));return}
+ if(st.sent){const x=st.sent;root.append(h('div',{class:'sent',tabindex:'-1',id:'sentBox'},h('p',{class:'k'},'Request sent'),h('p',null,'Sent to '+x.who+' in '+x.where+'. Nothing leaves the house until you both agree on postage.'),x.sum,
+  h('div',{class:'row'},h('button',{type:'button',class:'btn',onclick:()=>{st.sent=null;st.offer=new Set();st.also=new Set();renderSwap()}},'Start another'))));$('#sentBox').focus();return}
+ const others=SK.filter(o=>o.who===s.who&&o.id!==s.id);
+ const sumBox=h('div',{id:'sumBox','aria-live':'polite'}),err=h('p',{class:'err',id:'swErr',role:'alert'});
+ const note=h('textarea',{rows:'3',id:'swNote',placeholder:'Anything useful: when you can post, whether you want the needles tested first.'});
+ const post=h('select',{id:'swPost'},['Each pays own postage','I pay both ways','Meeting in person'].map(t=>h('option',null,t)));
+ root.append(h('form',{novalidate:true,onsubmit:e=>{e.preventDefault();
+   if(!st.offer.size&&!note.value.trim()){err.textContent='Choose something to offer, or say in the note what you have in mind.';return}
+   err.textContent='';st.sent={who:s.who,where:s.where,sum:summary(note.value.trim(),post.value)};renderSwap()}},
+  h('fieldset',null,h('legend',null,'You get'),
+   h('label',{class:'opt'},h('input',{type:'checkbox',checked:true,disabled:true}),h('span',null,h('span',{class:'cc',style:'--c:'+s.hex}),s.name,h('small',null,have(s)))),
+   others.map(o=>h('label',{class:'opt'},h('input',{type:'checkbox',checked:st.also.has(o.id),onchange:e=>{e.target.checked?st.also.add(o.id):st.also.delete(o.id);upd()}}),
+    h('span',null,h('span',{class:'cc',style:'--c:'+o.hex}),o.name+' (also from '+s.who+')',h('small',null,have(o)))))),
+  h('fieldset',null,h('legend',null,'You offer, from your stash'),MINE.map(o=>h('label',{class:'opt'},h('input',{type:'checkbox',checked:st.offer.has(o.id),onchange:e=>{e.target.checked?st.offer.add(o.id):st.offer.delete(o.id);upd()}}),
+   h('span',null,o.hex&&h('span',{class:'cc',style:'--c:'+o.hex}),o.name,h('small',null,o.kind+' / '+o.d))))),
+  h('label',{class:'fld'},'Postage',post),h('label',{class:'fld'},'Note to '+s.who,note),sumBox,err,
+  h('button',{type:'submit',class:'btn ox'},'Send request to '+s.who)));
+ function upd(){sumBox.replaceChildren(summary(note.value.trim(),post.value))}
+ note.addEventListener('input',upd);post.addEventListener('change',upd);upd()}
+
+function summary(note,post){
+ const s=BYID[st.sel],gets=[s].concat([...st.also].map(i=>BYID[i])),offers=MINE.filter(o=>st.offer.has(o.id));
+ const gm=gets.reduce((a,b)=>a+b.m,0),om=offers.reduce((a,b)=>a+b.m,0),kinds=new Set(offers.map(o=>o.kind)),hit=[...kinds].filter(k=>s.wants.includes(k));
+ const want=s.wants.map(k=>WANTN[k]).join(' or ');
+ let fit;
+ if(!offers.length)fit=s.who+' asked for '+want+'. You have not offered anything yet.';
+ else if(hit.length)fit=s.who+' asked for '+want+'. Your offer includes '+hit.map(k=>WANTN[k]).join(' and ')+', which is on that list.';
+ else fit=s.who+' asked for '+want+'. Nothing you offer is on that list, so explain why in the note.';
+ if(om&&gm)fit+=' Yarn offered: about '+om+' m. Yarn wanted: about '+gm+' m.';
+ return h('div',{class:'sum'},
+  h('div',null,h('h4',null,'You offer'),offers.length?h('ul',null,offers.map(o=>h('li',null,o.name))):h('p',{class:'hint',style:'margin:0'},'Nothing yet')),
+  h('div',null,h('h4',null,'You get'),h('ul',null,gets.map(o=>h('li',null,o.name+', '+o.g+' g')))),
+  h('div',{class:'fit'},fit+' Postage: '+post.toLowerCase()+'.'+(note?' Note: "'+note+'"':'')))}
+
+/* header */
+function drawBand(){const cv=$('#band'),w=cv.parentElement.clientWidth,cw=9,W=Math.ceil(w/cw);const g=build(MOTIFS[1],W,7);
+ paint(cv,g,['#1b3fa0','#ebe8dd','#f2b705'],cw,'flat',false);cv.style.width='100%';cv.style.height=(7*cw*.8)+'px'}
+function tally(){const t=$('#tally');t.append(h('dt',null,'Skeins'),h('dd',null,SK.length),h('dt',null,'Members'),h('dd',null,new Set(SK.map(s=>s.who)).size),h('dt',null,'Weights'),h('dd',null,new Set(SK.map(s=>s.w)).size),h('dt',null,'Total'),h('dd',null,Math.round(SK.reduce((a,b)=>a+b.g,0)/10)/100+' kg'))}
+
+buildFilters();tally();renderWall();renderDetail();renderSwatch();renderSwap();drawBand();
+let tm;addEventListener('resize',()=>{cancelAnimationFrame(tm);tm=requestAnimationFrame(()=>{drawBand();renderSwatch()})});
+})();
+</script>
+</body>
+</html>
