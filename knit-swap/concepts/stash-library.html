@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stash Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --metal:#6c7f8e; --metal-d:#455766; --metal-dd:#2f3d49; --metal-l:#a7b5c0;
+  --card:#f1efe6; --card-2:#e6e3d6; --rule:#a9c0d2; --ink:#24282d; --ink-soft:#4b5158;
+  --stamp:#58348f; --stamp-l:#8a6cb8; --red:#b0261f; --hand:#2a4a8a;
+  --type:'Special Elite','Courier Prime','Courier New',monospace;
+  --body:'Courier Prime','Courier New',Courier,monospace;
+  --serif:'Libre Caslon Text',Georgia,'Times New Roman',serif;
+  --hand-f:'Caveat','Segoe Print','Bradley Hand',cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#8696a3;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,rgba(0,0,0,.03) 0 2px,transparent 2px 5px);
+  overflow-x:hidden}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--stamp);outline-offset:2px;box-shadow:0 0 0 6px #fff8}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* cabinet header */
+.cab{background:linear-gradient(#5a6e7d,#475a69);border-bottom:6px solid var(--metal-dd);color:#eef2f5}
+.cab .wrap{padding-top:18px;padding-bottom:0}
+.brand{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:flex-end;justify-content:space-between}
+.brand h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,6vw,46px);line-height:1;margin:0;letter-spacing:.01em}
+.brand h1 span{font-style:italic;font-weight:400}
+.brand p{margin:0;font-size:14px;max-width:34ch;color:#d3dce3}
+.labelholder{display:inline-block;background:#d9d6c8;color:var(--ink);border:2px solid #2f3d49;box-shadow:inset 0 0 0 3px #bdb9a8;padding:3px 14px;font-family:var(--type);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.nav{display:flex;flex-wrap:wrap;gap:4px;margin-top:18px}
+.nav button{background:#7f93a2;border:2px solid var(--metal-dd);border-bottom:0;border-radius:6px 6px 0 0;padding:8px 14px 6px;cursor:pointer;font-family:var(--type);font-size:15px;color:#101820;position:relative;top:0}
+.nav button[aria-selected=true]{background:var(--card);top:2px;padding-bottom:10px}
+.nav button .n{display:inline-block;min-width:1.4em;text-align:center;background:var(--stamp);color:#fff;border-radius:9px;font-size:12px;padding:0 5px;margin-left:5px;font-family:var(--body)}
+
+main{padding:22px 0 60px}
+.intro{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px;color:#10171d}
+.intro p{margin:0;max-width:58ch;font-size:16px}
+.deskmemo{font-family:var(--hand-f);font-size:22px;line-height:1.15;color:#16306a;background:#e8e4d0;padding:8px 14px 10px;transform:rotate(-1.2deg);border-left:5px solid #c9c3a6;max-width:46ch;box-shadow:1px 2px 0 rgba(0,0,0,.18)}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-end;margin-bottom:14px}
+.guides{display:flex;flex-wrap:wrap;gap:3px;flex:1 1 100%}
+.guides button{background:#cfd3c3;border:2px solid var(--metal-dd);border-radius:5px 5px 0 0;padding:3px 9px 2px;font-family:var(--type);font-size:13px;cursor:pointer;color:#14191e}
+.guides button[aria-pressed=true]{background:var(--card);margin-top:-5px;padding-top:8px;font-weight:700}
+.fld{display:flex;flex-direction:column;gap:2px;font-size:13px;color:#0f161c;font-family:var(--type);letter-spacing:.05em;text-transform:uppercase}
+.fld input,.fld select{background:var(--card);border:2px solid var(--metal-dd);border-radius:2px;padding:6px 8px;font-family:var(--body);font-size:16px;text-transform:none;letter-spacing:0;min-width:0;width:100%}
+.fld.q{flex:1 1 200px}.fld.f{flex:0 1 210px}
+.count{font-family:var(--type);font-size:14px;color:#0f161c;flex:1 1 100%;margin:0}
+
+/* drawer */
+.drawer{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:start}
+@media(min-width:900px){.drawer{grid-template-columns:minmax(0,1fr) 270px}}
+.stackwrap{position:relative;padding-bottom:12px}
+.stackwrap::before,.stackwrap::after{content:"";position:absolute;left:6px;right:-4px;top:8px;bottom:0;background:#dcd9cb;border:1px solid #9a9a8c;z-index:0;transform:rotate(.5deg)}
+.stackwrap::after{left:12px;right:-9px;top:14px;background:#cfccbd;transform:rotate(1deg)}
+.cardnav{display:flex;gap:8px;align-items:center;margin-bottom:10px;font-family:var(--type);color:#0f161c}
+.cardnav button,.btn{background:#d9d6c8;border:2px solid var(--metal-dd);box-shadow:2px 2px 0 var(--metal-dd);padding:6px 14px;cursor:pointer;font-family:var(--type);font-size:15px;border-radius:2px}
+.cardnav button:active,.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--metal-dd)}
+.cardnav button:disabled{opacity:.5;cursor:default}
+.cardnav .pos{margin-left:auto;font-size:14px}
+.card{position:relative;z-index:1;background:var(--card);border:1px solid #8d8d80;padding:18px 18px 54px;transform:rotate(-.35deg);box-shadow:0 1px 0 #fff inset;transform-origin:50% 0}
+.card.flip{animation:flip .38s ease-out}
+@keyframes flip{from{transform:perspective(900px) rotateX(-65deg) rotate(-.35deg);opacity:.2}to{transform:perspective(900px) rotateX(0) rotate(-.35deg);opacity:1}}
+.card::after{content:"";position:absolute;left:50%;bottom:16px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#8696a3;box-shadow:inset 1px 2px 3px rgba(0,0,0,.45)}
+.chead{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;border-bottom:2px solid #7f9ab0;padding-bottom:10px}
+.art{width:104px;height:104px}
+.art svg{width:100%;height:100%;display:block;overflow:visible}
+.callno{font-family:var(--type);font-size:clamp(18px,4.6vw,24px);letter-spacing:.04em;margin:0;word-break:break-word}
+.ctitle{font-family:var(--type);font-size:17px;margin:4px 0 0;line-height:1.25}
+.cmaker{margin:3px 0 0;font-size:15px;color:var(--ink-soft)}
+.fields{margin:0;display:grid;grid-template-columns:1fr;background-image:repeating-linear-gradient(transparent 0 27px,var(--rule) 27px 28px);background-position:0 -1px}
+.fields div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:0 8px;line-height:28px;min-height:28px}
+.fields dt{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding-top:1px}
+.fields dd{margin:0;font-family:var(--type);font-size:15px;line-height:28px;overflow-wrap:anywhere}
+.fields div:nth-child(3n+2) dd{position:relative;top:1px}
+.fields div:nth-child(5n) dd{position:relative;top:-1px;margin-left:1px}
+@media(min-width:520px){.fields div{grid-template-columns:130px minmax(0,1fr)}}
+.margin{font-family:var(--hand-f);font-size:22px;line-height:1.1;color:var(--hand);transform:rotate(-2deg);margin:12px 0 0 auto;max-width:34ch;padding-left:10px;border-left:2px solid #c98a8a55}
+.lender{margin:10px 0 0;font-size:14px;color:var(--ink-soft)}
+.lender b{font-family:var(--type);font-weight:400;color:var(--ink)}
+
+/* pocket slip */
+.pocket{margin-top:16px;position:relative;background:#e2dcc3;border:1px solid #9b9477;padding:12px 14px 14px;transform:rotate(.4deg)}
+.pocket::before{content:"";position:absolute;left:-1px;right:-1px;top:34px;height:1px;background:#9b9477}
+.pocket h3{margin:0 0 14px;font-family:var(--type);font-weight:400;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.slipgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media(min-width:620px){.slipgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.rq{display:flex;flex-direction:column;gap:8px}
+.rq label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-family:var(--type);display:flex;flex-direction:column;gap:2px}
+.rq input{background:#f6f4ea;border:0;border-bottom:2px solid var(--ink);padding:5px 4px;font-family:var(--body);font-size:16px;border-radius:0;width:100%;min-width:0;text-transform:none;letter-spacing:0}
+.rq .btn{align-self:flex-start;background:var(--stamp);color:#fff;border-color:#2e1a50;box-shadow:2px 2px 0 #2e1a50}
+.rq small{font-size:13px;color:var(--ink-soft);line-height:1.35}
+.dateslip{min-height:170px;position:relative;background-image:repeating-linear-gradient(transparent 0 27px,#9b9477 27px 28px)}
+.dateslip .row{display:grid;grid-template-columns:90px 1fr;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--type);line-height:28px;height:28px;overflow:hidden}
+.dateslip .row span:last-child{font-family:var(--type);font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stamp{display:inline-block;font-family:var(--type);text-transform:uppercase;letter-spacing:.1em;color:var(--stamp);border:3px double var(--stamp);padding:5px 12px 3px;transform:rotate(-6deg);mix-blend-mode:multiply;opacity:.9;text-shadow:1.5px 1px 0 rgba(88,52,143,.28);box-shadow:1.5px 1px 0 rgba(88,52,143,.22);filter:url(#rough);line-height:1.15;font-size:19px}
+.stamp small{display:block;font-size:11px;letter-spacing:.2em}
+.stamp.red{color:var(--red);border-color:var(--red);text-shadow:1.5px 1px 0 rgba(176,38,31,.3);box-shadow:1.5px 1px 0 rgba(176,38,31,.22);transform:rotate(4deg)}
+.dateslip .stamp{position:absolute;right:2px;top:92px;transform:rotate(-7deg)}
+.stamp.fresh{animation:thunk .55s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes thunk{0%{opacity:0;transform:translateY(-46px) rotate(-16deg) scale(1.9)}55%{opacity:1;transform:translateY(2px) rotate(-6deg) scale(.95)}100%{opacity:.9;transform:rotate(-7deg) scale(1)}}
+.onloan{font-size:15px}
+.onloan p{margin:0 0 8px}
+
+/* spines list */
+.spines{list-style:none;margin:0;padding:0;background:var(--metal-dd);border:2px solid var(--metal-dd);display:flex;flex-direction:column;gap:2px}
+.spines button{display:block;width:100%;text-align:left;background:#dedbcd;border:0;padding:6px 10px;cursor:pointer;border-left:6px solid var(--metal-l)}
+.spines button[aria-current=true]{background:var(--card);border-left-color:var(--stamp);font-weight:700}
+.spines .c{display:block;font-family:var(--type);font-size:13px;letter-spacing:.04em}
+.spines .t{display:block;font-size:14px;line-height:1.25;overflow-wrap:anywhere}
+.spines .out{font-family:var(--type);font-size:11px;letter-spacing:.14em;color:var(--stamp);text-transform:uppercase}
+.sidehd{font-family:var(--type);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#0f161c;margin:0 0 6px}
+.empty{background:var(--card);padding:22px;border:1px dashed #6b6b5f;transform:rotate(.3deg)}
+.empty p{margin:0 0 10px}
+
+/* sheets */
+.sheet{background:var(--card);border:1px solid #8d8d80;padding:20px 18px 26px;max-width:760px;transform:rotate(.2deg)}
+.sheet h2{font-family:var(--serif);font-size:28px;margin:0 0 4px;font-weight:700}
+.sheet h2 em{font-weight:400}
+.sheet .sub{margin:0 0 16px;color:var(--ink-soft)}
+.slips{display:grid;gap:14px;margin-top:12px}
+.slip{background:#e2dcc3;border:1px solid #9b9477;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr);gap:8px 14px;position:relative}
+.slip:nth-child(2n){transform:rotate(-.4deg)}.slip:nth-child(2n+1){transform:rotate(.3deg)}
+@media(min-width:620px){.slip{grid-template-columns:minmax(0,1fr) auto;align-items:start}}
+.slip .cn{font-family:var(--type);font-size:14px;letter-spacing:.05em;margin:0}
+.slip .ti{font-family:var(--type);font-size:17px;margin:2px 0;line-height:1.25}
+.slip p{margin:0}.slip .meta{font-size:14px;color:var(--ink-soft)}
+.slip .stamps{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:56px}
+.slip.ret{opacity:.8}
+.slip .btn{justify-self:start;margin-top:6px;font-size:14px}
+.rules{list-style:none;margin:0;padding:0;background-image:repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 34px)}
+.rules li{line-height:34px;position:relative;padding-left:22px}
+.rules li::before{content:"\2014";position:absolute;left:0;color:var(--stamp)}
+.rules.tall li{line-height:1.5;padding:5px 0 6px 22px;background:none}
+.dewey{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px;font-size:15px;margin:6px 0 18px}
+.dewey dt{font-family:var(--type)}.dewey dd{margin:0}
+.sheet h3{font-family:var(--type);font-weight:400;letter-spacing:.14em;text-transform:uppercase;font-size:13px;margin:22px 0 6px;color:var(--ink-soft)}
+footer{color:#0f161c;font-size:13px;padding-bottom:30px}
+footer p{margin:0;max-width:60ch}
+@media (prefers-reduced-motion:reduce){.card.flip,.stamp.fresh{animation:none}*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="4" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="2.2" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="9" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.9" result="m"/>
+      <feComposite in="d" in2="m" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<header class="cab">
+  <div class="wrap">
+    <div class="brand">
+      <div>
+        <span class="labelholder">Branch: anywhere with a postbox</span>
+        <h1>Stash <span>Library</span></h1>
+      </div>
+      <p>Lending leftover yarn, spare needles and finished samples since the autumn of 2024.</p>
+    </div>
+    <div class="nav" role="tablist" aria-label="Library sections">
+      <button role="tab" id="tab-cat" aria-selected="true" aria-controls="view" data-view="cat">Catalogue</button>
+      <button role="tab" id="tab-out" aria-selected="false" aria-controls="view" data-view="out">My checkouts <span class="n" id="outn">2</span></button>
+      <button role="tab" id="tab-rules" aria-selected="false" aria-controls="view" data-view="rules">House rules</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div id="view" role="tabpanel"></div>
+  </div>
+</main>
+<div class="wrap"><footer><p>Run by a handful of volunteers who knit too much. Cards are typed by the people who lend the stuff, so spellings of colourways are theirs, not ours.</p></footer></div>
+<div class="sr" role="status" aria-live="polite" id="live"></div>
+
+<script>
+(function(){
+'use strict';
+var TODAY=new Date();TODAY.setHours(12,0,0,0);
+function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+var MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+function fmt(d){return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()}
+function fmtS(d){return d.getDate()+' '+MON[d.getMonth()]}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+var WEIGHTS=[['all','All'],['lace','Lace'],['fingering','Fingering'],['sport','Sport'],['DK','DK'],['worsted','Worsted'],['aran','Aran'],['bulky','Bulky'],['kit','Needles + samples']];
+var FIBRES=[['all','Any fibre'],['wool','Wool (undyed-ish, plain)'],['superwash','Superwash'],['hair','Alpaca, mohair, silk'],['plant','Cotton, linen']];
+
+var L=[
+{id:1,kind:'yarn',w:'DK',fib:'superwash',call:'746.432 MER DK',title:'Sloe Gin, 2 skeins',dyer:'Hedgerow & Hill',colors:['#5b3b63','#7a4f7d','#3f2a4f','#8a5a82'],
+ f:[['Fibre','100% superwash merino'],['Weight','DK, 3.75 mm / US 5'],['Yardage','246 yd / 100 g each'],['Dye lot','0914 (both skeins)'],['Condition','Wound once, never knitted']],
+ who:'Maren',town:'Hexham',note:'Bought for a cowl, then found out I look dreadful in plum. Lovely stuff.',want:'Anything sock-weight in green, or just postage.'},
+{id:2,kind:'yarn',w:'fingering',fib:'wool',call:'746.431 SHE FNG',title:'Peat Smoke, 3 skeins',dyer:'Old Quarry Wool',colors:['#6b6a64','#55544f','#7d7b72','#46453f'],
+ f:[['Fibre','100% Shetland, 2-ply'],['Weight','Fingering, 3.25 mm / US 3'],['Yardage','437 yd / 100 g each'],['Dye lot','Q-22 (natural-dyed)'],['Condition','Skeins in original twist']],
+ who:'Ines',town:'Hebden Bridge',note:'Slightly sticky to start with. Soaks out in the first wash and then it blooms.',want:'A hank of anything Shetland, any colour.'},
+{id:3,kind:'yarn',w:'fingering',fib:'superwash',call:'746.433 SOC FNG',title:'Rhubarb Custard, 1 skein',dyer:'Tin Kettle Dyeworks',colors:['#d8647f','#f1c04b','#e68a7a','#f6dd8a','#c24a6c'],
+ f:[['Fibre','75/25 superwash merino / nylon'],['Weight','Fingering (sock), 2.5 mm / US 1.5'],['Yardage','463 yd / 100 g'],['Dye lot','TK-311'],['Condition','Skein plus about 12 g of tail']],
+ who:'Priya',town:'Leamington Spa',note:'One pair of socks gets you the cuff of a second. Pooling is gentle.',want:'Pattern sample, or a skein to carry on the stripes.'},
+{id:4,kind:'yarn',w:'lace',fib:'hair',call:'746.435 MOH LAC',title:'Frost on Reed, 2 balls',dyer:'Fen Light Yarns',colors:['#c9d3cf','#b4c1bd','#dde3df'],
+ f:[['Fibre','70/30 mohair / silk'],['Weight','Lace, 3.5 mm / US 4'],['Yardage','460 yd / 50 g each'],['Dye lot','FL-0207 (same for both)'],['Condition','Balled, smoke-free house']],
+ who:'Rosalind',town:'Ely',note:'Hold it double for a drapey scarf or leave it single for a haze over something plain.',want:'Needles, 3.5 mm circular if you have one.'},
+{id:5,kind:'yarn',w:'worsted',fib:'hair',call:'746.434 ALP WST',title:'Undyed Fawn, 4 skeins',dyer:'Pennine Alpaca Co-op',colors:['#b79a79','#a68866','#c4a887'],
+ f:[['Fibre','100% alpaca, from a named herd'],['Weight','Worsted, 4.5 mm / US 7'],['Yardage','190 yd / 100 g each'],['Dye lot','n/a, one fleece batch'],['Condition','Two skeins loosely wound']],
+ who:'Tomas',town:'Kendal',note:'Warm and heavy. Think hat and mitts, not a jumper unless you enjoy the drape.',want:'Postage, or a sweet tin. I am not fussy.'},
+{id:6,kind:'yarn',w:'aran',fib:'wool',call:'746.431 BRI ARN',title:'Barley Field, 6 skeins',dyer:'Wolds & Co',colors:['#c8a85c','#b8964a','#d6bb74'],
+ f:[['Fibre','100% British wool'],['Weight','Aran, 5.0 mm / US 8'],['Yardage','164 yd / 100 g each'],['Dye lot','W-5530 (all six)'],['Condition','Untouched, tags on']],
+ who:'Gwen',town:'Aberystwyth',note:'Enough for an adult jumper in the smaller sizes. Buy-it-all-at-once leftovers from a job I abandoned.',want:'Send one finished thing back if you make it.'},
+{id:7,kind:'yarn',w:'bulky',fib:'wool',call:'746.431 COR BLK',title:'Gorse Bank, 2 skeins',dyer:'Bothy Fibre Mill',colors:['#a9a53b','#8f9a3a','#c2b449','#7d8a36'],
+ f:[['Fibre','100% Corriedale'],['Weight','Bulky, 6.5 mm / US 10.5'],['Yardage','109 yd / 100 g each'],['Dye lot','BM-48'],['Condition','Slightly dusty, nothing worse']],
+ who:'Hari',town:'Stroud',note:'Good for a quick hat before the frost. Spit-splice friendly.',want:'Nothing particular. Tell me what you made.'},
+{id:8,kind:'yarn',w:'sport',fib:'plant',call:'746.436 COT SPT',title:'Samphire, 2 skeins',dyer:'Saltmarsh Dyers',colors:['#6f9a86','#8bb09b','#5d8a77'],
+ f:[['Fibre','60/40 cotton / linen'],['Weight','Sport, 3.5 mm / US 4'],['Yardage','273 yd / 100 g each'],['Dye lot','SM-19'],['Condition','Wound in a ball, one dropped on the floor']],
+ who:'Bea',town:'Whitstable',note:'Stiff to knit, soft after two washes. Make a summer top, not a cosy one.',want:'More plant fibre, a linen stitch swatch would be a joy.'},
+{id:9,kind:'yarn',w:'fingering',fib:'wool',call:'746.437 BFL FNG',title:'Slate Heron, 1 skein',dyer:'Dunnock & Rook',colors:['#4f6272','#6c7f8e','#3d4e5c','#87979f'],
+ f:[['Fibre','100% Bluefaced Leicester'],['Weight','Fingering, 3.0 mm / US 2.5'],['Yardage','400 yd / 100 g'],['Dye lot','DR-0629'],['Condition','Swatched once, ripped back']],
+ who:'Noor',town:'Totnes',note:'Colour is truer than the photo on their site. A shawl wants about two of these.',want:'A second skein, if anyone has the matching lot.'},
+{id:10,kind:'dpn',w:'kit',fib:'none',call:'688.2 DPN 2.5',title:'Birch DPNs, set of five',dyer:'Maker unknown, pre-owned',colors:['#d9c08f'],
+ f:[['Size','2.5 mm / US 1.5'],['Length','15 cm / 6 in'],['Material','Birch, lightly waxed'],['Set','5 needles, none missing'],['Condition','One tip scuffed, not catchy']],
+ who:'Colm',town:'Dungarvan',note:'Mended a hundred heels on these. They have a smell of beeswax and I like it.',want:'Postage, or a 4.0 mm circular (US 6, 80 cm).'},
+{id:11,kind:'sample',w:'kit',fib:'none',call:'746.9 SMP DK',title:'Striped cardigan sample, age 4 to 5',dyer:'Knitted by Alma, DK merino',colors:['#2f5f7a','#e3d9b8','#c9843f','#2f5f7a','#e3d9b8'],
+ f:[['Item','Finished child cardigan, blocked'],['Yarn','DK superwash merino scraps'],['Needles','4.0 mm / US 6, ribbing 3.25 mm'],['Fits','Chest 60 cm / 24 in'],['Condition','Worn twice, one button replaced']],
+ who:'Alma',town:'Perth',note:'Made as a test knit and outgrown by the testers. Buttons are odd on purpose.',want:'A swatch from any pattern you are testing.'}
+];
+
+var S={view:'cat',weight:'all',fibre:'all',q:'',idx:0,reqs:{},name:'',
+ outs:[
+  {id:'x1',call:'746.435 MOH LAC',title:'Marsh Mist, 1 ball',from:'Dilys',town:'Machynlleth',due:addDays(TODAY,-9),out:true},
+  {id:'x2',call:'688.2 CIR 5.0',title:'Circular needles 5.0 mm / US 8, 60 cm',from:'Colm',town:'Dungarvan',due:addDays(TODAY,6),out:true}
+ ]};
+
+/* art */
+function rng(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
+function art(l){
+  var r=rng(l.id*97+13),h='<svg viewBox="0 0 120 120" role="img" aria-label="Drawing of '+esc(l.title)+'">';
+  var c=l.colors,i;
+  if(l.kind==='yarn'){
+    h+='<ellipse cx="62" cy="112" rx="38" ry="4" fill="#00000018"/>';
+    for(i=0;i<22;i++){
+      var w=(r()-.5)*84,col=c[i%c.length],y1=26+r()*10,y2=86+r()*10;
+      h+='<path d="M60 14 C'+(60+w)+' '+y1+','+(60+w*(0.7+r()*.5))+' '+y2+',60 106" fill="none" stroke="'+col+'" stroke-width="'+(2.6+r()*1.2).toFixed(1)+'" stroke-linecap="round" opacity=".92"/>';
+    }
+    h+='<path d="M52 10 q8 -6 16 0 q-3 8 -8 8 q-5 0 -8 -8z" fill="'+c[0]+'" stroke="#0003"/>';
+    h+='<g transform="rotate(-4 60 58)"><rect x="40" y="50" width="40" height="17" fill="#ebe7d6" stroke="#6b6a5c"/><text x="60" y="62" font-size="8" text-anchor="middle" font-family="Special Elite, Courier New, monospace" fill="#24282d">'+esc(l.call.split(' ')[1])+' '+esc(l.call.split(' ')[2])+'</text></g>';
+  } else if(l.kind==='dpn'){
+    for(i=0;i<5;i++){
+      var x=26+i*13;
+      h+='<g transform="rotate(14 60 60)"><line x1="'+x+'" y1="12" x2="'+x+'" y2="100" stroke="'+c[0]+'" stroke-width="5" stroke-linecap="butt"/><path d="M'+(x-2.5)+' 100 L'+x+' 112 L'+(x+2.5)+' 100z" fill="'+c[0]+'"/><line x1="'+(x-1)+'" y1="14" x2="'+(x-1)+'" y2="98" stroke="#fff6" stroke-width="1"/></g>';
+    }
+    h+='<rect x="8" y="64" width="104" height="9" fill="#a8b6c0" stroke="#6b7a85" transform="rotate(-4 60 68)"/>';
+  } else {
+    h+='<defs><pattern id="vv" width="6" height="7" patternUnits="userSpaceOnUse"><path d="M0 0 L3 6 L6 0" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="1.4"/></pattern></defs>';
+    var bands=[c[0],c[1],c[2],c[3],c[4]],y=10;
+    for(i=0;i<5;i++){h+='<rect x="14" y="'+y+'" width="92" height="17" fill="'+bands[i]+'"/>';y+=17}
+    h+='<rect x="14" y="10" width="92" height="85" fill="url(#vv)"/><rect x="14" y="95" width="92" height="12" fill="'+c[0]+'"/>';
+    for(i=0;i<14;i++)h+='<line x1="'+(17+i*6.5)+'" y1="95" x2="'+(17+i*6.5)+'" y2="107" stroke="#0004"/>';
+    h+='<rect x="12" y="8" width="96" height="100" fill="none" stroke="#0003" transform="rotate(1.2 60 58)"/>';
+  }
+  return h+'</svg>';
+}
+
+/* filtering */
+function list(){
+  var q=S.q.trim().toLowerCase();
+  return L.filter(function(l){
+    if(S.weight!=='all'&&l.w!==S.weight)return false;
+    if(S.fibre!=='all'&&l.fib!==S.fibre)return false;
+    if(q){var hay=(l.title+' '+l.dyer+' '+l.who+' '+l.town+' '+l.call+' '+l.f.map(function(a){return a[1]}).join(' ')).toLowerCase();if(hay.indexOf(q)<0)return false}
+    return true;
+  });
+}
+function say(t){document.getElementById('live').textContent=t}
+function nOut(){return S.outs.filter(function(o){return o.out}).length}
+function updNav(){document.getElementById('outn').textContent=nOut()}
+
+/* views */
+function viewCat(){
+  var counts={};L.forEach(function(l){counts[l.w]=(counts[l.w]||0)+1});
+  var g=WEIGHTS.map(function(w){return '<button type="button" data-w="'+w[0]+'" aria-pressed="'+(S.weight===w[0])+'">'+w[1]+(w[0]==='all'?'':' ('+(counts[w[0]]||0)+')')+'</button>'}).join('');
+  var fo=FIBRES.map(function(f){return '<option value="'+f[0]+'"'+(S.fibre===f[0]?' selected':'')+'>'+f[1]+'</option>'}).join('');
+  return '<div class="intro"><p>A lending shelf for the yarn you bought too much of, the needles you never reach for and the samples that no longer fit anyone. Nobody sells anything here. Pick a card, write to the lender, post it on, and pass something forward when you can.</p>'+
+   '<div class="deskmemo">Desk note, Sat: three new cards in the DK drawer. Please re-wind your skeins before they travel, the postie has opinions.</div></div>'+
+   '<form class="filters" id="filt" role="search" aria-label="Filter the catalogue"><div class="guides" role="group" aria-label="Guide cards by weight">'+g+'</div>'+
+   '<label class="fld q">Look up<input type="search" id="q" value="'+esc(S.q)+'" placeholder="dyer, town, fibre" autocomplete="off"></label>'+
+   '<label class="fld f">Fibre<select id="fib">'+fo+'</select></label><p class="count" id="cnt"></p></form>'+
+   '<div class="drawer"><div id="cardcol"></div><aside aria-label="Cards in this drawer"><p class="sidehd">In this drawer</p><ul class="spines" id="spines"></ul></aside></div>';
+}
+function drawCard(animate){
+  var arr=list(),col=document.getElementById('cardcol'),sp=document.getElementById('spines'),cnt=document.getElementById('cnt');
+  if(S.idx>=arr.length)S.idx=Math.max(0,arr.length-1);
+  cnt.textContent=arr.length+(arr.length===1?' card':' cards')+' match'+(arr.length===1?'es':'')+'.';
+  if(!arr.length){
+    col.innerHTML='<div class="empty"><p class="callno">Nothing filed under that.</p><p>Try a wider weight, or clear the search. The drawer fills up after the weekend post.</p><button class="btn" type="button" id="clear">Clear the filters</button></div>';
+    sp.innerHTML='';return;
+  }
+  var l=arr[S.idx],slip=S.reqs[l.id];
+  var fields=l.f.map(function(a){return '<div><dt>'+a[0]+'</dt><dd>'+esc(a[1])+'</dd></div>'}).join('');
+  var pocket;
+  if(slip){
+    pocket='<div class="pocket"><h3 id="slipH" tabindex="-1">Date due slip</h3><div class="slipgrid"><div class="onloan"><p><b style="font-family:var(--type);font-weight:400">'+esc(l.who)+'</b> has your slip now. Expect a message about the address within a day or two.</p><p>Post your side within five days of the stamp.</p></div>'+
+    '<div class="dateslip" aria-label="Date due slip"><div class="row"><span>Borrower</span><span>'+esc(slip.name)+'</span></div><div class="row"><span>Date due</span><span>'+fmt(slip.due)+'</span></div><div class="row"><span>Sending</span><span>'+esc(slip.back||'to be arranged')+'</span></div><span class="stamp fresh"><small>Checked out</small>Due '+fmtS(slip.due)+'</span></div></div></div>';
+  } else {
+    pocket='<div class="pocket"><h3>Date due slip</h3><div class="slipgrid"><form class="rq" id="rq" autocomplete="off"><label>Your first name<input id="rname" required maxlength="24" value="'+esc(S.name)+'"></label><label>What you can send back<input id="rback" maxlength="60" placeholder="a skein, a swatch, or postage"></label><button class="btn" type="submit">Stamp my slip</button><small>Loans run three weeks. Lenders are told when you stamp.</small></form>'+
+    '<div class="dateslip" aria-hidden="true"><div class="row"><span>Borrower</span><span></span></div><div class="row"><span>Date due</span><span></span></div><div class="row"><span>Sending</span><span></span></div></div></div></div>';
+  }
+  col.innerHTML='<div class="cardnav"><button type="button" id="prev" aria-label="Previous card"'+(S.idx===0?' disabled':'')+'>&larr; Back</button><button type="button" id="next" aria-label="Next card"'+(S.idx>=arr.length-1?' disabled':'')+'>Next &rarr;</button><span class="pos">Card '+(S.idx+1)+' of '+arr.length+'</span></div>'+
+   '<div class="stackwrap"><article class="card'+(animate?' flip':'')+'" aria-label="Catalogue card '+esc(l.call)+'"><div class="chead"><div class="art">'+art(l)+'</div><div><p class="callno">'+esc(l.call)+'</p><p class="ctitle">'+esc(l.title)+'</p><p class="cmaker">'+esc(l.dyer)+'</p></div></div>'+
+   '<dl class="fields">'+fields+'</dl><p class="lender">Lent by <b>'+esc(l.who)+'</b>, '+esc(l.town)+'. Would like back: '+esc(l.want)+'</p><p class="margin">'+esc(l.note)+'</p>'+pocket+'</article></div>';
+  sp.innerHTML=arr.map(function(x,i){return '<li><button type="button" data-i="'+i+'"'+(i===S.idx?' aria-current="true"':'')+'><span class="c">'+esc(x.call)+(S.reqs[x.id]?' <span class="out">on loan</span>':'')+'</span><span class="t">'+esc(x.title)+'</span></button></li>'}).join('');
+}
+function viewOut(){
+  var n=nOut(),od=S.outs.filter(function(o){return o.out&&o.due<TODAY}).length;
+  var sub=n===0?'Nothing out at the moment. The shelves look better for it.':n+(n===1?' item':' items')+' out'+(od?', '+od+' past the date.':'.');
+  var slips=S.outs.map(function(o){
+    var late=o.out&&o.due<TODAY,days=Math.round((TODAY-o.due)/864e5);
+    return '<li class="slip'+(o.out?'':' ret')+'" style="list-style:none"><div><p class="cn">'+esc(o.call)+'</p><p class="ti">'+esc(o.title)+'</p><p class="meta">From '+esc(o.from)+', '+esc(o.town)+'.</p>'+
+     (late?'<p class="meta">'+days+' days over. Nobody fines anybody here, but a message to '+esc(o.from)+' is kind.</p>':'')+
+     (o.out?'<button class="btn" type="button" data-ret="'+o.id+'">Posted it back</button>':'')+'</div><div class="stamps">'+
+     (o.out?'<span class="stamp"><small>Due</small>'+fmt(o.due)+'</span>':'<span class="stamp"><small>Returned</small>'+fmtS(o.ret)+'</span>')+
+     (late?'<span class="stamp red">Overdue</span>':'')+'</div></li>';
+  }).join('');
+  return '<section class="sheet"><h2>My <em>checkouts</em></h2><p class="sub">'+sub+'</p><ul class="slips" style="padding:0;margin:0">'+slips+'</ul></section>';
+}
+function viewRules(){
+  return '<section class="sheet"><h2>House <em>rules</em></h2><p class="sub">Written on the back of a catalogue card by Wen, who runs the desk.</p>'+
+  '<ul class="rules tall"><li>Wind it, tie it, label it. Put your name and the dye lot on a slip inside the parcel.</li><li>Post within five days of the date stamp. First class is fine, second class is fine, a long silence is not.</li><li>Say honestly if there is cat hair, smoke or moth risk. Freeze wool for a week before it travels.</li><li>Pass something forward when you can. It does not have to match what you took.</li><li>If a loan runs late, write to the lender. The stamp says overdue but we only mean it as a nudge.</li></ul>'+
+  '<h3>How the call numbers work</h3><p style="margin:0 0 6px;font-size:15px">Wen borrowed the shape of a Dewey number and bent it to wool. The digits after the point say what the yarn is made of; the letters say what weight it is.</p>'+
+  '<dl class="dewey"><dt>746.431</dt><dd>Plain wool: Shetland, British, Corriedale</dd><dt>746.432</dt><dd>Merino</dd><dt>746.433</dt><dd>Sock blends with nylon</dd><dt>746.434</dt><dd>Alpaca</dd><dt>746.435</dt><dd>Mohair, silk and friends</dd><dt>746.436</dt><dd>Cotton, linen and other plants</dd><dt>688.2</dt><dd>Needles and hooks</dd><dt>746.9</dt><dd>Finished samples</dd></dl>'+
+  '<p style="margin:0;font-size:15px">LAC lace, FNG fingering, SPT sport, DK, WST worsted, ARN aran, BLK bulky. A number after a needle call is its size in millimetres.</p></section>';
+}
+
+function render(){
+  var v=document.getElementById('view');
+  document.querySelectorAll('.nav button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.view===S.view)});
+  v.setAttribute('aria-labelledby','tab-'+S.view);
+  if(S.view==='cat'){v.innerHTML=viewCat();drawCard(false)}
+  else if(S.view==='out')v.innerHTML=viewOut();
+  else v.innerHTML=viewRules();
+  updNav();
+}
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.dataset.view){S.view=t.dataset.view;render();return}
+  if(t.dataset.w){S.weight=t.dataset.w;S.idx=0;
+    document.querySelectorAll('.guides button').forEach(function(b){b.setAttribute('aria-pressed',b===t)});drawCard(true);return}
+  if(t.id==='prev'||t.id==='next'){S.idx+=t.id==='next'?1:-1;drawCard(true);var nb=document.getElementById(t.id);if(nb&&!nb.disabled)nb.focus();else{var o=document.getElementById(t.id==='next'?'prev':'next');if(o)o.focus()}return}
+  if(t.dataset.i!==undefined){S.idx=+t.dataset.i;drawCard(true);var c=document.querySelector('.card');if(c)c.scrollIntoView({block:'nearest'});return}
+  if(t.id==='clear'){S.weight='all';S.fibre='all';S.q='';S.idx=0;render();return}
+  if(t.dataset.ret){var o=S.outs.filter(function(x){return x.id===t.dataset.ret})[0];o.out=false;o.ret=TODAY;render();say(o.title+' marked as posted back.');return}
+});
+document.addEventListener('input',function(e){
+  if(e.target.id==='q'){S.q=e.target.value;S.idx=0;drawCard(true)}
+});
+document.addEventListener('change',function(e){
+  if(e.target.id==='fib'){S.fibre=e.target.value;S.idx=0;drawCard(true)}
+});
+document.addEventListener('submit',function(e){
+  e.preventDefault();
+  if(e.target.id==='rq'){
+    var nm=document.getElementById('rname').value.trim();if(!nm){document.getElementById('rname').focus();return}
+    var l=list()[S.idx],back=document.getElementById('rback').value.trim();
+    S.name=nm;var due=addDays(TODAY,21);
+    S.reqs[l.id]={name:nm,due:due,back:back};
+    S.outs.unshift({id:'r'+l.id,call:l.call,title:l.title,from:l.who,town:l.town,due:due,out:true});
+    updNav();drawCard(false);
+    var h=document.getElementById('slipH');if(h)h.focus({preventScroll:true});
+    say('Slip stamped. Due '+fmt(due)+'.');
+  } else if(e.target.id==='filt'){}
+});
+document.addEventListener('keydown',function(e){
+  if(S.view!=='cat')return;
+  var tg=e.target.tagName;if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
+  var p=document.getElementById(e.key==='ArrowRight'?'next':e.key==='ArrowLeft'?'prev':'');
+  if(p&&!p.disabled){p.click()}
+});
+render();
+})();
+</script>
+</body>
+</html>
