@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ladder Stitch</title>
+<meta name="description" content="A photocopied zine for the monthly yarn swap meet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Dela+Gothic+One&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eceff1; --paper2:#e1e6e9; --ink:#1b2a4a;
+  --pink:#ff3fa4; --blue:#0a86b0; --mx:3px; --my:-2px;
+  --disp:"Rubik Mono One","Arial Black","Helvetica Neue",Impact,sans-serif;
+  --disp2:"Dela Gothic One","Arial Black",Impact,sans-serif;
+  --body:"Courier Prime","Courier New",Courier,monospace;
+  --hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  --g:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#eceff1;color:#1b2a4a;font-family:var(--body);font-size:16px;line-height:1.45;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.5;mix-blend-mode:multiply;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .15  0 0 0 0 .25  0 0 0 .55 -.12'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px;box-shadow:0 0 0 6px var(--blue)}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--g)}
+
+/* overprint headline */
+.ov{position:relative;color:var(--pink);font-family:var(--disp);line-height:.95;margin:0;text-transform:uppercase;transition:none}
+.ov::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;color:var(--blue);mix-blend-mode:multiply;transform:translate(var(--mx),var(--my));pointer-events:none}
+.halftone{background-image:radial-gradient(circle,var(--blue) 28%,transparent 31%);background-size:7px 7px;mix-blend-mode:multiply}
+.halftone.p{background-image:radial-gradient(circle,var(--pink) 30%,transparent 33%)}
+.halftone.f{background-size:5px 5px;background-position:2px 2px}
+
+/* masthead */
+header.mast{padding:22px 0 10px;position:relative}
+.mast-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+.mast h1{font-size:clamp(46px,11.2vw,128px);letter-spacing:-.02em;word-break:break-word}
+.issue{font-family:var(--hand);font-size:24px;line-height:1;transform:rotate(-4deg);text-align:right;color:var(--blue);font-weight:700;max-width:150px}
+.tagline{margin:8px 0 0;max-width:62ch;font-size:15px}
+.tagline b{background:var(--pink);color:#fff;padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.stripe{height:14px;margin:16px 0 0;border-block:2px solid var(--ink);position:relative}
+.stripe i{position:absolute;inset:0;display:block}
+
+/* controls */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 0;position:sticky;top:0;z-index:20;background:var(--paper)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 auto}
+.tab{border:2px solid var(--ink);background:var(--paper);padding:6px 11px;font-weight:700;font-size:14px;letter-spacing:.02em;position:relative;border-radius:0;box-shadow:3px 3px 0 var(--blue)}
+.tab[aria-selected=true]{background:var(--pink);color:#fff;box-shadow:3px 3px 0 var(--ink);transform:translate(1px,1px) rotate(-1deg)}
+.tab .n{font-family:var(--hand);font-size:20px;margin-left:2px}
+.reink{border:2px dashed var(--ink);background:transparent;padding:6px 11px;font-size:14px;font-weight:700;transform:rotate(1.5deg)}
+.reink[aria-pressed=true]{background:var(--blue);color:#fff;border-style:solid}
+
+/* spreads */
+.spread{display:none;padding:18px 0 56px}
+.spread.on{display:block;animation:turn .5s ease-out}
+@keyframes turn{from{opacity:0;transform:perspective(900px) rotateY(-9deg) translateX(-14px)}to{opacity:1;transform:none}}
+
+.collage{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:26px 22px;align-items:start}
+.box{border:2.5px solid var(--ink);padding:16px;position:relative;background:var(--paper);min-width:0}
+.box.rough{border-radius:3px 9px 4px 12px/10px 4px 11px 3px}
+.tape{position:absolute;width:86px;height:24px;background:rgba(255,63,164,.35);mix-blend-mode:multiply;top:-13px;left:18px;transform:rotate(-5deg)}
+.tape.b{background:rgba(10,134,176,.38);left:auto;right:20px;transform:rotate(4deg)}
+.cut{background:var(--paper2);box-shadow:0 0 0 1px rgba(27,42,74,.25);clip-path:polygon(0 3%,4% 0,97% 2%,100% 0,99% 97%,100% 100%,3% 99%,0 100%)}
+h2.big{font-size:clamp(30px,5vw,56px);margin:0 0 10px}
+h3{font-family:var(--disp2);font-weight:400;font-size:24px;margin:0 0 8px;line-height:1.05}
+p{margin:0 0 10px}
+.small{font-size:13.5px}
+.hand{font-family:var(--hand);font-weight:700;font-size:26px;line-height:1;color:var(--blue)}
+.c-a{grid-column:1/8}.c-b{grid-column:8/13}.c-c{grid-column:1/6}.c-d{grid-column:6/13}.c-e{grid-column:1/13}
+.r1{transform:rotate(-.8deg)}.r2{transform:rotate(1.2deg)}.r3{transform:rotate(-1.4deg)}.r4{transform:rotate(.6deg)}
+
+.meet-date{font-family:var(--disp);font-size:clamp(34px,6vw,66px);line-height:.9;color:var(--pink);position:relative;margin:4px 0 10px;text-transform:uppercase}
+.meet-date::after{content:attr(data-t);position:absolute;left:0;top:0;color:var(--blue);mix-blend-mode:multiply;transform:translate(var(--mx),var(--my));pointer-events:none;width:100%}
+dl.facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+dl.facts dt{font-weight:700;text-transform:uppercase;font-size:13px;padding-top:2px;color:var(--blue)}
+dl.facts dd{margin:0}
+ul.bring{margin:0;padding:0;list-style:none}
+ul.bring li{padding:4px 0 4px 28px;position:relative;border-bottom:1.5px dotted var(--ink)}
+ul.bring li::before{content:"";position:absolute;left:2px;top:9px;width:14px;height:14px;border:2px solid var(--ink)}
+ul.bring li.x::after{content:"";position:absolute;left:5px;top:6px;width:8px;height:16px;border-right:3px solid var(--pink);border-bottom:3px solid var(--pink);transform:rotate(40deg)}
+
+form.rsvp{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+label.vh{position:absolute;left:-9999px}
+input[type=text]{flex:1 1 150px;min-width:0;font:inherit;padding:8px 10px;border:2.5px solid var(--ink);background:#fff;border-radius:0}
+.btn{border:2.5px solid var(--ink);background:var(--pink);color:#fff;font-weight:700;padding:8px 14px;box-shadow:4px 4px 0 var(--blue);border-radius:0}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--blue)}
+.btn.alt{background:var(--paper);color:var(--ink)}
+.names{font-family:var(--hand);font-size:28px;line-height:1.05;column-width:150px;column-gap:18px;margin:0;padding:0;list-style:none}
+.names li{break-inside:avoid;padding:2px 0 2px 0;color:var(--ink)}
+.names li.me{color:var(--pink);animation:ink .6s ease-out}
+@keyframes ink{from{opacity:0;transform:translateX(-8px) rotate(-3deg)}to{opacity:1;transform:none}}
+.names li:nth-child(3n){transform:rotate(-1.2deg)}.names li:nth-child(4n){transform:rotate(1deg)}
+
+/* classifieds */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.chip{border:2px solid var(--ink);background:var(--paper);padding:3px 10px;font-size:14px;font-weight:700;border-radius:0}
+.chip[aria-pressed=true]{background:var(--blue);color:#fff}
+.cls-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+ul.ads{list-style:none;margin:0;padding:0;columns:2 270px;column-gap:20px}
+.ad{break-inside:avoid;margin:0 0 18px;border:2px solid var(--ink);padding:12px 12px 10px;position:relative;background:var(--paper);cursor:pointer;display:block}
+.ad:nth-child(odd){transform:rotate(-.5deg)}.ad:nth-child(even){transform:rotate(.6deg)}
+.ad .tg{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper);padding:1px 6px;display:inline-block;margin-bottom:6px}
+.ad[data-tag=free] .tg{background:var(--pink);color:#fff}
+.ad .tx{font-size:15px;margin:0 0 6px;position:relative;z-index:1}
+.ad .by{font-size:13px;display:flex;justify-content:space-between;gap:8px;align-items:center;position:relative;z-index:1}
+.ad .by span{font-style:italic}
+.pick{border:2px solid var(--ink);background:transparent;padding:2px 8px;font-size:13px;font-weight:700;border-radius:0}
+.ad.circled .pick{background:var(--pink);color:#fff}
+svg.pen{position:absolute;left:-10px;top:-10px;width:calc(100% + 20px);height:calc(100% + 20px);pointer-events:none;overflow:visible;z-index:2}
+svg.pen path{fill:none;stroke:var(--pink);stroke-width:4;stroke-linecap:round;mix-blend-mode:multiply;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.ad.circled svg.pen path{opacity:1;animation:draw .7s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ad.circled svg.pen path.p2{stroke:var(--blue);stroke-width:2.5;animation-delay:.25s;transform:translate(2px,2px)}
+.none{font-family:var(--hand);font-size:28px}
+.swaplist{position:sticky;top:78px}
+.swaplist ol{margin:0 0 10px;padding-left:22px}
+.swaplist li{margin-bottom:6px;font-size:14px}
+.swaplist li button{border:0;background:none;text-decoration:underline;font-size:12px;padding:0 0 0 4px}
+.legend{font-size:13px;margin:0 0 16px}
+.legend b{color:var(--pink)}
+
+/* confessions */
+.conf{margin:0 0 20px;position:relative}
+.conf blockquote{margin:0;font-size:17px;padding:12px 14px;border-left:8px solid var(--pink);background:rgba(10,134,176,.1)}
+.conf cite{display:block;margin-top:6px;font-style:normal;font-family:var(--hand);font-size:24px;color:var(--blue);font-weight:700}
+.cnt{font-family:var(--disp);font-size:44px;color:var(--pink)}
+ol.steps{padding-left:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;padding:8px 0 8px 44px;position:relative;border-bottom:1.5px dotted var(--ink)}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:6px;width:30px;height:30px;border:2.5px solid var(--ink);border-radius:50%;text-align:center;font-weight:700;line-height:25px;background:var(--pink);color:#fff}
+.wanted li{padding:8px 0;border-bottom:2px dashed var(--ink);list-style:none}
+.wanted ul{padding:0;margin:0}
+.wanted .w{font-weight:700;text-transform:uppercase;color:var(--pink)}
+svg{max-width:100%}
+.foot{border-top:2.5px solid var(--ink);padding:18px 0 40px;font-size:13.5px}
+
+@media (max-width:860px){
+  .cls-layout{grid-template-columns:1fr}
+  .swaplist{position:static}
+}
+@media (max-width:700px){
+  .collage{display:flex;flex-direction:column;gap:30px}
+  .r1,.r2,.r3,.r4{transform:rotate(0)}
+  .mast-row{grid-template-columns:1fr}
+  .issue{text-align:left;transform:rotate(-2deg);max-width:none}
+  ul.ads{columns:1}
+  .bar{position:static}
+  .swaplist{position:static}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .ad.circled svg.pen path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+ <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+</defs></svg>
+
+<div class="wrap">
+<header class="mast">
+  <div class="mast-row">
+    <h1 class="ov" data-t="Ladder Stitch">Ladder Stitch</h1>
+    <div class="issue">issue 71. free. take two, leave one.</div>
+  </div>
+  <p class="tagline"><b>The zine of the second-Saturday-ish yarn swap.</b> Photocopied at the library by someone who keeps misloading the pink. Bring your stash regrets; leave with different regrets.</p>
+  <div class="stripe"><i class="halftone" style="opacity:.55"></i></div>
+</header>
+
+<div class="bar">
+  <div class="tabs" role="tablist" aria-label="Zine spreads">
+    <button class="tab" role="tab" id="t-meet" aria-controls="s-meet" aria-selected="true">Pages 2-3: The meet</button>
+    <button class="tab" role="tab" id="t-ads" aria-controls="s-ads" aria-selected="false" tabindex="-1">Pages 4-7: Classifieds <span class="n" id="cnt-tab"></span></button>
+    <button class="tab" role="tab" id="t-back" aria-controls="s-back" aria-selected="false" tabindex="-1">Pages 8-11: Confessions, ladders, wanted</button>
+  </div>
+  <button class="reink" id="reink" aria-pressed="false" title="Wobble the registration a bit">Re-ink (wobble the pink)</button>
+</div>
+
+<main>
+<!-- SPREAD 1 -->
+<section class="spread on" id="s-meet" role="tabpanel" aria-labelledby="t-meet">
+ <div class="collage">
+  <div class="box cut c-a r1">
+    <span class="tape"></span>
+    <h2 class="big ov" data-t="This month's swap meet">This month's swap meet</h2>
+    <div class="meet-date" data-t="Sat 21 Nov">Sat 21 Nov</div>
+    <dl class="facts">
+      <dt>When</dt><dd>2pm to 5pm. Doors at 1:45 if you know Dennis.</dd>
+      <dt>Where</dt><dd>Back room of The Dropped Stitch (formerly the Dog &amp; Duck, nobody's changed the sign). Up the stairs by the fruit machine. Step-free route via the kitchen, ask Maureen.</dd>
+      <dt>Cost</dt><dd>Nothing. The raffle is &pound;1 a strip and the prize is a lot of acrylic.</dd>
+      <dt>Rules</dt><dd>One in, one out, roughly. Nobody is counting. Maureen is counting.</dd>
+    </dl>
+    <p class="small" style="margin-top:12px">If the pub's quiz night double-books us again, we move to Hartley Road Community Centre, hall B, next to the toddler group's felt tigers. We will put a sign on the door. The sign will be a bit wonky.</p>
+  </div>
+
+  <div class="box rough c-b r2" style="background:transparent">
+    <span class="tape b"></span>
+    <h3>What to bring</h3>
+    <ul class="bring" id="bring">
+      <li>Yarn you will never knit. Be honest.</li>
+      <li>Bags. Your own. The pub's are for crisps.</li>
+      <li>Wound balls if you can, skeins if you must (we have a swift, it squeaks)</li>
+      <li>A fibre label or at least a guess ("wool? mostly?")</li>
+      <li>Biscuits (optional but morale-critical)</li>
+    </ul>
+    <p class="small" style="margin-top:10px">Tap an item to tick it off. It only ticks on your copy.</p>
+  </div>
+
+  <div class="c-c r3" style="grid-column:1/6">
+    <svg viewBox="0 0 320 260" role="img" aria-label="Hand-drawn ball of yarn with two crossed knitting needles" style="width:100%;height:auto;overflow:visible">
+      <g class="halftone-g">
+        <circle cx="150" cy="140" r="100" fill="url(#hp)" style="mix-blend-mode:multiply"/>
+      </g>
+      <defs>
+        <pattern id="hp" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.4" fill="#0a86b0"/></pattern>
+        <pattern id="hq" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.9" fill="#ff3fa4"/></pattern>
+      </defs>
+      <circle cx="162" cy="130" r="92" fill="url(#hq)" style="mix-blend-mode:multiply"/>
+      <g fill="none" stroke="#1b2a4a" stroke-width="3" stroke-linecap="round" filter="url(#rough)">
+        <path d="M70 130 C90 60 200 50 240 120"/>
+        <path d="M62 150 C100 80 210 80 252 150"/>
+        <path d="M70 175 C120 110 200 120 244 180"/>
+        <path d="M95 215 C130 160 190 150 225 215"/>
+        <path d="M90 85 C130 120 160 190 150 230"/>
+        <path d="M140 60 C170 110 190 170 175 232"/>
+        <path d="M200 70 C210 120 215 160 205 222"/>
+        <path d="M232 200 C260 230 285 238 305 228 C290 215 270 235 255 240"/>
+        <path d="M18 235 L282 18" stroke-width="5"/>
+        <path d="M30 20 L296 232" stroke-width="5"/>
+      </g>
+      <circle cx="282" cy="18" r="9" fill="#ff3fa4" stroke="#1b2a4a" stroke-width="3"/>
+      <circle cx="30" cy="20" r="9" fill="#0a86b0" stroke="#1b2a4a" stroke-width="3" style="mix-blend-mode:multiply"/>
+      <text x="14" y="258" font-family="Caveat,cursive" font-size="22" font-weight="700" fill="#0a86b0">4mm / US 6 (this is the good pair)</text>
+    </svg>
+  </div>
+
+  <div class="box cut c-d r4" style="grid-column:6/13">
+    <h3>Who's coming <span class="hand">(write yourself in)</span></h3>
+    <form class="rsvp" id="rsvp" autocomplete="off">
+      <label class="vh" for="nm">Your first name</label>
+      <input type="text" id="nm" maxlength="24" placeholder="first name, nickname, ravelry handle...">
+      <button class="btn" type="submit">I'll be there</button>
+      <button class="btn alt" type="button" id="unrsvp">Cross me off</button>
+    </form>
+    <p class="small" id="rsvpmsg" aria-live="polite">Names go on the sign-in sheet so Maureen knows how many chairs.</p>
+    <ul class="names" id="names" aria-label="People coming"></ul>
+  </div>
+ </div>
+</section>
+
+<!-- SPREAD 2 -->
+<section class="spread" id="s-ads" role="tabpanel" aria-labelledby="t-ads" hidden>
+  <h2 class="big ov" data-t="Swaps &amp; Free Stuff" style="margin-bottom:6px">Swaps &amp; Free Stuff</h2>
+  <p class="legend"><b>Reading the ads:</b> SFH smoke-free home. DL dye lot. BNIB brand new in bag. ONO or nearest offer (in yarn). SWAP-ONLY means no money, you know who you are. Circle what you want and it goes on your swap list. Nobody gets held, first to the pub wins.</p>
+  <div class="chips" id="chips" role="group" aria-label="Filter by tag"></div>
+  <div class="cls-layout">
+    <ul class="ads" id="ads"></ul>
+    <aside class="box cut swaplist r2" aria-labelledby="slh">
+      <span class="tape"></span>
+      <h3 id="slh">Your swap list</h3>
+      <p class="small" id="slempty">Nothing circled yet. Pen is hovering.</p>
+      <ol id="sl"></ol>
+      <button class="btn alt" id="slclear" type="button" style="padding:4px 10px;font-size:13px">Rub it all out</button>
+      <p class="hand" id="slnote" style="margin-top:10px"></p>
+    </aside>
+  </div>
+</section>
+
+<!-- SPREAD 3 -->
+<section class="spread" id="s-back" role="tabpanel" aria-labelledby="t-back" hidden>
+ <div class="collage">
+  <div class="box rough c-a r1" style="background:transparent">
+    <span class="tape b"></span>
+    <h2 class="big ov" data-t="Stash confessions">Stash confessions</h2>
+    <div class="conf"><blockquote>I have forty-one skeins of fingering weight. I knit one sock a year. I have counted this and I do not want to talk about it.</blockquote><cite>Priya, since 2019</cite></div>
+    <div class="conf"><blockquote>Bought three 100g cakes of a gradient called "Puddle at Dusk" for a cardigan I designed in the bath. The cardigan needs 700m. I have 840m, divided by feelings.</blockquote><cite>Tomasz</cite></div>
+    <div class="conf"><blockquote>I swapped my mum's old 3.5mm steel needles for a bag of mystery cones and the cones turned out to be carpet wool. I am knitting a rug. It is going fine.</blockquote><cite>Bernadette</cite></div>
+    <div class="conf" style="margin:0"><blockquote>Gauge swatches: I make them, I measure them, I ignore them.</blockquote><cite>Callum, age 67, no regrets</cite></div>
+  </div>
+
+  <div class="box cut c-b r3">
+    <span class="tape"></span>
+    <h3>Ladder of the month</h3>
+    <p class="small"><b>The mistake:</b> a dropped stitch three rows below, on the plain stockinette back of a DK jumper. We have all been here.</p>
+    <svg viewBox="0 0 260 150" role="img" aria-label="Diagram of a dropped stitch ladder with a crochet hook" style="width:100%;height:auto;overflow:visible">
+      <g fill="none" stroke-linecap="round" filter="url(#rough)">
+        <g stroke="#0a86b0" stroke-width="5" style="mix-blend-mode:multiply">
+          <path d="M30 10 C20 40 40 50 30 70"/><path d="M80 10 C70 40 90 50 80 70"/><path d="M180 10 C170 40 190 50 180 70"/><path d="M230 10 C220 40 240 50 230 70"/>
+          <path d="M30 70 C20 100 40 110 30 140"/><path d="M80 70 C70 100 90 110 80 140"/><path d="M180 70 C170 100 190 110 180 140"/><path d="M230 70 C220 100 240 110 230 140"/>
+        </g>
+        <g stroke="#ff3fa4" stroke-width="5" style="mix-blend-mode:multiply">
+          <path d="M130 10 C122 30 138 40 130 70"/><path d="M130 70 C122 90 138 100 130 140" stroke-dasharray="1 12"/>
+          <path d="M80 100 C100 94 120 106 130 100 C150 94 160 106 180 100"/>
+          <path d="M80 85 C100 80 120 90 130 85 C150 80 160 90 180 85"/>
+        </g>
+        <path d="M130 140 L130 175 M130 140 q8 -12 -2 -20" stroke="#1b2a4a" stroke-width="4"/>
+      </g>
+      <text x="140" y="46" font-family="Caveat,cursive" font-size="22" font-weight="700" fill="#1b2a4a">escaped!</text>
+    </svg>
+    <ol class="steps small">
+      <li>Stop. Put the knitting down. Step away from the cardigan.</li>
+      <li>Catch the live stitch on a spare needle or a safety pin. Do not breathe on it.</li>
+      <li>Find the loose strand ladder running up. Count the rungs. That's how many rows you get to climb.</li>
+      <li>With a crochet hook, pull each rung through the loop, front to back, like a very small lift.</li>
+      <li>Slip it back on the left needle, untwisted. Pretend it never happened. Tell everyone it happened.</li>
+    </ol>
+  </div>
+
+  <div class="box c-e r4 wanted" style="border-style:double;border-width:6px;background:var(--paper)">
+    <h2 class="big ov" data-t="Wanted" style="font-size:clamp(34px,6vw,70px)">Wanted</h2>
+    <p class="small">Written in on the clipboard by the door. We just type them up and add typos.</p>
+    <div style="columns:2 300px;column-gap:28px">
+    <ul>
+      <li><span class="w">ISO</span> any 2.25mm (US 1) dpns, bamboo or metal, set of five. Mine went through a washing machine. -- Joss</li>
+      <li><span class="w">Seeking</span> 200m of undyed fingering, any breed, for dyeing in a bucket. Will trade a bucket. -- Hana</li>
+      <li><span class="w">Wtd</span> a human to explain German short rows to me, slowly, with biscuits. -- Gareth</li>
+      <li><span class="w">Looking for</span> pattern for a cardigan that fits like the one in the 1987 catalogue photo (yes, that one). -- Edie</li>
+      <li><span class="w">Urgent</span> one (1) skein of "Heather Fell" Bobbin Hollow Aran, DL 22B, to finish a hat that is already on someone's head. -- Rosalind</li>
+      <li><span class="w">ISO</span> row counter that clicks. Tired of tally marks on my hand. -- Dev</li>
+    </ul></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer class="foot">
+  <p><b>Ladder Stitch</b> is made by the people who show up. Typed on a laptop with a cracked trackpad, photocopied at Eastgate Library (10p a side, bring change). Next issue: whenever Maureen finds the stapler. Send corrections, recipes and yarn-related apologies to the clipboard by the door.</p>
+  <p class="small">Two inks. If it looks wrong, it's the copier. If it looks right, it's also the copier.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var $=function(s,c){return (c||document).querySelector(s)};
+
+  /* tabs */
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(tab){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;
+      var p=document.getElementById(t.getAttribute('aria-controls'));
+      p.hidden=!on;p.classList.toggle('on',on);
+    });
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t)});
+    t.addEventListener('keydown',function(e){
+      var j=-1;
+      if(e.key==='ArrowRight')j=(i+1)%tabs.length;
+      if(e.key==='ArrowLeft')j=(i+tabs.length-1)%tabs.length;
+      if(j>=0){e.preventDefault();tabs[j].focus();show(tabs[j])}
+    });
+  });
+  $('#s-meet').hidden=false;
+
+  /* re-ink */
+  var rb=$('#reink');
+  function setReg(x,y){root.style.setProperty('--mx',x+'px');root.style.setProperty('--my',y+'px')}
+  function rnd(a,b){return Math.round((a+Math.random()*(b-a))*10)/10}
+  rb.addEventListener('click',function(){
+    var x=rnd(-7,7),y=rnd(-6,6);
+    if(Math.abs(x)<2)x=x<0?-3:3;
+    setReg(x,y);
+    rb.setAttribute('aria-pressed','true');
+    document.querySelectorAll('.r1,.r2,.r3,.r4,.ad').forEach(function(el){
+      if(matchMedia('(min-width:701px)').matches) el.style.transform='rotate('+rnd(-1.8,1.8)+'deg)';
+    });
+    setTimeout(function(){rb.setAttribute('aria-pressed','false')},700);
+  });
+
+  /* bring list */
+  document.querySelectorAll('#bring li').forEach(function(li){
+    li.tabIndex=0;li.setAttribute('role','checkbox');li.setAttribute('aria-checked','false');li.style.cursor='pointer';
+    function t(){var on=li.classList.toggle('x');li.setAttribute('aria-checked',on)}
+    li.addEventListener('click',t);
+    li.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();t()}});
+  });
+
+  /* rsvp */
+  var base=['Maureen','Dennis','Priya','Tomasz','Bernadette','Callum','Joss','Hana','Gareth','Edie'];
+  var me=store.get('ls_me')||'';
+  var names=$('#names'),msg=$('#rsvpmsg');
+  function drawNames(){
+    names.innerHTML='';
+    base.concat(me?[me]:[]).forEach(function(n){
+      var li=document.createElement('li');li.textContent=n;
+      if(n===me&&me)li.className='me';
+      names.appendChild(li);
+    });
+  }
+  drawNames();
+  $('#rsvp').addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=$('#nm').value.replace(/\s+/g,' ').trim();
+    if(!v){msg.textContent='The pen needs a name to write with.';return}
+    me=v;store.set('ls_me',me);drawNames();$('#nm').value='';
+    msg.textContent='Written in, '+me+'. We have saved you the chair that wobbles.';
+  });
+  $('#unrsvp').addEventListener('click',function(){
+    if(!me){msg.textContent='You are not on the list. That is how I like my admin.';return}
+    me='';store.set('ls_me','');drawNames();msg.textContent='Crossed off. No hard feelings, the biscuits will keep.';
+  });
+
+  /* classifieds */
+  var ADS=[
+   {id:1,tag:'yarn',t:'4 x 50g Drops Alpaca, colour "heather", DL 4417, SFH. Swap for any sock yarn, fingering, 75/25 wool/nylon ideal.',by:'Priya'},
+   {id:2,tag:'yarn',t:'2 skeins Gull Rock "Slate Tide" DK, 100g/225m, merino/silk 80/20. Hand-dyed, one skein slightly felted on the label side. Swap for aran, any grey.',by:'Callum'},
+   {id:3,tag:'needles',t:'Set of 5 dpns 3.25mm (US 3), bamboo, one has a chewed tip (dog, not me). Free to good home or swap for a cable needle that stays put.',by:'Edie'},
+   {id:4,tag:'needles',t:'Interchangeable tips 4.5mm (US 7) and 5mm (US 8), metal, BNIB, wrong cable length for me. Swap for 3.75mm (US 5) tips, same system.',by:'Gareth'},
+   {id:5,tag:'patterns',t:'Printed pattern, "Weekend Waffle Cowl", knit in worsted, size 5mm. Sample knit in my grandma\'s pea green. I will bring the sample. Swap for a hat pattern.',by:'Hana'},
+   {id:6,tag:'free',t:'Bag of mixed acrylic aran, approx 12 part balls, all colours that were fashionable. Free to good home, ideal for donation blankets. Takes up half a bag.',by:'Joss'},
+   {id:7,tag:'yarn',t:'6 x 25g Wrenfield Mohair-Silk lace, colour "crab apple", pink. Held double with fingering it\'s lovely. Swap for 200m+ any non-pink DK.',by:'Rosalind'},
+   {id:8,tag:'tools',t:'Wooden swift and ball winder, clamps to table, squeaks. Works. Swap for a blocking mat set or a very good bottle of squash.',by:'Dennis'},
+   {id:9,tag:'yarn',t:'3 x 100g Ptarmigan &amp; Pine Chunky, undyed Jacob\'s, smells of sheep (good sheep). SFH, 6mm (US 10). Swap for worsted, any heathered green.',by:'Bernadette'},
+   {id:10,tag:'tools',t:'Stitch markers, ~40, mixed. Some are actually earrings. Row counter (clicks), pair blunt scissors, 2 darning needles. Free to good home, one lot only.',by:'Maureen'},
+   {id:11,tag:'patterns',t:'Photocopied 1980s pattern booklet, "Fair Isle for Beginners (and the Brave)". Spine gone. Swap for a toe-up sock pattern or a decent biscuit.',by:'Tomasz'},
+   {id:12,tag:'needles',t:'Circular 80cm 4mm (US 6) nickel, 2 needles, one bent slightly. Free to good home, or swap for 60cm 3.5mm (US 4). Flexible about the bend.',by:'Dev'},
+   {id:13,tag:'free',t:'Oddments of fingering sock yarn, ~30 mini balls, 3 to 20g each. Free to good home for scrappy blankets, only if you promise to send a photo.',by:'Priya'}
+  ];
+  var tags=['all','yarn','needles','patterns','tools','free'];
+  var labels={all:'Everything',yarn:'Yarn',needles:'Needles',patterns:'Patterns',tools:'Tools',free:'Free to good home'};
+  var circled={};
+  try{circled=JSON.parse(store.get('ls_c')||'{}')||{}}catch(e){circled={}}
+  var cur='all',list=$('#ads');
+
+  function penSvg(id){
+    var a=(id*37%9)-4,b=(id*53%7)-3;
+    return '<svg class="pen" viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true">'+
+     '<path pathLength="1" d="M'+(30+a)+' 14 C 90 -6, 190 4, 194 46 C 198 92, 110 100, 50 90 C -2 80, -2 22, '+(92+b*3)+' 6 C 140 -2, 175 12, 180 20"/>'+
+     '<path class="p2" pathLength="1" d="M20 30 C 40 6, 150 -4, 188 38 C 200 80, 100 98, 36 84"/></svg>';
+  }
+  function render(){
+    list.innerHTML='';
+    var shown=ADS.filter(function(a){return cur==='all'||a.tag===cur});
+    if(!shown.length){list.innerHTML='<li class="none">Nothing under that heading. Try another.</li>'}
+    shown.forEach(function(a){
+      var li=document.createElement('li');
+      li.className='ad'+(circled[a.id]?' circled':'');li.dataset.id=a.id;li.dataset.tag=a.tag;
+      li.innerHTML='<span class="tg">'+labels[a.tag]+'</span><p class="tx">'+a.t+'</p><div class="by"><span>-- '+a.by+'</span><button type="button" class="pick" aria-pressed="'+(!!circled[a.id])+'">'+(circled[a.id]?'Circled':'Circle it')+'</button></div>'+penSvg(a.id);
+      list.appendChild(li);
+    });
+    $('#chips').querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.tag===cur)});
+  }
+  var chips=$('#chips');
+  tags.forEach(function(t){
+    var b=document.createElement('button');b.type='button';b.className='chip';b.dataset.tag=t;b.textContent=labels[t];
+    b.addEventListener('click',function(){cur=t;render()});chips.appendChild(b);
+  });
+  function drawSL(){
+    var ol=$('#sl');ol.innerHTML='';var n=0;
+    ADS.forEach(function(a){
+      if(!circled[a.id])return;n++;
+      var li=document.createElement('li');
+      li.innerHTML=a.t.split(/[.,]/)[0].slice(0,46)+' <em>('+a.by+')</em><button type="button" data-id="'+a.id+'" aria-label="Remove from swap list">drop</button>';
+      ol.appendChild(li);
+    });
+    $('#slempty').style.display=n?'none':'';
+    $('#cnt-tab').textContent=n?'('+n+' circled)':'';
+    $('#slnote').textContent=n>=3?'That is a lot of yarn for one carrier bag, love.':(n?'Bring something to trade.':'');
+  }
+  function toggle(id){
+    if(circled[id])delete circled[id];else circled[id]=1;
+    store.set('ls_c',JSON.stringify(circled));
+    var li=list.querySelector('[data-id="'+id+'"]');
+    if(li){
+      li.classList.toggle('circled',!!circled[id]);
+      var b=li.querySelector('.pick');b.textContent=circled[id]?'Circled':'Circle it';b.setAttribute('aria-pressed',!!circled[id]);
+      if(circled[id]){var ps=li.querySelectorAll('path');ps.forEach(function(p){p.style.animation='none';void p.getBoundingClientRect();p.style.animation=''})}
+    }
+    drawSL();
+  }
+  list.addEventListener('click',function(e){
+    var li=e.target.closest('.ad');if(!li)return;toggle(+li.dataset.id);
+  });
+  $('#sl').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(b)toggle(+b.dataset.id);
+  });
+  $('#slclear').addEventListener('click',function(){circled={};store.set('ls_c','{}');render();drawSL()});
+  render();drawSL();
+})();
+</script>
+</body>
+</html>
