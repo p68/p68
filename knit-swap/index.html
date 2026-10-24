@@ -47,6 +47,11 @@
     display: flex; align-items: baseline; gap: 6px;
   }
   nav button small { font-size: 11px; opacity: .8; }
+  nav .round {
+    align-self: center; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); padding: 0 4px 0 10px;
+  }
+  nav .round:first-child { padding-left: 0; }
   nav button:hover { color: var(--ink); border-color: var(--line); }
   nav button[aria-selected="true"] { color: var(--ink); border-color: var(--accent); background: var(--bg); }
   nav button:focus-visible, .open:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -83,7 +88,15 @@
     { id: "wall", label: "Colour Wall", tag: "chart grid", src: "concepts/colour-wall.html",
       note: "Browse yarn by hue, then try two or three skeins together in a colourwork motif before you swap." },
     { id: "zine", label: "Ladder Stitch", tag: "riso zine", src: "concepts/swap-zine.html",
-      note: "A two-ink photocopied zine for the monthly swap meet, with classifieds you circle and an RSVP list." }
+      note: "A two-ink photocopied zine for the monthly swap meet, with classifieds you circle and an RSVP list." },
+    { id: "bin", round: 2, label: "Baa-gain Bin", tag: "2005 hobby site", src: "concepts/baa-gain-bin.html",
+      note: "A swap site one knitter built herself years ago and still keeps up, with a hit counter, guestbook and a hand-drawn map of local sellers." },
+    { id: "fair", round: 2, label: "Fleece & Fair", tag: "county show", src: "concepts/fleece-and-fair.html",
+      note: "A farm-show craft stall with Mabel the sheep, price tags on gingham, and a countryside map of sellers near you." },
+    { id: "guild", round: 2, label: "Flock Together", tag: "guild newsletter", src: "concepts/flock-together.html",
+      note: "A knitting guild's newsletter, made in a desktop-publishing program, with classifieds, a pattern library and a printed-leaflet district map." },
+    { id: "lost", round: 2, label: "Lost Sheep", tag: "knitted & sewn", src: "concepts/lost-sheep.html",
+      note: "Everything looks knitted and sewn. Stray skeins look for a new flock, and the map of sellers is knitted like a picture blanket." }
   ];
   const tabs = document.getElementById("tabs");
   const frame = document.getElementById("frame");
@@ -92,7 +105,7 @@
 
   function show(id) {
     const c = concepts.find(x => x.id === id) || concepts[0];
-    for (const b of tabs.children) b.setAttribute("aria-selected", b.dataset.id === c.id ? "true" : "false");
+    for (const b of tabs.querySelectorAll("button")) b.setAttribute("aria-selected", b.dataset.id === c.id ? "true" : "false");
     if (frame.getAttribute("src") !== c.src) frame.setAttribute("src", c.src);
     frame.title = c.label + " concept";
     open.href = c.src;
@@ -100,7 +113,13 @@
     try { localStorage.setItem("knitswap-tab", c.id); } catch (e) {}
   }
 
-  concepts.forEach(c => {
+  concepts.forEach((c, i) => {
+    if (i === 0 || c.round !== concepts[i - 1].round) {
+      const g = document.createElement("span");
+      g.className = "round";
+      g.textContent = c.round === 2 ? "Classic" : "Round 1";
+      tabs.appendChild(g);
+    }
     const b = document.createElement("button");
     b.type = "button"; b.role = "tab"; b.dataset.id = c.id;
     b.innerHTML = c.label + " <small></small>";
@@ -110,7 +129,7 @@
   });
   tabs.addEventListener("keydown", e => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-    const btns = [...tabs.children];
+    const btns = [...tabs.querySelectorAll("button")];
     const i = btns.indexOf(document.activeElement);
     if (i < 0) return;
     const next = btns[(i + (e.key === "ArrowRight" ? 1 : btns.length - 1)) % btns.length];
