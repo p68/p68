@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fleece &amp; Fair</title>
+<meta name="description" content="Fleece &amp; Fair: a county-show yarn swap for knitters. Swap and sell leftover yarn, needles, patterns and finished samples.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Kalam:wght@400;700&family=Rye&family=Vollkorn:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#9e2a22; --red2:#c8473d; --hay:#e6b53c; --hay2:#f4dc8c; --green:#5f8f3e; --green2:#a9cf7a;
+  --sky:#8cc3e0; --sky2:#d6ecf6; --wool:#fffdf6; --brown:#3b2614; --brown2:#6e4524; --kraft:#dcbb85; --paper:#f8efd4;
+  --sign:"Rye","Rockwell","Georgia",serif; --slab:"Bevan","Rockwell","Georgia",serif;
+  --body:"Vollkorn","Gentium Book Plus","Georgia",serif; --hand:"Kalam","Gochi Hand","Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;background:#b5d889}
+body{margin:0;background:#b9dff0;background:linear-gradient(#b9dff0 0,#d6ecf6 260px,#c9dc93 260px,#b5d889 100%) fixed;color:var(--brown);
+  font-family:var(--body);font-size:18px;line-height:1.5;overflow-x:clip}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+a{color:var(--red)}
+h1,h2,h3{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #0b3d7a;outline-offset:3px;box-shadow:0 0 0 6px #fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* wood + painted lettering */
+.wood{background:
+  radial-gradient(ellipse 14px 7px at 18% 42%,#4d2e15 0 60%,transparent 70%),
+  radial-gradient(ellipse 12px 6px at 78% 68%,#4d2e15 0 60%,transparent 70%),
+  repeating-linear-gradient(177deg,rgba(0,0,0,.12) 0 1px,transparent 1px 5px,rgba(255,225,170,.10) 5px 6px,transparent 6px 12px),
+  repeating-linear-gradient(90deg,transparent 0 37px,rgba(0,0,0,.14) 37px 38px,transparent 38px 91px),
+  linear-gradient(180deg,#8d5c31,#6e4524 55%,#7d5129);
+  border:3px solid var(--brown);border-radius:7px;box-shadow:0 5px 0 rgba(59,38,20,.35),inset 0 2px 0 rgba(255,225,170,.25)}
+.paint{font-family:var(--sign);color:#fdf3d5;text-shadow:2px 2px 0 var(--brown),-1px -1px 0 rgba(59,38,20,.6);letter-spacing:.02em}
+
+/* bunting + header */
+.bunting{display:block;width:100%;height:58px}
+header{padding-bottom:6px}
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;max-width:640px;margin:14px auto 0;padding:14px 14px 12px;position:relative;transform:rotate(-1.2deg)}
+.logo::before,.logo::after{content:"";position:absolute;top:-22px;width:4px;height:22px;background:repeating-linear-gradient(#cfc7b5 0 4px,#6d675b 4px 6px)}
+.logo::before{left:18%}.logo::after{right:18%}
+.logo .mab{width:96px;height:auto;flex:none;transform:rotate(2deg)}
+.logo .sk{width:70px;height:auto;flex:none;transform:rotate(9deg)}
+.logo .txt{text-align:center;min-width:0}
+.logo h1{font-size:clamp(30px,8.5vw,64px);line-height:1}
+.logo h1 .amp{color:var(--hay);font-size:.8em}
+.logo p{margin:6px 0 0;font-family:var(--hand);font-size:clamp(15px,3.6vw,20px);color:#fdf3d5;line-height:1.2}
+
+/* hanging-sign tabs */
+nav{margin:6px 0 0}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;padding:0 0 6px;margin:0;list-style:none}
+.tab{position:relative;margin-top:30px;padding:10px 14px 9px;cursor:pointer;font-family:var(--slab);font-size:16px;color:#fdf3d5;text-shadow:1px 1px 0 var(--brown);
+  transform-origin:50% -26px;transform:rotate(var(--tr,0deg));transition:transform .25s,margin .25s}
+.tab::before{content:"";position:absolute;top:-26px;left:14%;width:72%;height:26px;background:#eadfbe;
+  clip-path:polygon(50% 0,100% 100%,96% 100%,50% 9%,4% 100%,0 100%)}
+.tab::after{content:"";position:absolute;top:-32px;left:calc(50% - 5px);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ddd,#555);border:1px solid var(--brown)}
+.tabs li:nth-child(1) .tab{--tr:-1.6deg}.tabs li:nth-child(2) .tab{--tr:1.2deg}.tabs li:nth-child(3) .tab{--tr:-.8deg}
+.tabs li:nth-child(4) .tab{--tr:1.8deg}.tabs li:nth-child(5) .tab{--tr:-1.2deg}
+.tab:hover{transform:rotate(calc(var(--tr) * -1.8))}
+.tab[aria-selected="true"]{background:
+  repeating-linear-gradient(177deg,rgba(0,0,0,.10) 0 1px,transparent 1px 6px),linear-gradient(#b8382e,var(--red));
+  color:#fff;margin-top:36px;padding-bottom:13px;transform:rotate(0)}
+.tab[aria-selected="true"]::before{top:-36px;height:36px}
+.tab[aria-selected="true"]::after{top:-42px}
+.tab .sub{display:block;font-family:var(--hand);font-size:12px;text-shadow:none;color:var(--hay2);line-height:1}
+
+/* panels */
+main{padding:10px 0 30px}
+.panel{animation:rise .35s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sign{display:inline-block;padding:8px 24px 10px;margin:12px 0 14px;font-size:clamp(26px,6.5vw,44px);line-height:1.1;transform:rotate(-1.4deg)}
+.sign.r{transform:rotate(1deg)}
+.lead{max-width:60ch;margin:0 0 14px;font-size:19px}
+.ging{background-color:#fffdf6;background-image:linear-gradient(90deg,rgba(158,42,34,.5) 50%,transparent 50%),linear-gradient(rgba(158,42,34,.5) 50%,transparent 50%);
+  background-size:44px 44px;border:4px solid var(--red);border-radius:6px;box-shadow:0 5px 0 rgba(59,38,20,.3),inset 0 0 0 5px #fffdf6}
+.paper{background:var(--paper);border:3px solid var(--brown);border-radius:6px;box-shadow:0 4px 0 rgba(59,38,20,.3)}
+
+/* stall */
+.stallgrid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+.stallbox{padding:34px 18px 22px;position:relative;margin-top:80px}
+.fence{position:absolute;left:0;right:0;top:-24px;height:50px;pointer-events:none}
+.fence .rail{position:absolute;left:-4px;right:-4px;height:9px;background:linear-gradient(#a9764a,#7d5129);border:2px solid var(--brown);border-radius:3px}
+.fence .r1{top:12px}.fence .r2{top:30px}
+.fence .post{position:absolute;top:0;width:12px;height:54px;background:linear-gradient(90deg,#8d5c31,#6e4524);border:2px solid var(--brown);border-radius:3px 3px 0 0}
+.peek{position:absolute;top:-62px;right:7%;width:128px;height:auto;z-index:1}
+.peek.big{width:150px}
+.tags{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px 18px;list-style:none;margin:0;padding:0}
+.board{background:#2f4a35;color:#f4efe0;font-family:var(--hand);border:7px solid #8d5c31;border-radius:4px;padding:12px 16px;font-size:20px;line-height:1.3;transform:rotate(1.2deg);box-shadow:0 5px 0 rgba(59,38,20,.35)}
+.board b{color:var(--hay2);font-size:24px;display:block;line-height:1.1}
+.board .hl{text-decoration:underline wavy var(--hay);text-underline-offset:4px}
+.prizes{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.prize{display:flex;align-items:center;gap:12px;padding:10px 12px;transform:rotate(var(--pr,0deg))}
+.prize p{margin:0;line-height:1.25}.prize b{font-family:var(--slab);font-weight:400;display:block;font-size:19px}
+.prize small{font-family:var(--hand);font-size:16px}
+.ros{position:relative;width:84px;height:108px;flex:none}
+.ros::before,.ros::after{content:"";position:absolute;bottom:0;width:26px;height:46px;background:var(--a);border:2px solid var(--brown);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)}
+.ros::before{left:14px;transform:rotate(9deg)}.ros::after{right:14px;transform:rotate(-9deg)}
+.ros i{position:absolute;left:0;top:0;width:84px;height:84px;border-radius:50%;z-index:1;display:grid;place-items:center;font-style:normal;
+  background:repeating-conic-gradient(var(--a) 0 11deg,var(--b) 11deg 22deg);filter:drop-shadow(0 2px 0 rgba(59,38,20,.4))}
+.ros i::before{content:"";position:absolute;inset:13px;border-radius:50%;background:var(--a);border:3px solid var(--b)}
+.ros b{position:relative;font-family:var(--sign);font-weight:400;color:#fff;font-size:20px;text-shadow:1px 1px 0 var(--brown);text-align:center;line-height:1}
+.ros.red{--a:#a8231b;--b:#d95a4f}.ros.blue{--a:#2b62a8;--b:#6ea3dc}.ros.green{--a:#3f7a2e;--b:#86bf6a}.ros.hay{--a:#c99414;--b:#f1d068}
+.bigsheep{display:block;width:min(100%,300px);height:auto;margin:6px auto 0}
+
+/* tags */
+.tagw{position:relative;margin-top:26px;transform-origin:50% 16px;transform:rotate(var(--r,0deg));filter:drop-shadow(0 4px 2px rgba(59,38,20,.38));transition:transform .3s}
+.tagw:hover,.tagw:focus-within{transform:rotate(calc(var(--r,0deg) * -.4))}
+.tagw .str{position:absolute;top:4px;left:50%;margin-left:-30px;width:60px;height:56px;z-index:2;pointer-events:none}
+.tag{background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 40%),repeating-linear-gradient(8deg,rgba(110,69,36,.07) 0 2px,transparent 2px 7px),var(--kraft);
+  clip-path:polygon(0 16px,16px 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);padding:46px 14px 12px;min-height:260px;display:flex;flex-direction:column;gap:3px}
+.tag .cat{font-family:var(--hand);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);font-weight:700;transform:rotate(-2deg);align-self:flex-start;border:2px solid var(--red);padding:0 7px;border-radius:3px;line-height:1.35}
+.tag h3{font-size:19px;line-height:1.2;font-weight:800;margin-top:4px}
+.tag .spec{font-size:15.5px;line-height:1.35;margin:0}
+.tag .lot{font-family:var(--hand);font-size:15px;line-height:1.2;color:var(--brown2)}
+.tag .pr{font-family:var(--hand);font-weight:700;font-size:38px;line-height:1;color:#8f1f18;margin-top:auto;padding-top:6px;transform:rotate(-2deg);display:inline-block}
+.tag .pr.sw{font-size:30px;letter-spacing:.06em}
+.tag .or{font-family:var(--hand);font-size:17px;margin-left:8px;color:var(--brown)}
+.tag .by{font-size:14.5px;line-height:1.3;margin:2px 0 0;border-top:2px dashed rgba(59,38,20,.4);padding-top:5px}
+.tag .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.mini{font-family:var(--hand);font-size:15px;font-weight:700;background:var(--wool);border:2px solid var(--brown);border-radius:4px;padding:2px 9px;cursor:pointer;color:var(--brown);min-height:32px}
+.mini:hover{background:var(--hay2)}
+.note{font-family:var(--hand);font-size:15px;color:#27501a;margin:2px 0 0;font-weight:700}
+.ribbon{position:absolute;top:34px;right:-8px;z-index:3;background:var(--green);color:#fff;font-family:var(--hand);font-weight:700;font-size:14px;padding:1px 10px;transform:rotate(5deg);border:2px solid var(--brown)}
+.tagw.new .tag{outline:0}
+
+/* swap table */
+.filters{padding:14px 16px 16px;display:grid;gap:12px;margin-bottom:18px;grid-template-columns:1fr}
+.filters fieldset{border:0;margin:0;padding:0;min-width:0}
+.filters legend,.filters label.lbl{font-family:var(--slab);font-size:15px;color:var(--brown2);padding:0;display:block;margin-bottom:5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--hand);font-weight:700;font-size:18px;background:var(--wool);border:2px solid var(--brown);border-radius:20px;padding:3px 14px;cursor:pointer;min-height:38px;transform:rotate(var(--cr,0deg))}
+.chip:nth-child(odd){--cr:-1deg}.chip:nth-child(even){--cr:.8deg}
+.chip[aria-pressed="true"]{background:var(--red);color:#fff;border-color:var(--brown)}
+select,input[type=text],input[type=number],textarea{width:100%;background:#fff;border:2px solid var(--brown);border-radius:5px;padding:8px 10px;font-size:17px;min-height:44px}
+textarea{min-height:90px;resize:vertical}
+.selrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.countline{font-family:var(--hand);font-size:20px;margin:0 0 6px;font-weight:700;background:rgba(255,253,246,.8);display:inline-block;padding:0 10px;border-radius:4px}
+.flash{background:var(--green);color:#fff;border:3px solid var(--brown);padding:8px 14px;font-family:var(--hand);font-size:19px;font-weight:700;margin:0 0 14px;border-radius:5px;transform:rotate(-.5deg)}
+.pegboard{padding:26px 16px 22px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 60px),var(--hay2);border:4px solid var(--brown2);border-radius:6px}
+.empty{font-family:var(--hand);font-size:22px;text-align:center;padding:20px}
+
+/* map */
+.where{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:12px 16px;margin-bottom:16px}
+.where label{font-family:var(--slab);font-size:20px;color:var(--red)}
+.where select{width:auto;min-width:220px;flex:1 1 220px;max-width:340px;font-family:var(--hand);font-weight:700;font-size:19px}
+.where .wn{font-family:var(--hand);font-size:18px;flex:1 1 200px}
+.mapgrid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+.mapbox{border:5px solid var(--brown2);border-radius:8px;background:#b5d889;box-shadow:0 6px 0 rgba(59,38,20,.35);overflow:hidden;min-width:0}
+#map{display:block;width:100%;height:auto}
+.mk{cursor:pointer;outline:none}
+.mk .mi{transition:transform .2s;transform-box:fill-box;transform-origin:center}
+.mk:hover .mi,.mk.sel .mi{transform:scale(1.28)}
+.mk .fr{display:none;fill:rgba(255,255,255,.35);stroke:#0b3d7a;stroke-width:4;stroke-dasharray:7 5}
+.mk:focus-visible .fr{display:inline}
+.mk.sel .fr{display:inline;stroke:var(--red)}
+#you{transition:transform .8s cubic-bezier(.3,.7,.3,1.1)}
+.bob{animation:bob 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes bob{50%{transform:translateY(-4px) rotate(-2deg)}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;padding:8px 12px;background:var(--paper);border-top:4px solid var(--brown2);font-family:var(--hand);font-size:16px;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.detail{padding:12px 14px;background:#fff8e2;border-top:4px solid var(--brown2);min-height:104px}
+.detail h3{font-family:var(--slab);font-weight:400;font-size:21px;line-height:1.2}
+.detail p{margin:3px 0}
+.detail .dd{font-family:var(--hand);font-size:20px;font-weight:700;color:var(--red)}
+.slist{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.slist li{counter-increment:s}
+.row{display:grid;grid-template-columns:38px 1fr auto;gap:2px 10px;align-items:start;width:100%;text-align:left;cursor:pointer;background:var(--wool);border:3px solid var(--brown);border-radius:6px;padding:9px 12px;box-shadow:0 3px 0 rgba(59,38,20,.3)}
+.row::before{content:counter(s);grid-row:1/3;font-family:var(--sign);font-size:20px;width:34px;height:34px;display:grid;place-items:center;background:var(--hay);border:2px solid var(--brown);border-radius:50%;margin-top:2px}
+.row b{font-family:var(--slab);font-weight:400;font-size:18px;line-height:1.2}
+.row .mi2{font-family:var(--hand);font-weight:700;font-size:20px;color:var(--red);white-space:nowrap}
+.row small{grid-column:2/4;font-size:15.5px;line-height:1.3}
+.row[aria-pressed="true"]{background:var(--hay2);border-color:var(--red);transform:rotate(-.5deg)}
+.row:hover{background:#fff4cf}
+
+/* process */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px 18px;counter-reset:st}
+.step{position:relative;padding:60px 16px 16px;transform:rotate(var(--sr,0deg));counter-increment:st}
+.step:nth-child(odd){--sr:-.9deg}.step:nth-child(even){--sr:1.1deg}
+.step::before{content:counter(st);position:absolute;top:-16px;left:14px;width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;border:3px solid var(--brown);font-family:var(--sign);font-size:24px;display:grid;place-items:center;z-index:1}
+.step svg{position:absolute;top:-18px;right:10px;width:88px;height:88px}
+.step h3{font-family:var(--slab);font-weight:400;font-size:24px;color:var(--red)}
+.step p{margin:4px 0 0;font-size:17px;line-height:1.4}
+.step .tip{font-family:var(--hand);font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--green);text-transform:uppercase;display:block}
+.stepnote{margin-top:22px;padding:14px 18px;font-family:var(--hand);font-size:20px}
+
+/* form */
+.formgrid{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+form.sell{padding:18px 18px 20px;display:grid;gap:14px}
+.fld label,.fld legend{display:block;font-family:var(--slab);font-size:16px;color:var(--brown2);margin-bottom:4px;padding:0}
+.fld fieldset{border:0;margin:0;padding:0}
+.fld .hint{font-size:14px;color:var(--brown2);font-style:italic;margin:2px 0 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{font-family:var(--hand);font-weight:700;font-size:18px;display:inline-flex;align-items:center;gap:6px;background:var(--wool);border:2px solid var(--brown);border-radius:20px;padding:2px 14px 2px 10px;min-height:40px;cursor:pointer;margin:0;color:var(--brown)}
+.radios input{width:20px;height:20px;accent-color:var(--red);margin:0}
+.go{font-family:var(--sign);font-size:24px;background:var(--red);color:#fff;border:3px solid var(--brown);border-radius:7px;padding:10px 22px;cursor:pointer;box-shadow:0 5px 0 var(--brown);text-shadow:2px 2px 0 var(--brown);justify-self:start;transform:rotate(-1deg)}
+.go:hover{background:#b8382e}.go:active{transform:translateY(3px) rotate(-1deg);box-shadow:0 2px 0 var(--brown)}
+.holder{padding:16px 14px 6px;text-align:center}
+.holder svg{width:min(100%,260px);height:auto}
+
+footer{margin-top:20px;padding:0 0 28px}
+.foot{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:16px 18px 14px;position:relative}
+.foot svg{width:150px;height:auto;flex:none}
+.foot p{margin:0;flex:1 1 220px;font-size:16px;color:#fdf3d5;text-shadow:1px 1px 0 var(--brown)}
+.foot p b{font-family:var(--sign);font-weight:400;font-size:22px;display:block}
+.z{animation:zz 3s ease-in-out infinite}.z2{animation-delay:.8s}.z3{animation-delay:1.6s}
+@keyframes zz{0%,100%{opacity:.35;transform:translateY(2px)}50%{opacity:1;transform:translateY(-4px)}}
+
+@media (min-width:700px){
+  .filters{grid-template-columns:2fr 1fr 1fr;align-items:end}
+  .stallgrid{grid-template-columns:2.4fr 1fr}
+  .stallbox{margin-top:80px}
+  .formgrid{grid-template-columns:1.6fr 1fr}
+}
+@media (min-width:900px){
+  .mapgrid{grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr)}
+  .slist{max-height:720px;overflow:auto;padding:4px 8px 8px 2px}
+}
+@media (max-width:420px){
+  body{font-size:17px}
+  .logo .mab{width:64px}.logo .sk{width:44px}
+  .logo{gap:6px;padding:12px 8px 10px}
+  .tab{font-size:14px;padding:9px 10px 8px}
+  .tabs{gap:4px 8px}
+  .selrow,.two{grid-template-columns:1fr}
+  .peek{width:100px}.peek.big{width:112px}
+  .stallbox{padding:30px 12px 18px}
+  .step svg{width:72px;height:72px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- shared drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <g id="wool"><circle cx="38" cy="52" r="20"/><circle cx="58" cy="42" r="22"/><circle cx="80" cy="48" r="21"/><circle cx="50" cy="64" r="18"/><circle cx="72" cy="64" r="18"/><circle cx="28" cy="64" r="12"/><circle cx="90" cy="62" r="13"/></g>
+  <g id="wool2"><circle cx="26" cy="32" r="15"/><circle cx="50" cy="22" r="19"/><circle cx="74" cy="32" r="15"/><circle cx="40" cy="38" r="14"/><circle cx="62" cy="38" r="14"/></g>
+  <g id="wool3"><circle cx="36" cy="46" r="22"/><circle cx="60" cy="37" r="24"/><circle cx="86" cy="43" r="22"/><circle cx="52" cy="58" r="18"/><circle cx="76" cy="58" r="18"/></g>
+  <g id="mwool"><circle cx="14" cy="22" r="11"/><circle cx="27" cy="15" r="12"/><circle cx="40" cy="20" r="11"/><circle cx="24" cy="29" r="11"/><circle cx="37" cy="30" r="10"/></g>
+
+  <symbol id="mabel" viewBox="0 0 130 100">
+    <g fill="#2a1d12"><rect x="36" y="76" width="9" height="21" rx="4"/><rect x="51" y="78" width="9" height="19" rx="4"/><rect x="70" y="78" width="9" height="19" rx="4"/><rect x="85" y="76" width="9" height="21" rx="4"/></g>
+    <use href="#wool" fill="#3b2614" stroke="#3b2614" stroke-width="6" stroke-linejoin="round"/>
+    <use href="#wool" fill="#fffdf6"/>
+    <path d="M30 48q6-7 12 0M62 34q7-6 13 1M70 58q6-6 12 0M44 66q6-6 11 0" stroke="#d6cfba" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="96" cy="53" rx="9" ry="4" transform="rotate(25 96 53)" fill="#2a1d12"/>
+    <ellipse cx="122" cy="51" rx="9" ry="4" transform="rotate(-25 122 51)" fill="#2a1d12"/>
+    <ellipse cx="109" cy="63" rx="14" ry="17" fill="#2a1d12"/>
+    <circle cx="109" cy="45" r="9" fill="#fffdf6" stroke="#3b2614" stroke-width="2.5"/>
+    <circle cx="103" cy="59" r="4.4" fill="#fff"/><circle cx="115" cy="59" r="4.4" fill="#fff"/>
+    <circle cx="104" cy="59.5" r="2" fill="#111"/><circle cx="114" cy="59.5" r="2" fill="#111"/>
+    <ellipse cx="99.5" cy="67" rx="3.2" ry="2" fill="#e48a85"/><ellipse cx="118.5" cy="67" rx="3.2" ry="2" fill="#e48a85"/>
+    <path d="M104 71q5 5 10 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="peek" viewBox="0 0 100 66">
+    <use href="#wool2" fill="#3b2614" stroke="#3b2614" stroke-width="6" stroke-linejoin="round"/>
+    <use href="#wool2" fill="#fffdf6"/>
+    <ellipse cx="27" cy="41" rx="11" ry="4.5" transform="rotate(-18 27 41)" fill="#2a1d12"/>
+    <ellipse cx="73" cy="41" rx="11" ry="4.5" transform="rotate(18 73 41)" fill="#2a1d12"/>
+    <ellipse cx="50" cy="43" rx="17" ry="19" fill="#2a1d12"/>
+    <circle cx="50" cy="26" r="11" fill="#fffdf6" stroke="#3b2614" stroke-width="2.5"/>
+    <circle cx="43" cy="42" r="4.6" fill="#fff"/><circle cx="57" cy="42" r="4.6" fill="#fff"/>
+    <circle cx="44" cy="43" r="2.1" fill="#111"/><circle cx="56" cy="43" r="2.1" fill="#111"/>
+    <ellipse cx="38" cy="51" rx="3.5" ry="2.2" fill="#e48a85"/><ellipse cx="62" cy="51" rx="3.5" ry="2.2" fill="#e48a85"/>
+    <path d="M45 54q5 5 10 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <rect x="27" y="56" width="17" height="10" rx="5" fill="#2a1d12"/><rect x="56" y="56" width="17" height="10" rx="5" fill="#2a1d12"/>
+  </symbol>
+
+  <symbol id="msheep" viewBox="0 0 60 48">
+    <rect x="16" y="36" width="5" height="11" rx="2" fill="#2a1d12"/><rect x="32" y="36" width="5" height="11" rx="2" fill="#2a1d12"/>
+    <use href="#mwool" fill="#3b2614" stroke="#3b2614" stroke-width="5" stroke-linejoin="round"/>
+    <use href="#mwool" fill="#fffdf6"/>
+    <ellipse cx="50" cy="27" rx="7.5" ry="9" fill="#2a1d12" stroke="#3b2614" stroke-width="1.5"/>
+    <circle cx="52" cy="24" r="2.2" fill="#fff"/><circle cx="52.5" cy="24" r="1" fill="#111"/>
+  </symbol>
+
+  <symbol id="skein" viewBox="0 0 64 70">
+    <path d="M32 58q-5 8-12 8M32 58q5 8 12 8" stroke="#9e2a22" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="32" cy="34" rx="22" ry="26" fill="none" stroke="#3b2614" stroke-width="15"/>
+    <ellipse cx="32" cy="34" rx="22" ry="26" fill="none" stroke="#b8382e" stroke-width="10"/>
+    <ellipse cx="32" cy="34" rx="22" ry="26" fill="none" stroke="#e4877d" stroke-width="2.5" stroke-dasharray="3 5"/>
+    <path d="M12 30q20 9 40 0M12 42q20 9 40 0" stroke="#fff" stroke-opacity=".4" stroke-width="2" fill="none"/>
+    <rect x="25" y="3" width="14" height="12" rx="2" fill="#e6b53c" stroke="#3b2614" stroke-width="2.5"/>
+  </symbol>
+
+  <symbol id="barn" viewBox="0 0 50 40">
+    <path d="M4 38V16L25 3l21 13v22z" fill="#9e2a22" stroke="#3b2614" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M17 38V24h16v14M17 24l16 14M33 24L17 38" stroke="#f4dc8c" stroke-width="2.5" fill="none"/>
+  </symbol>
+</defs>
+</svg>
+
+<header>
+  <svg class="bunting" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMin slice">
+    <defs>
+      <pattern id="bp" width="320" height="58" patternUnits="userSpaceOnUse">
+        <polygon points="20,13 60,13 40,50" fill="#9e2a22" stroke="#3b2614" stroke-width="2"/>
+        <polygon points="100,13 140,13 120,50" fill="#e6b53c" stroke="#3b2614" stroke-width="2"/>
+        <polygon points="180,13 220,13 200,50" fill="#5f8f3e" stroke="#3b2614" stroke-width="2"/>
+        <polygon points="260,13 300,13 280,50" fill="#fffdf6" stroke="#3b2614" stroke-width="2"/>
+        <path d="M0 6Q40 26 80 6Q120 26 160 6Q200 26 240 6Q280 26 320 6" fill="none" stroke="#3b2614" stroke-width="2.5"/>
+        <path d="M30 22l20 0M110 22h20M190 22h20M270 22h20" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="58" fill="url(#bp)"/>
+  </svg>
+  <div class="wrap">
+    <div class="logo wood" role="img" aria-label="Fleece and Fair logo: a wooden sign with Mabel the sheep and a skein of red wool">
+      <svg class="mab bob" viewBox="0 0 130 100" aria-hidden="true"><use href="#mabel"/></svg>
+      <div class="txt">
+        <h1 class="paint">Fleece <span class="amp">&amp;</span> Fair</h1>
+        <p>Yarn, needles and woolly bits, swapped between neighbours</p>
+      </div>
+      <svg class="sk" viewBox="0 0 64 70" aria-hidden="true"><use href="#skein"/></svg>
+    </div>
+  </div>
+  <nav aria-label="Sections" class="wrap">
+    <ul class="tabs" role="tablist" aria-label="Fleece and Fair sections">
+      <li role="presentation"><button class="tab wood" role="tab" id="t-stall" aria-controls="p-stall" aria-selected="true">The Stall</button></li>
+      <li role="presentation"><button class="tab wood" role="tab" id="t-swap" aria-controls="p-swap" aria-selected="false" tabindex="-1">Swap Table</button></li>
+      <li role="presentation"><button class="tab wood" role="tab" id="t-map" aria-controls="p-map" aria-selected="false" tabindex="-1">Near You</button></li>
+      <li role="presentation"><button class="tab wood" role="tab" id="t-yarn" aria-controls="p-yarn" aria-selected="false" tabindex="-1">Fleece to Yarn</button></li>
+      <li role="presentation"><button class="tab wood" role="tab" id="t-sell" aria-controls="p-sell" aria-selected="false" tabindex="-1">Sell Your Stash</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="wrap" id="main">
+
+<!-- 1. THE STALL -->
+<section id="p-stall" class="panel" role="tabpanel" aria-labelledby="t-stall">
+  <h2 class="sign wood paint">The Stall</h2>
+  <p class="lead">Pull up a hay bale. These are the best of this week's swaps and sales, tied on with string by the folk who knitted, spun or simply over-bought them.</p>
+  <div class="stallgrid">
+    <div class="stallbox ging">
+      <div class="fence" aria-hidden="true">
+        <div class="rail r1"></div><div class="rail r2"></div>
+        <div class="post" style="left:6%"></div><div class="post" style="left:30%"></div><div class="post" style="left:55%"></div><div class="post" style="left:80%"></div><div class="post" style="right:0"></div>
+      </div>
+      <svg class="peek big bob" viewBox="0 0 100 66" role="img" aria-label="Mabel the sheep peeping over the fence"><use href="#peek"/></svg>
+      <ul class="tags" id="stallTags" aria-label="Featured swaps and sales"></ul>
+    </div>
+    <aside aria-label="Show news">
+      <div class="board">
+        <b>Show day notice</b>
+        Mart Saturday <span class="hl">31 October</span>, doors 8am. Tea tent open from 10. Bring spare skeins; there is a trestle going begging.
+      </div>
+      <h3 class="sign wood paint r" style="font-size:24px;margin:22px 0 10px">Rosettes</h3>
+      <div class="prizes">
+        <div class="prize paper" style="--pr:-1deg"><div class="ros red"><i><b>1st</b></i></div><p><b>1st Prize</b>Best Aran Cardigan<br><small>Mrs Hebblethwaite, Low Garth</small></p></div>
+        <div class="prize paper" style="--pr:1.2deg"><div class="ros blue"><i><b>2nd</b></i></div><p><b>2nd Prize</b>Finest Wensleydale Fleece<br><small>Alder Beck Spinners</small></p></div>
+        <div class="prize paper" style="--pr:-.6deg"><div class="ros green"><i><b>H.C.</b></i></div><p><b>Highly Commended</b>Neatest Colourwork<br><small>Calvert's Fold, age 9 and under</small></p></div>
+      </div>
+      <svg class="bigsheep bob" viewBox="0 0 220 120" role="img" aria-label="Mabel holding a sign that reads Swaps welcome"><use href="#mabel" x="0" y="16" width="136" height="105"/>
+        <rect x="160" y="30" width="8" height="88" fill="#6e4524" stroke="#3b2614" stroke-width="2.5"/>
+        <g transform="rotate(-4 160 40)"><rect x="118" y="6" width="98" height="44" rx="4" fill="#8d5c31" stroke="#3b2614" stroke-width="3"/>
+        <path d="M122 20h90M122 33h90" stroke="#000" stroke-opacity=".12"/>
+        <text x="167" y="26" text-anchor="middle" font-family="Rye,Georgia,serif" font-size="15" fill="#fdf3d5">SWAPS</text>
+        <text x="167" y="42" text-anchor="middle" font-family="Rye,Georgia,serif" font-size="12" fill="#e6b53c">WELCOME</text></g>
+      </svg>
+    </aside>
+  </div>
+</section>
+
+<!-- 2. SWAP TABLE -->
+<section id="p-swap" class="panel" role="tabpanel" aria-labelledby="t-swap" hidden>
+  <h2 class="sign wood paint r">Swap Table</h2>
+  <div id="flash" class="flash" role="status" hidden></div>
+  <div class="filters paper">
+    <fieldset><legend>What are you after?</legend>
+      <div class="chips" id="catChips">
+        <button type="button" class="chip" data-cat="all" aria-pressed="true">Everything</button>
+        <button type="button" class="chip" data-cat="yarn" aria-pressed="false">Yarn</button>
+        <button type="button" class="chip" data-cat="needles" aria-pressed="false">Needles</button>
+        <button type="button" class="chip" data-cat="patterns" aria-pressed="false">Patterns</button>
+        <button type="button" class="chip" data-cat="finished" aria-pressed="false">Finished</button>
+      </div>
+    </fieldset>
+    <div><label class="lbl" for="fWt">Weight</label>
+      <select id="fWt"><option value="all">Any weight</option><option>Lace</option><option>4ply</option><option>DK</option><option>Aran</option><option>Chunky</option></select></div>
+    <div><label class="lbl" for="fMode">Swap or sell</label>
+      <select id="fMode"><option value="all">Swap or sell</option><option value="swap">Open to a swap</option><option value="sell">For sale</option></select></div>
+  </div>
+  <p class="countline" id="count" aria-live="polite"></p>
+  <p id="sellerNote" class="countline" hidden></p>
+  <div class="pegboard"><ul class="tags" id="swapTags" aria-label="All listings"></ul></div>
+</section>
+
+<!-- 3. NEAR YOU -->
+<section id="p-map" class="panel" role="tabpanel" aria-labelledby="t-map" hidden>
+  <h2 class="sign wood paint">Near You</h2>
+  <p class="lead">Your browser won't tell us where you are, which suits us fine. Pick the village or farm nearest you and Mabel will walk there.</p>
+  <div class="where paper">
+    <label for="where">Where are you?</label>
+    <select id="where"></select>
+    <span class="wn" id="whereNote" aria-live="polite"></span>
+  </div>
+  <div class="mapgrid">
+    <div>
+      <div class="mapbox">
+        <svg id="map" viewBox="0 0 800 560" role="group" aria-label="Illustrated map of the Thwaite dales: fields, dry-stone walls, farm tracks, a village green, a sheep pen, the livestock mart and a tea tent, with a marker for each seller. Use the list for the same information.">
+          <rect width="800" height="560" fill="#b5d889"/>
+          <g stroke="#6e8f48" stroke-width="2">
+            <polygon points="20,20 262,20 268,172 30,186" fill="#a2c874"/>
+            <polygon points="268,20 522,26 516,164 268,172" fill="#d2dc88"/>
+            <polygon points="526,26 780,20 780,186 520,166" fill="#9bc46c"/>
+            <polygon points="30,190 252,176 244,332 36,342" fill="#c0d884"/>
+            <polygon points="602,196 780,192 780,348 598,344" fill="#dcd98a"/>
+            <polygon points="30,348 236,338 240,545 30,545" fill="#a2c874"/>
+            <polygon points="568,366 780,360 780,545 578,545" fill="#d2dc88"/>
+          </g>
+          <g fill="none" stroke="#6e8f48" stroke-width="2" opacity=".7">
+            <path d="M40 60h200M40 100h200M40 140h200"/><path d="M280 50h230M280 90h230M280 130h230" /><path d="M620 230h150M620 270h150M620 310h150"/><path d="M590 400h180M590 440h180M590 480h180"/>
+          </g>
+          <g fill="none" stroke="#8a8372" stroke-width="7" stroke-dasharray="9 2">
+            <path d="M20 186L262 174L268 20"/><path d="M268 172L516 164L524 26"/><path d="M520 166L602 196L780 192"/><path d="M30 342L246 332L254 176"/><path d="M600 196L598 346L780 350"/><path d="M30 346L238 338L242 548"/><path d="M566 366L780 360"/><path d="M566 366L578 548"/>
+          </g>
+          <g fill="none" stroke="#e9e4d0" stroke-width="2" stroke-dasharray="2 9"><path d="M20 186L262 174L268 20"/><path d="M268 172L516 164L524 26"/><path d="M30 342L246 332L254 176"/><path d="M600 196L598 346L780 350"/></g>
+          <path d="M410 0C400 90 450 150 420 210C395 260 440 330 400 400C375 450 410 520 395 560" fill="none" stroke="#6fa9cb" stroke-width="18" stroke-linecap="round"/>
+          <path d="M410 0C400 90 450 150 420 210C395 260 440 330 400 400C375 450 410 520 395 560" fill="none" stroke="#bfe0f0" stroke-width="5" stroke-dasharray="14 12"/>
+          <g fill="none" stroke="#d7b676" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M62 100C150 140 250 230 365 285"/><path d="M365 300C470 300 540 270 600 270"/><path d="M360 300C390 360 330 430 270 465"/>
+            <path d="M640 255C700 200 725 150 700 105"/><path d="M360 285C420 170 480 120 540 80"/><path d="M640 285C650 380 690 430 730 480"/><path d="M270 465C400 480 470 470 545 450"/>
+          </g>
+          <g fill="none" stroke="#f4e6bd" stroke-width="2.5" stroke-dasharray="10 10" stroke-linecap="round">
+            <path d="M62 100C150 140 250 230 365 285"/><path d="M365 300C470 300 540 270 600 270"/><path d="M360 300C390 360 330 430 270 465"/><path d="M640 255C700 200 725 150 700 105"/><path d="M360 285C420 170 480 120 540 80"/><path d="M640 285C650 380 690 430 730 480"/><path d="M270 465C400 480 470 470 545 450"/>
+          </g>
+          <rect x="420" y="287" width="40" height="26" rx="3" fill="#8d5c31" stroke="#3b2614" stroke-width="3" transform="rotate(-4 440 300)"/>
+          <g fill="none" stroke="#7a9d56" stroke-width="2.5" opacity=".9"><ellipse cx="715" cy="55" rx="90" ry="38"/><ellipse cx="715" cy="55" rx="62" ry="26"/><ellipse cx="715" cy="55" rx="34" ry="14"/></g>
+          <!-- village green -->
+          <circle cx="365" cy="300" r="56" fill="#86bd5e" stroke="#4d7d33" stroke-width="3"/>
+          <ellipse cx="385" cy="318" rx="20" ry="11" fill="#8cc3e0" stroke="#3b2614" stroke-width="2.5"/>
+          <path d="M338 296V258" stroke="#3b2614" stroke-width="3"/><path d="M338 260q-10 8-18 4M338 260q10 8 18 4" stroke="#9e2a22" stroke-width="3" fill="none"/>
+          <g stroke="#3b2614" stroke-width="2.5" stroke-linejoin="round">
+            <rect x="290" y="232" width="30" height="20" fill="#f1e4c3"/><polygon points="286,233 305,216 324,233" fill="#9e2a22"/>
+            <rect x="400" y="236" width="30" height="20" fill="#f1e4c3"/><polygon points="396,237 415,220 434,237" fill="#6e4524"/>
+            <rect x="300" y="362" width="30" height="20" fill="#f1e4c3"/><polygon points="296,363 315,346 334,363" fill="#6e4524"/>
+            <rect x="398" y="366" width="26" height="30" fill="#d9d2bd"/><polygon points="396,367 411,332 426,367" fill="#555"/>
+          </g>
+          <!-- sheep pen -->
+          <rect x="430" y="395" width="96" height="62" fill="#c9dc93" stroke="#6e4524" stroke-width="6" stroke-dasharray="7 4"/>
+          <path d="M478 395V457" stroke="#6e4524" stroke-width="4" stroke-dasharray="7 4"/>
+          <g stroke="#3b2614" stroke-width="2"><circle cx="452" cy="418" r="9" fill="#fff"/><circle cx="504" cy="430" r="9" fill="#fff"/><circle cx="458" cy="442" r="9" fill="#fff"/><circle cx="498" cy="410" r="9" fill="#fff"/></g>
+          <g fill="#2a1d12"><circle cx="462" cy="414" r="3.5"/><circle cx="496" cy="434" r="3.5"/><circle cx="466" cy="446" r="3.5"/><circle cx="490" cy="406" r="3.5"/></g>
+          <!-- mart -->
+          <rect x="598" y="256" width="96" height="50" fill="#d9d2bd" stroke="#3b2614" stroke-width="3"/>
+          <polygon points="590,258 646,226 702,258" fill="#9e2a22" stroke="#3b2614" stroke-width="3" stroke-linejoin="round"/>
+          <rect x="632" y="278" width="28" height="28" fill="#6e4524" stroke="#3b2614" stroke-width="2.5"/>
+          <g stroke="#6e4524" stroke-width="4" stroke-dasharray="6 3" fill="#c9dc93"><rect x="600" y="312" width="42" height="30"/><rect x="650" y="312" width="42" height="30"/></g>
+          <!-- tea tent -->
+          <polygon points="222,474 260,414 298,474" fill="#fffdf6" stroke="#3b2614" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="244,474 260,414 266,414 258,474" fill="#c8473d"/><polygon points="276,474 262,414 268,414 288,474" fill="#c8473d"/>
+          <path d="M260 414V398" stroke="#3b2614" stroke-width="3"/><polygon points="260,398 280,404 260,410" fill="#e6b53c" stroke="#3b2614" stroke-width="2"/>
+          <path d="M248 474v-16h24v16" fill="#6e4524" stroke="#3b2614" stroke-width="2"/>
+          <!-- barns, trees -->
+          <use href="#barn" x="62" y="52" width="46" height="37"/><use href="#barn" x="726" y="66" width="46" height="37"/><use href="#barn" x="668" y="342" width="46" height="37"/><use href="#barn" x="72" y="430" width="46" height="37"/>
+          <g stroke="#3b2614" stroke-width="2.5" fill="#4d7d33"><circle cx="190" cy="150" r="16"/><circle cx="214" cy="160" r="12"/><circle cx="560" cy="130" r="15"/><circle cx="580" cy="140" r="11"/><circle cx="150" cy="300" r="15"/><circle cx="700" cy="480" r="16"/><circle cx="330" cy="500" r="14"/><circle cx="600" cy="520" r="13"/><circle cx="470" cy="60" r="14"/></g>
+          <!-- labels -->
+          <g font-family="Kalam,'Comic Sans MS',cursive" font-size="24" font-weight="700" fill="#3b2614" text-anchor="middle" stroke="#fffbea" stroke-width="6" paint-order="stroke" stroke-linejoin="round">
+            <text x="365" y="412" font-size="22">Thwaite Green</text>
+            <text x="646" y="218">Skelby Mart</text>
+            <text x="478" y="485">Sheep Pen</text>
+            <text x="260" y="500">Tea Tent</text>
+            <text x="715" y="30" font-size="21">Raven Fell</text>
+            <text x="468" y="248" font-size="19" opacity=".9">Alder Beck</text>
+          </g>
+          <!-- compass + scale -->
+          <g transform="translate(748 506)"><circle r="24" fill="#fffdf6" stroke="#3b2614" stroke-width="3"/><polygon points="0,-20 6,0 0,4 -6,0" fill="#9e2a22" stroke="#3b2614" stroke-width="1.5"/><text y="-28" text-anchor="middle" font-family="Rye,serif" font-size="16" fill="#3b2614" stroke="#fffbea" stroke-width="4" paint-order="stroke">N</text></g>
+          <g transform="translate(40 528)"><path d="M0 0h100" stroke="#3b2614" stroke-width="5"/><path d="M0 -8v16M100 -8v16" stroke="#3b2614" stroke-width="4"/><text x="50" y="-12" text-anchor="middle" font-family="Kalam,cursive" font-size="20" font-weight="700" fill="#3b2614" stroke="#fffbea" stroke-width="5" paint-order="stroke">1 mile</text></g>
+          <g id="markers"></g>
+          <g id="selLabel" style="pointer-events:none" hidden></g>
+          <g id="you" style="transform:translate(365px,330px)"><g class="bob"><use href="#mabel" x="-42" y="-64" width="84" height="65"/></g>
+            <g transform="translate(0 -78)"><rect x="-62" y="-20" width="124" height="26" rx="4" fill="#9e2a22" stroke="#3b2614" stroke-width="3"/><text y="-1" text-anchor="middle" font-family="Kalam,cursive" font-weight="700" font-size="19" fill="#fff">You are here</text></g></g>
+        </svg>
+        <div class="legend" aria-hidden="true">
+          <span><svg width="30" height="22" viewBox="-30 -22 60 44"><rect x="-26" y="-18" width="52" height="36" rx="8" fill="#e6b53c" stroke="#3b2614" stroke-width="3"/><path d="M-9 -18V18M9 -18V18" stroke="#8a5a1d" stroke-width="3"/></svg> Farm or stall</span>
+          <span><svg width="30" height="24" viewBox="0 0 60 48"><use href="#msheep"/></svg> Meet-up or swap circle</span>
+          <span>100 map units = 1 mile</span>
+        </div>
+        <div class="detail" id="mdetail" aria-live="polite"></div>
+      </div>
+    </div>
+    <ol class="slist" id="slist" aria-label="Sellers, nearest first"></ol>
+  </div>
+</section>
+
+<!-- 4. FLEECE TO YARN -->
+<section id="p-yarn" class="panel" role="tabpanel" aria-labelledby="t-yarn" hidden>
+  <h2 class="sign wood paint r">Fleece to Yarn</h2>
+  <p class="lead">Every skein on the Swap Table started life on a sheep's back. Here's the journey, in order, with one honest tip from the kitchen table at each stop.</p>
+  <ol class="steps">
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mwool" x="2" y="4" width="40" height="30" transform="translate(0 0) scale(.9)" fill="#fffdf6" stroke="#3b2614" stroke-width="2"/><path d="M20 8L44 44M46 8L26 44" stroke="#3b2614" stroke-width="5" stroke-linecap="round"/><circle cx="22" cy="50" r="8" fill="none" stroke="#9e2a22" stroke-width="5"/><circle cx="42" cy="50" r="8" fill="none" stroke="#9e2a22" stroke-width="5"/></svg>
+      <h3>Shear</h3><span class="tip">Mabel's tip</span>
+      <p>Clip in early summer on a dry day. Keep the fleece in one piece, cut side down, and leave the dags behind the barn door.</p>
+    </li>
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 28h48l-6 28H14z" fill="#8cc3e0" stroke="#3b2614" stroke-width="3" stroke-linejoin="round"/><ellipse cx="32" cy="28" rx="24" ry="5" fill="#d6ecf6" stroke="#3b2614" stroke-width="3"/><circle cx="26" cy="26" r="8" fill="#fffdf6" stroke="#3b2614" stroke-width="2"/><circle cx="38" cy="25" r="7" fill="#fffdf6" stroke="#3b2614" stroke-width="2"/><g fill="#fff" stroke="#3b2614" stroke-width="2"><circle cx="16" cy="12" r="5"/><circle cx="30" cy="6" r="4"/><circle cx="46" cy="12" r="6"/></g></svg>
+      <h3>Wash</h3><span class="tip">Mabel's tip</span>
+      <p>Hand-hot water and a squirt of washing-up liquid. Soak, don't swish. Felting comes from fuss, not from water.</p>
+    </li>
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><g transform="rotate(-24 22 34)"><rect x="6" y="26" width="34" height="14" rx="3" fill="#a9764a" stroke="#3b2614" stroke-width="3"/><path d="M10 40v6M16 40v6M22 40v6M28 40v6M34 40v6" stroke="#3b2614" stroke-width="2.5"/><rect x="38" y="30" width="18" height="6" rx="3" fill="#6e4524" stroke="#3b2614" stroke-width="2"/></g><g transform="rotate(14 40 36)"><rect x="24" y="34" width="34" height="14" rx="3" fill="#c28a58" stroke="#3b2614" stroke-width="3"/><path d="M28 34v-6M34 34v-6M40 34v-6M46 34v-6M52 34v-6" stroke="#3b2614" stroke-width="2.5"/></g><ellipse cx="32" cy="38" rx="16" ry="6" fill="#fffdf6" stroke="#3b2614" stroke-width="2"/></svg>
+      <h3>Card</h3><span class="tip">Mabel's tip</span>
+      <p>Tease the locks open first, then card in thin batts. Wensleydale is happier combed than carded.</p>
+    </li>
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="36" cy="30" r="22" fill="none" stroke="#3b2614" stroke-width="5"/><circle cx="36" cy="30" r="22" fill="none" stroke="#a9764a" stroke-width="2"/><path d="M36 8v44M14 30h44M20 14l32 32M52 14L20 46" stroke="#3b2614" stroke-width="2.5"/><circle cx="36" cy="30" r="5" fill="#e6b53c" stroke="#3b2614" stroke-width="2"/><path d="M6 58l22-8M20 60l16-30" stroke="#3b2614" stroke-width="4" stroke-linecap="round"/><path d="M2 20q8-6 14 2" stroke="#fffdf6" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+      <h3>Spin</h3><span class="tip">Mabel's tip</span>
+      <p>Park and draft, then let the twist run up. Ply back the opposite way and the yarn will sit up straight.</p>
+    </li>
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 28h40l-3 26H15z" fill="#3b2614"/><path d="M14 30h36l-3 22H17z" fill="#b8382e"/><rect x="8" y="24" width="48" height="7" rx="3" fill="#6e4524" stroke="#3b2614" stroke-width="2.5"/><path d="M20 56v4M44 56v4" stroke="#3b2614" stroke-width="4" stroke-linecap="round"/><path d="M22 18q-6-6 0-12M32 18q-6-6 0-12M42 18q-6-6 0-12" stroke="#8a8372" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M26 34q6 8 12 0" stroke="#fffdf6" stroke-width="3" fill="none"/></svg>
+      <h3>Dye</h3><span class="tip">Mabel's tip</span>
+      <p>Onion skins or madder, simmered never boiled. Write the dye lot on a tag before you forget which pot was which.</p>
+    </li>
+    <li class="step paper">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="38" r="20" fill="#b8382e" stroke="#3b2614" stroke-width="3"/><path d="M14 30q16 6 32-2M12 40q18 6 36-2M18 52q12 4 24-2M22 22q8 12 4 32" stroke="#e4877d" stroke-width="2.5" fill="none"/><path d="M8 6L52 54" stroke="#3b2614" stroke-width="4" stroke-linecap="round"/><path d="M30 4L58 40" stroke="#6e4524" stroke-width="4" stroke-linecap="round"/><circle cx="8" cy="6" r="3.5" fill="#e6b53c" stroke="#3b2614" stroke-width="1.5"/><circle cx="30" cy="4" r="3.5" fill="#e6b53c" stroke="#3b2614" stroke-width="1.5"/></svg>
+      <h3>Knit</h3><span class="tip">Mabel's tip</span>
+      <p>Wash and block a swatch before you trust it. For DK, try 4mm (US 6) and go up a size if your fabric is stiff as a gate.</p>
+    </li>
+  </ol>
+  <div class="stepnote ging"><div style="background:#fffdf6;padding:8px 12px;border-radius:4px">Don't fancy the first five? Skip straight to the Swap Table and join the story at step six.</div></div>
+</section>
+
+<!-- 5. SELL YOUR STASH -->
+<section id="p-sell" class="panel" role="tabpanel" aria-labelledby="t-sell" hidden>
+  <h2 class="sign wood paint">Sell Your Stash</h2>
+  <p class="lead">Got a basket of leftovers going cold? Fill in a tag and we'll hang it on the Swap Table.</p>
+  <div class="formgrid">
+    <form class="sell ging" id="sellForm" novalidate>
+      <div class="fld"><label for="fTitle">What is it?</label><input type="text" id="fTitle" name="title" required maxlength="60" placeholder="e.g. Herdwick DK, Slate Grey"><p class="hint">Say the breed if you know it.</p></div>
+      <div class="two">
+        <div class="fld"><label for="fCat">Kind of thing</label><select id="fCat"><option value="yarn">Yarn</option><option value="needles">Needles</option><option value="patterns">Pattern</option><option value="finished">Finished piece</option></select></div>
+        <div class="fld"><label for="fW">Weight</label><select id="fW"><option>Lace</option><option>4ply</option><option selected>DK</option><option>Aran</option><option>Chunky</option><option value="n/a">Not applicable</option></select></div>
+      </div>
+      <div class="fld"><label for="fSpec">Amount and details</label><input type="text" id="fSpec" required maxlength="70" placeholder="e.g. 3 x 100g, 220 yds each"></div>
+      <div class="fld"><label for="fLot">Dye lot or needle size</label><input type="text" id="fLot" maxlength="50" placeholder="e.g. Lot 7, or 4.5mm (US 7)"></div>
+      <fieldset class="fld"><legend>Swap or sell?</legend>
+        <div class="radios">
+          <label><input type="radio" name="mode" value="swap" checked> Swap</label>
+          <label><input type="radio" name="mode" value="sell"> Sell</label>
+          <label><input type="radio" name="mode" value="both"> Either</label>
+        </div></fieldset>
+      <div class="fld" id="priceFld" hidden><label for="fPrice">Price in pounds</label><input type="number" id="fPrice" min="0.5" step="0.5" placeholder="12">
+        <p class="hint">Postage to be agreed between you.</p></div>
+      <div class="fld"><label for="fBy">Your name or farm</label><input type="text" id="fBy" required maxlength="40" placeholder="e.g. Maud at Cross Keys Farm"></div>
+      <p id="formErr" class="note" style="color:#8f1f18" role="alert" hidden></p>
+      <button class="go" type="submit">Hang up my tag</button>
+    </form>
+    <aside class="holder paper" aria-label="Mabel with a sign">
+      <svg class="peek big bob" style="position:static;width:170px" viewBox="0 0 100 66" aria-hidden="true"><use href="#peek"/></svg>
+      <h3 style="font-family:var(--slab);font-weight:400;font-size:22px;color:var(--red)">Good tagging</h3>
+      <p style="text-align:left;font-size:16.5px">Weigh it, count the yardage, and say whether it came from a smoke-free home. Honest dye-lot notes get swapped quickest. Write needle sizes in mm and US so everybody's happy.</p>
+    </aside>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <div class="foot wood">
+    <svg viewBox="0 0 150 80" role="img" aria-label="Mabel fast asleep on the grass">
+      <path d="M2 74h146" stroke="#4d7d33" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="46" cy="72" rx="8" ry="4" fill="#2a1d12"/><ellipse cx="98" cy="72" rx="8" ry="4" fill="#2a1d12"/>
+      <use href="#wool3" fill="#3b2614" stroke="#3b2614" stroke-width="6" stroke-linejoin="round"/>
+      <use href="#wool3" fill="#fffdf6"/>
+      <ellipse cx="106" cy="50" rx="9" ry="4" transform="rotate(30 106 50)" fill="#2a1d12"/>
+      <ellipse cx="121" cy="60" rx="17" ry="14" fill="#2a1d12"/>
+      <circle cx="119" cy="45" r="8" fill="#fffdf6" stroke="#3b2614" stroke-width="2.5"/>
+      <path d="M112 58q4 4 8 0M125 58q4 4 8 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M118 67q4 3 8 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <g font-family="Rye,Georgia,serif" fill="#fdf3d5" stroke="#3b2614" stroke-width="2" paint-order="stroke"><text class="z" x="124" y="26" font-size="14">z</text><text class="z z2" x="134" y="16" font-size="17">z</text><text class="z z3" x="143" y="7" font-size="20">Z</text></g>
+    </svg>
+    <p><b class="paint">Fleece &amp; Fair</b>Made by knitters, for knitters, on a kitchen table somewhere in the dales. Swaps and sales are agreed between neighbours; be kind, post it fairly, and mind the dog. Hush now, Mabel's asleep.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- data ---------- */
+var SELLERS=[
+ {id:'s1',name:'Ruth Hebblethwaite',place:'Low Garth Farm',x:110,y:100,kind:'bale',hours:'Honesty box at the farm gate, daylight hours'},
+ {id:'s2',name:'Tom & Edna Calvert',place:"Calvert's Fold",x:330,y:110,kind:'bale',hours:'Wed and Fri afternoons, knock at the back door'},
+ {id:'s3',name:'Nell Arkwright',place:'Thwaite Green',x:345,y:262,kind:'sheep',hours:'Sundays after chapel, on the village green'},
+ {id:'s4',name:'The Metcalfe Sisters',place:'Skelby Mart',x:588,y:205,kind:'bale',hours:'Sat mornings at the mart, pen 14'},
+ {id:'s5',name:'Joss Thwaite',place:'High Scar Farm',x:690,y:112,kind:'bale',hours:'By arrangement, ring the bell at the gate'},
+ {id:'s6',name:'Peggy Dinsdale',place:'The Tea Tent',x:325,y:432,kind:'sheep',hours:'Show days 10 till 4, trestle in the tea tent'},
+ {id:'s7',name:'Alder Beck Spinners',place:'Beck Cottage',x:505,y:195,kind:'sheep',hours:'First Thursday, 7pm, back room at Beck Cottage'},
+ {id:'s8',name:'Bill Raine',place:"Raine's Intake",x:735,y:318,kind:'bale',hours:'Honesty box at the farm gate, cash tin and a note'},
+ {id:'s9',name:'Agnes Slee',place:'Pen Cottage',x:555,y:440,kind:'sheep',hours:'Saturday afternoons by the sheep pen'},
+ {id:'s10',name:'Dorothy Fawcett',place:'Lower Beck',x:112,y:490,kind:'bale',hours:'Mon to Fri, parcels left in the porch box'},
+ {id:'s11',name:'Harry Garsdale',place:'Garsdale Cross',x:228,y:252,kind:'bale',hours:'Wed market, 9 till noon at Garsdale Cross'}
+];
+var SM={}; SELLERS.forEach(function(s){SM[s.id]=s});
+var PLACES=[
+ {n:'Thwaite Green (village)',x:365,y:335},{n:'Low Garth Farm',x:150,y:135},{n:'Skelby Mart',x:660,y:340},
+ {n:'High Scar Farm',x:665,y:150},{n:'Lower Beck Cottage',x:170,y:455},{n:'Garsdale Cross (hamlet)',x:210,y:215}
+];
+var LISTINGS=[
+ {id:'l1',title:'Swaledale Aran, Peat Brown',cat:'yarn',wt:'Aran',mode:'sell',price:22,spec:'4 x 100g, 200 yds each',lot:'Fibre: Swaledale. Lot S-14',seller:'s1',feat:1},
+ {id:'l2',title:'Wensleydale DK, Madder Red',cat:'yarn',wt:'DK',mode:'swap',spec:'2 x 85g, 260 yds each, handspun',lot:'Fibre: Wensleydale. Dye lot 3, madder root',seller:'s7',feat:1},
+ {id:'l3',title:'Herdwick Chunky, Slate',cat:'yarn',wt:'Chunky',mode:'sell',price:30,spec:'6 x 100g, 120 yds each',lot:'Fibre: Herdwick. Rugged, wears like a gate',seller:'s8'},
+ {id:'l4',title:'Jacob 4ply, Natural Spots',cat:'yarn',wt:'4ply',mode:'both',price:15,spec:'5 x 50g, 190 yds each',lot:'Fibre: Jacob. Undyed, two-tone batch',seller:'s2',feat:1},
+ {id:'l5',title:'Bluefaced Leicester 4ply, Heather Skies',cat:'yarn',wt:'4ply',mode:'sell',price:21,spec:'3 x 100g, 400 yds each',lot:'Fibre: BFL. Dye lot BFL 22-B',seller:'s3',feat:1},
+ {id:'l6',title:'BFL Lace, Moth Grey',cat:'yarn',wt:'Lace',mode:'swap',spec:'2 x 50g, 480 yds each',lot:'Fibre: Bluefaced Leicester. Lot 9',seller:'s11'},
+ {id:'l7',title:'Birch DPN Set, 2.5mm (US 1.5)',cat:'needles',wt:'n/a',mode:'swap',spec:'Set of 5, 15cm, hand-turned',lot:'Lightly used, one tip re-sanded',seller:'s10'},
+ {id:'l8',title:'Circular, 4.0mm (US 6), 80cm',cat:'needles',wt:'n/a',mode:'sell',price:6,spec:'Brass tips, cable still springy',lot:'Fine for DK jumpers',seller:'s4'},
+ {id:'l9',title:'Beech Straights, 8mm (US 11)',cat:'needles',wt:'n/a',mode:'both',price:9,spec:'35cm pair, hand-turned',lot:'Good with chunky Herdwick',seller:'s9'},
+ {id:'l10',title:'Interchangeable Tips, 4.5mm (US 7)',cat:'needles',wt:'n/a',mode:'sell',price:12,spec:'Two pairs and four cords',lot:'Tin tip-protectors included',seller:'s6'},
+ {id:'l11',title:'Dales Gansey Chart Pack',cat:'patterns',wt:'4ply',mode:'sell',price:4,spec:'Printed, 6 traditional panels',lot:'Photocopied from Nana\'s notebook',seller:'s3'},
+ {id:'l12',title:'Aran Cardigan, Paper Pattern',cat:'patterns',wt:'Aran',mode:'swap',spec:'5 sizes, 34 to 46 inch chest',lot:'First prize pattern, written out kindly',seller:'s1',feat:1},
+ {id:'l13',title:'Fair Isle Tea Cosy',cat:'finished',wt:'4ply',mode:'sell',price:18,spec:'Jacob and BFL, fits a 6-cup pot',lot:'Lined, with a pompom the size of an egg',seller:'s5',feat:1},
+ {id:'l14',title:'Cabled Aran Cardigan, Size 14',cat:'finished',wt:'Aran',mode:'sell',price:85,spec:'Swaledale, 1,100 yds, buttoned',lot:'Spare button sewn inside the hem',seller:'s4'},
+ {id:'l15',title:'Lace Baby Blanket',cat:'finished',wt:'Lace',mode:'sell',price:40,spec:'BFL, 90cm square, washed and blocked',lot:'Smells faintly of lavender',seller:'s11'}
+];
+var USER=[], KEY='fleecefair.mine.v1', KEYP='fleecefair.where.v1';
+try{var raw=localStorage.getItem(KEY); if(raw){USER=JSON.parse(raw)||[]; if(!Array.isArray(USER))USER=[];}}catch(e){USER=[];}
+var st={cat:'all',wt:'all',mode:'all',seller:null,you:0,sel:null,newId:null};
+try{var p=parseInt(localStorage.getItem(KEYP),10); if(p>=0&&p<PLACES.length)st.you=p;}catch(e){}
+var ROT=[-3,2,-1.5,3.5,-2.5,1,-.5,2.5];
+var CATN={yarn:'Yarn',needles:'Needles',patterns:'Pattern',finished:'Finished'};
+
+function all(){return LISTINGS.concat(USER)}
+function dist(id){var s=SM[id],y=PLACES[st.you]; if(!s)return null; return Math.hypot(s.x-y.x,s.y-y.y)/100}
+function mi(d){return d.toFixed(1)+(d.toFixed(1)==='1.0'?' mile':' miles')}
+
+/* ---------- tags ---------- */
+function tag(l,i){
+  var s=SM[l.seller], d=s?dist(l.seller):null;
+  var price = l.mode==='swap' ? '<span class="pr sw">SWAP</span>' :
+    '<span class="pr">&pound;'+esc(l.price)+'</span>'+(l.mode==='both'?'<span class="or">or swap</span>':'');
+  var by = s ? 'From '+esc(s.name)+', '+esc(s.place)+'<br><b>'+mi(d)+' from '+esc(PLACES[st.you].n.replace(/ \(.*\)/,''))+'</b>' : 'Listed by '+esc(l.by||'a neighbour')+'<br><b>On your own stall</b>';
+  var acts = '<button type="button" class="mini ask" data-id="'+l.id+'">Ask about it</button>' + (s?'<button type="button" class="mini onmap" data-s="'+s.id+'">On the map</button>':'');
+  return '<li class="tagw'+(l.isNew?' new':'')+'" id="tag-'+l.id+'" style="--r:'+ROT[i%ROT.length]+'deg">'+
+   '<svg class="str" viewBox="0 0 60 56" aria-hidden="true"><path d="M30 38C6 34 10 4 30 4C50 4 54 34 30 38M30 38q-7 9-2 16" fill="none" stroke="#efe5c6" stroke-width="3" stroke-linecap="round"/><path d="M30 38C6 34 10 4 30 4" fill="none" stroke="#8c7d58" stroke-width="1" stroke-dasharray="2 3"/><circle cx="30" cy="38" r="5.5" fill="none" stroke="#3b2614" stroke-width="2.5"/><circle cx="30" cy="4" r="3" fill="#9e2a22"/></svg>'+
+   (l.isNew?'<span class="ribbon">Just pinned up</span>':'')+
+   '<article class="tag"><span class="cat">'+CATN[l.cat]+(l.wt&&l.wt!=='n/a'?' / '+esc(l.wt):'')+'</span><h3>'+esc(l.title)+'</h3>'+
+   '<p class="spec">'+esc(l.spec)+'</p><p class="lot">'+esc(l.lot||'')+'</p>'+price+
+   '<p class="by">'+by+'</p><div class="acts">'+acts+'</div><p class="note" role="status" hidden></p></article></li>';
+}
+function renderStall(){ $('#stallTags').innerHTML=all().filter(function(l){return l.feat}).map(tag).join(''); }
+function renderSwap(){
+  var items=all().filter(function(l){
+    if(st.cat!=='all'&&l.cat!==st.cat)return false;
+    if(st.wt!=='all'&&l.wt!==st.wt)return false;
+    if(st.mode==='swap'&&l.mode==='sell')return false;
+    if(st.mode==='sell'&&l.mode==='swap')return false;
+    if(st.seller&&l.seller!==st.seller)return false;
+    return true;
+  });
+  $('#count').textContent = items.length+' of '+all().length+' tags on the table';
+  var sn=$('#sellerNote');
+  if(st.seller){sn.hidden=false;sn.innerHTML='Only '+esc(SM[st.seller].name)+"'s things. <button type='button' class='mini' id='clearSeller'>Show everyone</button>";}
+  else sn.hidden=true;
+  $('#swapTags').innerHTML = items.length ? items.map(tag).join('') : '';
+  if(!items.length)$('#swapTags').innerHTML='<li class="empty" style="grid-column:1/-1">Nothing hanging here yet. Try a different weight, or ask Mabel to knit it.</li>';
+}
+
+/* ---------- tabs ---------- */
+var TABS=['stall','swap','map','yarn','sell'];
+function show(id,focus){
+  TABS.forEach(function(t){var on=t===id,b=$('#t-'+t);b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;$('#p-'+t).hidden=!on;});
+  if(focus)$('#t-'+id).focus();
+  if(id==='map')renderMap(false);
+}
+$('.tabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(b)show(b.id.slice(2));});
+$('.tabs').addEventListener('keydown',function(e){
+  var i=TABS.indexOf(document.activeElement.id.slice(2)); if(i<0)return;
+  var n=null; if(e.key==='ArrowRight')n=(i+1)%5; else if(e.key==='ArrowLeft')n=(i+4)%5; else if(e.key==='Home')n=0; else if(e.key==='End')n=4;
+  if(n!==null){e.preventDefault();show(TABS[n],true);}
+});
+
+/* ---------- swap table events ---------- */
+$('#catChips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;st.cat=b.dataset.cat;
+  $$('.chip').forEach(function(c){c.setAttribute('aria-pressed',c===b)});renderSwap();});
+$('#fWt').addEventListener('change',function(e){st.wt=e.target.value;renderSwap();});
+$('#fMode').addEventListener('change',function(e){st.mode=e.target.value;renderSwap();});
+document.addEventListener('click',function(e){
+  var a=e.target.closest('.ask');
+  if(a){var tg=a.closest('.tag'),n=$('.note',tg),l=all().filter(function(x){return x.id===a.dataset.id})[0],s=SM[l.seller];
+    if(n.hidden){n.hidden=false;n.textContent='Note pinned. Mabel will pass it to '+(s?s.name.split(' ')[0]:(l.by||'the seller'))+' by the next post.';a.textContent='Take note back';}
+    else{n.hidden=true;a.textContent='Ask about it';} return;}
+  var m=e.target.closest('.onmap'); if(m){show('map');select(m.dataset.s,true);return;}
+  if(e.target.id==='clearSeller'){st.seller=null;renderSwap();}
+});
+
+/* ---------- map ---------- */
+function sorted(){return SELLERS.map(function(s){return {s:s,d:dist(s.id)}}).sort(function(a,b){return a.d-b.d})}
+function count(id){return all().filter(function(l){return l.seller===id}).length}
+function markerHTML(s){
+  var shape = s.kind==='bale'
+   ? '<rect x="-27" y="-19" width="54" height="38" rx="9" fill="#e6b53c" stroke="#3b2614" stroke-width="3.5"/><path d="M-9 -19V19M9 -19V19" stroke="#8a5a1d" stroke-width="3"/><path d="M-21 -8h8M13 6h8M-21 8h8M13 -8h8" stroke="#8a5a1d" stroke-width="2"/>'
+   : '<use href="#msheep" x="-33" y="-26" width="66" height="53"/>';
+  return '<g class="mk" tabindex="0" role="button" data-id="'+s.id+'" aria-label="'+esc(s.name)+', '+esc(s.place)+'" style="transform:translate('+s.x+'px,'+s.y+'px)"><circle class="fr" r="40"/><g class="mi">'+shape+'</g></g>';
+}
+var built=false;
+function renderMap(){
+  if(!built){$('#markers').innerHTML=SELLERS.map(markerHTML).join('');built=true;}
+  var y=PLACES[st.you]; $('#you').style.transform='translate('+y.x+'px,'+y.y+'px)';
+  var so=sorted();
+  $('#slist').innerHTML=so.map(function(o){var s=o.s;
+    return '<li><button type="button" class="row" data-id="'+s.id+'" aria-pressed="'+(st.sel===s.id)+'"><b>'+esc(s.name)+'</b><span class="mi2">'+mi(o.d)+'</span><small>'+esc(s.place)+'. '+esc(s.hours)+'</small></button></li>';}).join('');
+  var n=so[0]; $('#whereNote').textContent='Nearest: '+n.s.name+', '+mi(n.d)+' away.';
+  if(!st.sel||!SM[st.sel])st.sel=n.s.id;
+  paintSel(false);
+}
+function paintSel(scroll){
+  $$('.mk').forEach(function(m){m.classList.toggle('sel',m.dataset.id===st.sel)});
+  $$('.row').forEach(function(r){r.setAttribute('aria-pressed',r.dataset.id===st.sel)});
+  var s=SM[st.sel],d=dist(st.sel),c=count(s.id);
+  $('#mdetail').innerHTML='<h3>'+esc(s.name)+'</h3><p class="dd">'+mi(d)+' from '+esc(PLACES[st.you].n)+'</p><p>'+esc(s.place)+'. '+esc(s.hours)+'.</p><p>'+
+   (c?c+' thing'+(c>1?'s':'')+' on the table. <button type="button" class="mini" id="seeTheirs">See them on the Swap Table</button>':'Nothing listed just now; knock and ask.')+'</p>';
+  var g=$('#selLabel'); var txt=s.place, w=txt.length*10.5+26;
+  var lx=Math.max(w/2+4,Math.min(800-w/2-4,s.x)), ly=s.y<80?s.y+60:s.y-36;
+  g.removeAttribute('hidden');
+  g.innerHTML='<g transform="translate('+lx+' '+ly+')"><rect x="'+(-w/2)+'" y="-18" width="'+w+'" height="30" rx="5" fill="#fffdf6" stroke="#9e2a22" stroke-width="3"/><text y="5" text-anchor="middle" font-family="Kalam,cursive" font-weight="700" font-size="20" fill="#3b2614">'+esc(txt)+'</text></g>';
+  var mk=$('.mk.sel'); if(mk&&mk.parentNode)mk.parentNode.appendChild(mk);
+  var sy=$('#you'); if(sy&&sy.parentNode){sy.parentNode.insertBefore(g,sy);}
+  if(scroll){var r=$('.row[data-id="'+st.sel+'"]');if(r&&r.scrollIntoView)r.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});}
+}
+function select(id,scroll){st.sel=id;if(!built)renderMap();paintSel(scroll);}
+$('#map').addEventListener('click',function(e){var m=e.target.closest('.mk');if(m)select(m.dataset.id,true);});
+$('#map').addEventListener('keydown',function(e){var m=e.target.closest('.mk');if(m&&(e.key==='Enter'||e.key===' ')){e.preventDefault();select(m.dataset.id,true);}});
+$('#slist').addEventListener('click',function(e){var r=e.target.closest('.row');if(r)select(r.dataset.id,false);});
+$('#mdetail').addEventListener('click',function(e){if(e.target.id==='seeTheirs'){st.seller=st.sel;st.cat='all';st.wt='all';st.mode='all';resetFilters();renderSwap();show('swap');}});
+function resetFilters(){$$('.chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.cat==='all')});$('#fWt').value='all';$('#fMode').value='all';}
+$('#where').innerHTML=PLACES.map(function(p,i){return '<option value="'+i+'">'+esc(p.n)+'</option>'}).join('');
+$('#where').value=st.you;
+$('#where').addEventListener('change',function(e){
+  st.you=parseInt(e.target.value,10);
+  try{localStorage.setItem(KEYP,String(st.you));}catch(x){}
+  renderMap(); renderStall(); renderSwap();
+});
+
+/* ---------- sell form ---------- */
+function modeVal(){return $('input[name=mode]:checked').value}
+$$('input[name=mode]').forEach(function(r){r.addEventListener('change',function(){$('#priceFld').hidden=modeVal()==='swap';});});
+$('#sellForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var f=e.target, err=$('#formErr'), title=$('#fTitle').value.trim(), spec=$('#fSpec').value.trim(), by=$('#fBy').value.trim(), m=modeVal(), price=parseFloat($('#fPrice').value);
+  var msg='';
+  if(!title)msg='Give the item a name first.'; else if(!spec)msg='Say how much there is (weight, yardage or size).'; else if(!by)msg='Put your name or farm on the tag.';
+  else if(m!=='swap'&&!(price>0))msg='Pop a price on it, or choose Swap.';
+  if(msg){err.textContent=msg;err.hidden=false;return;}
+  err.hidden=true;
+  var l={id:'u'+Date.now(),title:title,cat:$('#fCat').value,wt:$('#fW').value,mode:m,spec:spec,lot:$('#fLot').value.trim(),seller:null,by:by,isNew:true};
+  if(m!=='swap')l.price=(Math.round(price*100)/100).toString().replace(/\.0+$/,'');
+  USER.forEach(function(u){u.isNew=false});
+  USER.unshift(l);
+  try{localStorage.setItem(KEY,JSON.stringify(USER.slice(0,30).map(function(u){var c={};for(var k in u)c[k]=u[k];c.isNew=false;return c;})));}catch(x){}
+  f.reset(); $('#priceFld').hidden=true;
+  st.cat='all';st.wt='all';st.mode='all';st.seller=null;resetFilters();
+  var fl=$('#flash'); fl.hidden=false; fl.textContent='Your tag for "'+title+'" is hanging at the front of the Swap Table.';
+  renderSwap(); show('swap');
+  var el=$('#tag-'+l.id); if(el&&el.scrollIntoView)el.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'});
+  var h=$('#p-swap h2'); if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}
+  renderStall();
+});
+
+renderStall(); renderSwap(); renderMap();
+})();
+</script>
+</body>
+</html>
