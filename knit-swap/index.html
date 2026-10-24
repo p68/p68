@@ -1,0 +1,125 @@
+<title>Knit Swap Concepts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap">
+<style>
+  /* Layout: a thin presenter bar on top, the concept fills the rest. The frame stays quiet so the concepts carry the color. */
+  :root {
+    --bg: #e9ebe6;
+    --bar: #f7f8f4;
+    --ink: #22261f;
+    --muted: #646b5e;
+    --line: #cfd3c8;
+    --accent: #3d5a3a;
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --ui: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161814; --bar: #1f221d; --ink: #e6e9e1; --muted: #9aa292; --line: #353a31; --accent: #9cc196;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161814; --bar: #1f221d; --ink: #e6e9e1; --muted: #9aa292; --line: #353a31; --accent: #9cc196;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 14px;
+    display: flex; flex-direction: column;
+  }
+  header {
+    background: var(--bar); border-bottom: 1px solid var(--line);
+    padding-block: 10px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px;
+  }
+  .brand { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .brand h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+  .brand p { margin: 0; color: var(--muted); font-size: 12px; }
+  nav { display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto; }
+  nav button {
+    font: inherit; font-weight: 500; color: var(--muted); background: transparent;
+    border: 1px solid transparent; border-radius: 6px; padding: 6px 10px; cursor: pointer;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  nav button small { font-size: 11px; opacity: .8; }
+  nav button:hover { color: var(--ink); border-color: var(--line); }
+  nav button[aria-selected="true"] { color: var(--ink); border-color: var(--accent); background: var(--bg); }
+  nav button:focus-visible, .open:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .open { color: var(--accent); font-weight: 500; text-decoration: none; white-space: nowrap; }
+  .open:hover { text-decoration: underline; }
+  .note {
+    margin: 0; color: var(--muted); font-size: 12.5px; max-width: 70ch;
+    padding-block: 8px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    border-bottom: 1px solid var(--line);
+  }
+  main { flex: 1 1 auto; min-height: 0; position: relative; }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+</style>
+
+<header>
+  <div class="brand">
+    <h1>Knit Swap</h1>
+    <p>Four design directions for a yarn &amp; needle exchange</p>
+  </div>
+  <nav role="tablist" aria-label="Design concepts" id="tabs"></nav>
+  <a class="open" id="open" href="#" target="_blank" rel="noopener">Open full page</a>
+</header>
+<p class="note" id="note"></p>
+<main><iframe id="frame" title="Design concept"></iframe></main>
+
+<script>
+  const concepts = [
+    { id: "library", label: "Stash Library", tag: "card catalogue", src: "concepts/stash-library.html",
+      note: "Skeins are catalogued like library books. You check out a swap and get a stamped due-date slip." },
+    { id: "board", label: "Swap Board", tag: "village hall", src: "concepts/noticeboard.html",
+      note: "A corkboard of handwritten notices. Tear off a tab to claim a swap, or pin up your own." },
+    { id: "wall", label: "Colour Wall", tag: "chart grid", src: "concepts/colour-wall.html",
+      note: "Browse yarn by hue, then try two or three skeins together in a colourwork motif before you swap." },
+    { id: "zine", label: "Ladder Stitch", tag: "riso zine", src: "concepts/swap-zine.html",
+      note: "A two-ink photocopied zine for the monthly swap meet, with classifieds you circle and an RSVP list." }
+  ];
+  const tabs = document.getElementById("tabs");
+  const frame = document.getElementById("frame");
+  const open = document.getElementById("open");
+  const note = document.getElementById("note");
+
+  function show(id) {
+    const c = concepts.find(x => x.id === id) || concepts[0];
+    for (const b of tabs.children) b.setAttribute("aria-selected", b.dataset.id === c.id ? "true" : "false");
+    if (frame.getAttribute("src") !== c.src) frame.setAttribute("src", c.src);
+    frame.title = c.label + " concept";
+    open.href = c.src;
+    note.textContent = c.note;
+    try { localStorage.setItem("knitswap-tab", c.id); } catch (e) {}
+  }
+
+  concepts.forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.role = "tab"; b.dataset.id = c.id;
+    b.innerHTML = c.label + " <small></small>";
+    b.querySelector("small").textContent = c.tag;
+    b.addEventListener("click", () => { show(c.id); try { history.replaceState(null, "", "#" + c.id); } catch (e) {} });
+    tabs.appendChild(b);
+  });
+  tabs.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const btns = [...tabs.children];
+    const i = btns.indexOf(document.activeElement);
+    if (i < 0) return;
+    const next = btns[(i + (e.key === "ArrowRight" ? 1 : btns.length - 1)) % btns.length];
+    next.focus(); next.click();
+  });
+
+  let start = location.hash.slice(1);
+  if (!concepts.some(c => c.id === start)) {
+    try { start = localStorage.getItem("knitswap-tab") || ""; } catch (e) { start = ""; }
+  }
+  show(start);
+</script>
