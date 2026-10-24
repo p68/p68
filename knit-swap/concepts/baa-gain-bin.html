@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Baa-gain Bin</title>
+<meta name="description" content="Yarn, needles, patterns and finished samples swapped and sold between knitters near Little Wetherby.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chewy&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#cfe6f7; --blue2:#e6f2fb; --mint:#cdeede; --lilac:#ddd0f0; --pink:#f8d4e0; --pink2:#f3b3cb;
+  --navy:#1c2b5a; --cream:#fffdf6; --shade:#7683ad; --hot:#c2185b; --sun:#fde68a;
+  --head:"Chewy","Comic Sans MS","Marker Felt",cursive;
+  --hand:"Patrick Hand","Segoe Print","Comic Sans MS",cursive;
+  --body:Verdana,Tahoma,Geneva,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:#d9ecf8}
+body{
+  margin:0; padding:14px 16px 30px; color:var(--navy); font:14px/1.5 var(--body);
+  background-color:#d9ecf8;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%23d9ecf8'/%3E%3Cg id='s' fill='%23fff' stroke='%23a9c3dc' stroke-width='1'%3E%3Ccircle cx='11' cy='13' r='4.5'/%3E%3Ccircle cx='16' cy='10' r='4.5'/%3E%3Ccircle cx='21' cy='13' r='4.5'/%3E%3Ccircle cx='14' cy='16' r='4'/%3E%3Ccircle cx='19' cy='16' r='4'/%3E%3Cpath d='M12 19v4M20 19v4' stroke='%231c2b5a' stroke-width='1.6'/%3E%3Cellipse cx='26' cy='13' rx='3' ry='3.6' fill='%231c2b5a' stroke='none'/%3E%3C/g%3E%3Cg transform='translate(30 30)' fill='%23fff' stroke='%23c9b8e4' stroke-width='1'%3E%3Ccircle cx='11' cy='13' r='4.5'/%3E%3Ccircle cx='16' cy='10' r='4.5'/%3E%3Ccircle cx='21' cy='13' r='4.5'/%3E%3Ccircle cx='14' cy='16' r='4'/%3E%3Ccircle cx='19' cy='16' r='4'/%3E%3Cpath d='M12 19v4M20 19v4' stroke='%231c2b5a' stroke-width='1.6'/%3E%3Cellipse cx='26' cy='13' rx='3' ry='3.6' fill='%231c2b5a' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+}
+a{color:#1a3fa0}
+a:visited{color:#6a2a9a}
+button,input,select,textarea{font:inherit;color:var(--navy)}
+:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+.sr{position:absolute;left:-9999px}
+
+#page{max-width:880px;margin:0 auto;background:var(--cream);border:5px solid var(--navy);box-shadow:6px 6px 0 var(--shade);outline:2px solid #fff;outline-offset:-9px}
+header{background:var(--blue);border-bottom:5px double var(--navy);padding:12px 14px 8px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header svg.logo{width:132px;height:auto;flex:none}
+.brand{min-width:0;flex:1 1 240px}
+.brand h1{font:normal 46px/1 var(--head);margin:0;letter-spacing:1px;color:var(--navy);text-shadow:3px 3px 0 #fff,4px 4px 0 var(--pink2)}
+.brand .slogan{font:22px/1.1 var(--hand);margin:6px 0 0 3px;color:#3a4a85}
+.brand .est{font-size:11px;margin:5px 0 0 3px;letter-spacing:.5px}
+marquee,.ticker{display:block;background:var(--navy);color:var(--sun);font:12px/1.4 var(--body);padding:3px 10px;white-space:nowrap;overflow:hidden}
+.ticker span{display:inline-block;padding-left:100%;animation:tick 32s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+@media (prefers-reduced-motion:reduce){.ticker span{animation:none;padding-left:0;white-space:normal}.ticker{white-space:normal}}
+
+.wrap{display:grid;grid-template-columns:166px minmax(0,1fr);gap:0}
+aside{background:var(--lilac);border-right:4px solid var(--navy);padding:12px 10px 14px}
+aside h2{font:normal 17px/1 var(--head);margin:0 0 7px;text-align:center;letter-spacing:.5px}
+.tabs{display:flex;flex-direction:column;gap:7px}
+.btn,.tab{
+  display:block;width:100%;text-align:left;cursor:pointer;background:var(--blue2);
+  border:3px solid;border-color:#fff var(--shade) var(--shade) #fff;box-shadow:0 0 0 1px var(--navy);
+  padding:6px 8px;font:bold 13px/1.25 var(--body);text-decoration:none
+}
+.tab{background:var(--pink)}
+.tab:hover,.btn:hover{background:#fff}
+.tab[aria-selected=true]{background:var(--mint);border-color:var(--shade) #fff #fff var(--shade);padding:7px 7px 5px 9px}
+.btn:active{border-color:var(--shade) #fff #fff var(--shade);padding:7px 7px 5px 9px}
+.tab small{display:block;font-weight:normal;font-size:10px}
+.btn.small{display:inline-block;width:auto;font-size:12px;padding:4px 10px}
+.soon{background:#eee;color:#666;font-weight:normal}
+#soonNote{font:15px/1.15 var(--hand);margin:6px 0 0;min-height:18px}
+.sidebox{margin-top:14px;background:var(--cream);border:2px solid var(--navy);padding:6px;font-size:11px;text-align:center}
+.counter{display:flex;justify-content:center;gap:2px;margin:4px 0}
+.counter b{background:var(--navy);color:#fff;font:bold 15px/1 "Courier New",monospace;padding:4px 3px;border:1px solid #fff;outline:1px solid var(--navy)}
+.badge{display:block;margin:10px auto 0;font-size:10px;background:var(--pink);border:2px dashed var(--navy);padding:4px}
+
+main{padding:14px 18px 18px;min-width:0}
+section[hidden]{display:none}
+h2.pg{font:normal 30px/1.05 var(--head);margin:2px 0 8px;color:var(--navy)}
+h3{font:normal 21px/1.1 var(--head);margin:14px 0 5px;color:#2a3d82}
+h3.big{font-size:26px}
+p{margin:0 0 9px}
+.hr{height:18px;margin:10px 0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='18'%3E%3Cg fill-opacity='1' stroke='%231c2b5a' stroke-width='1' fill-rule='nonzero'%3E%3Ccircle cx='10' cy='9' r='6.5' fill='%23f8d4e0'/%3E%3Cpath d='M5 6q5 2 10 0M4 9q6 3 12 0M6 13q4-2 8-1' fill='none' stroke-width='.8'/%3E%3Cpath d='M16 13q5 3 9 1' fill='none'/%3E%3Ccircle cx='36' cy='9' r='6.5' fill='%23cfe6f7'/%3E%3Cpath d='M31 6q5 2 10 0M30 9q6 3 12 0M32 13q4-2 8-1' fill='none' stroke-width='.8'/%3E%3Cpath d='M42 13q5 3 9 1' fill='none'/%3E%3C/g%3E%3C/svg%3E") repeat-x center}
+.box{border:3px solid var(--navy);background:#fff;padding:9px 12px;margin:0 0 14px}
+.box.b{background:var(--blue2)} .box.m{background:#e8f8ef} .box.l{background:#f0eafa} .box.p{background:#fdeaf1}
+.box h3:first-child{margin-top:0}
+.welcome::after{content:"";display:block;clear:both}
+.frame{float:right;margin:0 0 6px 14px;width:178px;text-align:center;font:15px/1.1 var(--hand)}
+.frame svg{display:block;width:100%;height:auto}
+.new{display:inline-block;background:var(--hot);color:#fff;font:bold 10px/1 var(--body);padding:2px 4px;transform:rotate(-4deg);margin-right:4px;vertical-align:1px}
+ul.news{list-style:none;margin:0;padding:0}
+ul.news li{padding:5px 0 5px 24px;border-bottom:1px dotted var(--shade);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23ddd0f0' stroke='%231c2b5a'/%3E%3Cpath d='M4 6q4 2 8 0M3.5 9q4.5 3 9 0' fill='none' stroke='%231c2b5a' stroke-width='.8'/%3E%3C/svg%3E") no-repeat 2px 7px}
+ul.news li:last-child{border:0}
+.date{font-size:11px;color:#3d4d87;display:block}
+.uc{margin-top:8px;border:3px solid var(--navy);background:repeating-linear-gradient(-45deg,var(--sun) 0 11px,var(--navy) 11px 22px);padding:5px}
+.uc div{background:var(--cream);padding:5px 9px;font-size:12px;text-align:center}
+.uc div b{font:normal 17px var(--head)}
+.small{font-size:11px}
+.hand{font-family:var(--hand);font-size:18px;line-height:1.15}
+
+/* the bin */
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px}
+.filters .lab{font:bold 12px var(--body);margin-right:2px}
+.chip{cursor:pointer;background:var(--blue2);border:3px solid;border-color:#fff var(--shade) var(--shade) #fff;box-shadow:0 0 0 1px var(--navy);padding:3px 9px;font-size:12px}
+.chip[aria-pressed=true]{background:var(--pink);border-color:var(--shade) #fff #fff var(--shade);font-weight:bold}
+table.bin{width:100%;border-collapse:collapse;border:3px solid var(--navy);background:#fff;font-size:12px}
+.bin th{background:var(--navy);color:#fff;font:normal 15px var(--head);text-align:left;padding:5px 6px;letter-spacing:.5px}
+.bin td{border-bottom:1px solid #b9c4e0;padding:6px;vertical-align:top}
+.bin tr:nth-child(even) td{background:#f1f7fc}
+.bin td.k{width:78px;text-align:center}
+.bin td.k.on{font-weight:bold}
+.bin td.k.swap.on{background:var(--lilac) !important}
+.bin td.k.sell.on{background:var(--pink) !important}
+.bin td.k.free.on{background:var(--mint) !important}
+.bin .nm{font-weight:bold;font-size:13px;display:block}
+.bin .sp{display:block;font-size:11px;color:#3d4d87}
+.tag{display:inline-block;border:1px solid var(--navy);padding:0 4px;font-size:10px;background:var(--sun);margin-right:3px}
+.askb{margin-top:4px;font-size:11px;cursor:pointer;background:var(--blue2);border:2px solid;border-color:#fff var(--shade) var(--shade) #fff;padding:1px 7px}
+.askb[aria-pressed=true]{background:var(--mint);border-color:var(--shade) #fff #fff var(--shade)}
+.empty{color:#8a94b8;text-align:center}
+#binCount{font:16px var(--hand);margin:5px 0 8px}
+
+/* map */
+.mapctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:flex-end;margin-bottom:8px}
+.mapctl label{display:block;font-size:11px;font-weight:bold;margin-bottom:2px}
+.mapctl select,.mapctl input{border:2px solid var(--navy);background:#fff;padding:5px 6px;font-size:13px;min-width:0;max-width:100%}
+.mapctl form{display:flex;gap:5px;align-items:flex-end}
+.mapctl input{width:120px}
+#pcMsg{font:16px/1.1 var(--hand);min-height:18px;margin:0 0 6px}
+.mapbox{border:4px solid var(--navy);background:var(--mint);box-shadow:3px 3px 0 var(--shade)}
+.mapbox svg{display:block;width:100%;height:auto}
+.pin{cursor:pointer}
+.pin:focus-visible{outline:none}
+.pin:focus-visible .ring{stroke:var(--hot);stroke-width:3;opacity:1}
+.pin .ring{fill:none;stroke:var(--navy);stroke-width:2;opacity:0}
+.pin.sel .ring{opacity:1;stroke:var(--hot);stroke-width:3}
+.pin .hit{fill:transparent}
+.pin .bub{transition:transform .12s}
+.pin.sel .bub{transform:scale(1.35)}
+.pin text.lbl{display:none}
+.pin.sel text.lbl{display:block}
+.maplower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:12px;margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;margin:6px 0 0}
+.legend span{display:inline-flex;gap:4px;align-items:center}
+.legend svg{width:20px;height:20px}
+#sellerList{list-style:none;margin:0;padding:0;border:3px solid var(--navy);background:#fff;max-height:340px;overflow:auto}
+#sellerList li{border-bottom:1px solid #b9c4e0}
+#sellerList button{width:100%;display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:6px;align-items:center;text-align:left;background:transparent;border:0;border-left:6px solid transparent;padding:6px 7px;cursor:pointer;font-size:12px}
+#sellerList button:hover{background:var(--blue2)}
+#sellerList button[aria-pressed=true]{background:var(--pink);border-left-color:var(--hot);font-weight:bold}
+#sellerList svg{width:24px;height:24px}
+#sellerList .mi{font:bold 13px var(--body);white-space:nowrap}
+#sellerList small{display:block;font-weight:normal;font-size:10px;color:#3d4d87}
+#detail{border:3px solid var(--navy);background:var(--cream);padding:9px 11px;font-size:12px}
+#detail h3{margin-top:0;font-size:22px}
+#detail ul{margin:4px 0 6px;padding-left:18px}
+
+/* guestbook */
+.gform{display:grid;gap:7px;margin-bottom:12px}
+.gform label{font-size:12px;font-weight:bold;display:block}
+.gform input,.gform textarea{width:100%;border:2px solid var(--navy);padding:5px 6px;background:#fff;font-size:13px}
+.gform .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.entry{border:2px solid var(--navy);background:#fff;margin:0 0 10px;box-shadow:3px 3px 0 var(--blue)}
+.entry:nth-child(3n+1){margin-right:6px}.entry:nth-child(3n+2){margin-left:10px;box-shadow:3px 3px 0 var(--pink)}
+.entry .eh{background:var(--lilac);border-bottom:2px solid var(--navy);padding:3px 8px;font-size:11px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.entry .eb{padding:6px 9px;font-family:var(--hand);font-size:18px;line-height:1.2;overflow-wrap:anywhere}
+ol.rules{margin:0;padding-left:0;counter-reset:r;list-style:none}
+ol.rules li{counter-increment:r;position:relative;padding:5px 0 7px 40px;border-bottom:1px dotted var(--shade)}
+ol.rules li::before{content:counter(r);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--pink);border:2px solid var(--navy);font:normal 16px/24px var(--head);text-align:center}
+ol.rules li:nth-child(3n+2)::before{background:var(--mint)}ol.rules li:nth-child(3n)::before{background:var(--lilac)}
+ol.rules b{font-family:var(--head);font-weight:normal;font-size:17px}
+
+footer{border-top:5px double var(--navy);background:var(--pink);padding:9px 14px;font-size:11px;text-align:center}
+footer .ring{display:inline-block;border:2px solid var(--navy);background:#fff;padding:2px 8px;margin:4px 3px}
+
+@media (max-width:720px){
+  body{padding:10px 16px 24px}
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  aside{border-right:0;border-bottom:4px solid var(--navy)}
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .sidebox{display:inline-block;margin-right:6px;vertical-align:top}
+  main{padding:12px 12px 16px}
+  .brand h1{font-size:36px}
+  header svg.logo{width:104px}
+  .frame{float:none;margin:0 auto 10px}
+  .maplower{grid-template-columns:minmax(0,1fr)}
+  .gform .row{grid-template-columns:minmax(0,1fr)}
+  .entry:nth-child(n){margin-left:0;margin-right:0}
+  /* bin table becomes stacked cards */
+  table.bin,.bin tbody,.bin tr,.bin td{display:block;width:100%}
+  .bin thead{position:absolute;left:-9999px}
+  .bin tr{border-bottom:3px solid var(--navy);padding:4px 0}
+  .bin td{border:0;padding:3px 8px}
+  .bin td.k{width:100%;text-align:left}
+  .bin td.k.empty{display:none}
+  .bin td.k::before{content:attr(data-l) ": ";font-weight:bold}
+}
+</style>
+</head>
+<body>
+
+<!-- shared drawings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="ic-porch" viewBox="0 0 20 20"><path d="M2 10 10 3l8 7z" fill="#f8d4e0" stroke="#1c2b5a" stroke-width="1.5" stroke-linejoin="round"/><rect x="4" y="10" width="12" height="8" fill="#fff" stroke="#1c2b5a" stroke-width="1.5"/><rect x="8" y="12" width="4" height="6" fill="#cdeede" stroke="#1c2b5a" stroke-width="1.2"/></symbol>
+    <symbol id="ic-market" viewBox="0 0 20 20"><path d="M2 8 4 3h12l2 5z" fill="#fff" stroke="#1c2b5a" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 3 5 8M10 3v5M14 3l1 5" stroke="#c2185b" stroke-width="1.6"/><rect x="3" y="11" width="14" height="3" fill="#ddd0f0" stroke="#1c2b5a" stroke-width="1.3"/><path d="M5 14v4M15 14v4M3 8v3M17 8v3" stroke="#1c2b5a" stroke-width="1.4"/></symbol>
+    <symbol id="ic-cafe" viewBox="0 0 20 20"><path d="M3 8h11v4a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" fill="#fff" stroke="#1c2b5a" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 9.5h1.5a2.5 2.5 0 0 1 0 5H13.5" fill="none" stroke="#1c2b5a" stroke-width="1.5"/><path d="M6 6c-1-1 1-2 0-3M10 6c-1-1 1-2 0-3" fill="none" stroke="#1c2b5a" stroke-width="1.1"/></symbol>
+    <symbol id="sh" viewBox="-14 -12 30 22"><g fill="#fff" stroke="#1c2b5a" stroke-width="1"><circle cx="-6" cy="0" r="5"/><circle cx="-1" cy="-4" r="5"/><circle cx="5" cy="-1" r="5"/><circle cx="0" cy="2" r="5"/><circle cx="-5" cy="4" r="3.5"/><circle cx="4" cy="4" r="3.5"/></g><ellipse cx="11" cy="-1" rx="3.4" ry="3.8" fill="#1c2b5a"/><path d="M-3 7v3M3 7v3" stroke="#1c2b5a" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<div id="page">
+  <header>
+    <!-- logo: sheep sitting in a wicker bin with yarn balls -->
+    <svg class="logo" viewBox="0 0 140 120" role="img" aria-label="A woolly sheep sitting in a wicker bin with balls of yarn">
+      <ellipse cx="70" cy="113" rx="58" ry="5" fill="#7683ad" opacity=".35"/>
+      <!-- sheep -->
+      <g stroke="#1c2b5a" stroke-width="2" fill="#fff">
+        <circle cx="42" cy="48" r="14"/><circle cx="58" cy="36" r="15"/><circle cx="78" cy="38" r="15"/><circle cx="94" cy="50" r="14"/><circle cx="52" cy="58" r="14"/><circle cx="76" cy="58" r="15"/><circle cx="66" cy="48" r="13" stroke="none"/>
+      </g>
+      <ellipse cx="70" cy="62" rx="18" ry="19" fill="#1c2b5a"/>
+      <path d="M53 52q-12-6-14 4q4 5 14 0zM87 52q12-6 14 4q-4 5-14 0z" fill="#1c2b5a"/>
+      <path d="M58 46q12-12 24 0q-12-6-24 0z" fill="#fff" stroke="#fff"/>
+      <circle cx="63" cy="60" r="3.4" fill="#fff"/><circle cx="77" cy="60" r="3.4" fill="#fff"/><circle cx="64" cy="60.5" r="1.5" fill="#1c2b5a"/><circle cx="76" cy="60.5" r="1.5" fill="#1c2b5a"/>
+      <path d="M65 71q5 4 10 0" fill="none" stroke="#f3b3cb" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- bin -->
+      <path d="M20 82h100l-9 30H29z" fill="#e9c9a0" stroke="#1c2b5a" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M23 92h94M26 102h88" stroke="#1c2b5a" stroke-width="1.5"/>
+      <path d="M36 83l-5 29M54 83l-3 29M72 83v29M90 83l3 29M108 83l5 29" stroke="#1c2b5a" stroke-width="1.2" opacity=".7"/>
+      <path d="M17 82h106" stroke="#1c2b5a" stroke-width="6" stroke-linecap="round"/>
+      <!-- yarn balls -->
+      <g stroke="#1c2b5a" stroke-width="1.6">
+        <circle cx="18" cy="82" r="13" fill="#f8d4e0"/><path d="M9 76q10 6 18 0M7 83q11 7 22 0M10 90q8-3 15-1" fill="none"/>
+        <circle cx="124" cy="80" r="12" fill="#cfe6f7"/><path d="M116 74q8 6 16 0M113 80q11 7 21 0M116 87q8-3 14-1" fill="none"/>
+        <circle cx="112" cy="98" r="9" fill="#cdeede" stroke-width="1.4"/><path d="M106 94q6 4 12 0M105 99q7 5 14 0" fill="none"/>
+      </g>
+      <path d="M30 94q-14 10-4 18" fill="none" stroke="#c2185b" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <div class="brand">
+      <h1>The Baa-gain Bin</h1>
+      <p class="slogan">Ewe'll find something.</p>
+      <p class="est">Swapping &amp; selling leftover wool around Little Wetherby since 2005</p>
+    </div>
+  </header>
+  <div class="ticker" aria-hidden="true"><span>*** New this month: the NEAR YOU map is up! *** Saturday market stall moved to the Corn Exchange yard *** Please wind your yarn BEFORE you post it *** </span></div>
+
+  <div class="wrap">
+    <aside>
+      <h2>Have a look round</h2>
+      <div class="tabs" role="tablist" aria-label="Sections of this website" aria-orientation="vertical">
+        <button class="tab" role="tab" id="t-home" aria-controls="home" aria-selected="true" data-tab="home">Home<small>start here, dear</small></button>
+        <button class="tab" role="tab" id="t-bin" aria-controls="bin" aria-selected="false" data-tab="bin" tabindex="-1">The Bin<small>swaps &amp; sales</small></button>
+        <button class="tab" role="tab" id="t-map" aria-controls="map" aria-selected="false" data-tab="map" tabindex="-1">Near You<small>map of sellers</small></button>
+        <button class="tab" role="tab" id="t-guest" aria-controls="guest" aria-selected="false" data-tab="guest" tabindex="-1">Guestbook<small>sign it!</small></button>
+        <button class="tab" role="tab" id="t-rules" aria-controls="rules" aria-selected="false" data-tab="rules" tabindex="-1">Swap Rules<small>please read</small></button>
+        <button class="btn soon" type="button" data-soon="Links page: still knitting it, sorry!">Links (soon!)</button>
+        <button class="btn soon" type="button" data-soon="Photo gallery: waiting for Gareth to show me the scanner.">Photo Gallery</button>
+      </div>
+      <p id="soonNote" role="status"></p>
+      <div class="sidebox">
+        <div>You are visitor</div>
+        <div class="counter" id="counter" aria-label="Visitor counter"></div>
+        <div class="small">Last updated:<br><b>24 October 2026</b><br>(by me, on the kitchen computer)</div>
+      </div>
+      <span class="badge">Best viewed in anything, really. Made with tea.</span>
+    </aside>
+
+    <main>
+      <!-- HOME -->
+      <section id="home" role="tabpanel" aria-labelledby="t-home">
+        <h2 class="pg">Hello and welcome, dear knitter!</h2>
+        <div class="welcome">
+          <figure class="frame" style="margin-bottom:6px">
+            <svg viewBox="0 0 180 170" role="img" aria-label="Photograph in a pink frame of a knitted sheep-shaped tea cosy">
+              <rect x="2" y="2" width="176" height="166" fill="#f3b3cb" stroke="#1c2b5a" stroke-width="3"/>
+              <rect x="12" y="12" width="156" height="146" fill="#ddd0f0" stroke="#1c2b5a" stroke-width="2"/>
+              <rect x="22" y="22" width="136" height="126" fill="#e6f2fb" stroke="#1c2b5a" stroke-width="2"/>
+              <path d="M22 118h136v30H22z" fill="#fffdf6"/><path d="M22 118h136M22 133h136" stroke="#f8d4e0" stroke-width="3"/>
+              <path d="M22 118h136" stroke="#1c2b5a" stroke-width="1.5"/>
+              <!-- teapot under cosy -->
+              <path d="M142 90q18-6 14 16q-4 6-12 2" fill="none" stroke="#1c2b5a" stroke-width="3"/>
+              <path d="M32 94 20 84q-2 12 10 18" fill="#cdeede" stroke="#1c2b5a" stroke-width="2"/>
+              <!-- cosy -->
+              <g fill="#fffdf6" stroke="#1c2b5a" stroke-width="1.8">
+                <circle cx="56" cy="92" r="17"/><circle cx="76" cy="76" r="18"/><circle cx="100" cy="78" r="18"/><circle cx="120" cy="94" r="17"/><circle cx="68" cy="106" r="16"/><circle cx="96" cy="104" r="17"/>
+              </g>
+              <path d="M52 117h80v1H52z" fill="#fffdf6"/>
+              <circle cx="88" cy="62" r="6" fill="#f3b3cb" stroke="#1c2b5a" stroke-width="1.6"/>
+              <!-- face -->
+              <ellipse cx="40" cy="104" rx="13" ry="15" fill="#1c2b5a"/>
+              <path d="M30 94q-9-3-9 5 4 4 10 0zM47 93q8-5 11 2-4 5-10 1z" fill="#1c2b5a"/>
+              <circle cx="37" cy="101" r="2.6" fill="#fff"/><circle cx="46" cy="102" r="2.6" fill="#fff"/><circle cx="37.5" cy="101.5" r="1.1" fill="#1c2b5a"/><circle cx="45.5" cy="102.5" r="1.1" fill="#1c2b5a"/>
+              <path d="M37 111q4 3 8 0" stroke="#f3b3cb" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <path d="M46 116q-3 8-11 5" fill="none" stroke="#c2185b" stroke-width="1.4"/>
+              <rect x="64" y="116" width="6" height="2" fill="#1c2b5a"/><rect x="110" y="116" width="6" height="2" fill="#1c2b5a"/>
+              <path d="M142 28l4 8 9 1-6 6 2 9-9-4-8 4 2-9-6-6 9-1z" fill="#fde68a" stroke="#1c2b5a" stroke-width="1" transform="scale(.6) translate(100 10)"/>
+            </svg>
+            <figcaption>Dolly, my sheep tea cosy (2004). She keeps the pot hot and the knitters honest.</figcaption>
+          </figure>
+          <p>Come in, come in, and mind the wool on the floor. This is my little corner of the internet where knitters swap, sell and give away their <b>leftover yarn, needles, patterns and finished samples</b>. Every one of us has a bag in the cupboard that is too good to bin and too odd to use up. Here it goes to somebody who will love it.</p>
+          <p>I built this site in 2005 after a Computers for the Over-Sixties evening class (thank you, Gareth) and I have been fiddling with it ever since. It is not fancy. It does work, mostly. The <b>new "Near You" map</b> shows who is selling in which village, so you can pop round with a flask instead of paying postage.</p>
+          <p class="hand">Happy knitting, <span style="font-size:24px">Margery P.</span> (retired, Class 3, Ewe Green C of E Primary)</p>
+        </div>
+
+        <div class="hr" role="presentation"></div>
+
+        <div class="box b">
+          <h3>What's new this week</h3>
+          <ul class="news">
+            <li><span class="date">Sat 24 Oct</span><span class="new">NEW</span> <a href="#map" data-go="map">Near You map</a> is live, with eleven stalls, porches and a very good café.</li>
+            <li><span class="date">Thu 22 Oct</span>Colin has put up a lot of 3 x 100 g mustard chunky in <a href="#bin" data-go="bin">the Bin</a>. It is lovely. I nearly kept it.</li>
+            <li><span class="date">Tue 20 Oct</span>Dot found eleven part-balls of sock yarn behind her sofa. Free to anyone who can carry them.</li>
+            <li><span class="date">Sun 18 Oct</span>Thistledown Stitch Group now meets on <b>Wednesdays</b>, not Thursdays. Sorry Thursday people.</li>
+          </ul>
+        </div>
+
+        <div class="box p">
+          <h3 class="big">Pattern of the Month</h3>
+          <p><b>Dolly's Hot-Water-Bottle Cover</b> (the sheep one, by popular request). Easy, mostly garter stitch, and a good way to use up odds and ends.</p>
+          <p class="small"><b>Yarn:</b> about 250 g Aran (180 m / 197 yds per 100 g), cream plus a scrap of dark for the face. <b>Needles:</b> 5 mm / UK 6 / US 8. <b>Tension:</b> 17 sts and 34 rows to 10 cm in garter.<br><b>Row 1:</b> cast on 52 sts, knit every row for 18 cm, then <i>bobble row</i>: k4, (MB, k3) to end. Repeat bobble row every 6th row. Full pattern when I find the other half of the page.</p>
+        </div>
+
+        <div class="uc"><div><b>Under construction</b><br>The "Recipes for Knitters' Tea" page. Started March 2007. Do come back.</div></div>
+      </section>
+
+      <!-- THE BIN -->
+      <section id="bin" role="tabpanel" aria-labelledby="t-bin" hidden>
+        <h2 class="pg">The Bin</h2>
+        <p>Everything below is real, in somebody's cupboard, and waiting. Pick a yarn weight, or a kind of deal, and ask the seller politely.</p>
+        <div class="filters" role="group" aria-label="Filter by weight">
+          <span class="lab">Weight:</span>
+          <button class="chip" data-w="all" aria-pressed="true">All</button>
+          <button class="chip" data-w="lace" aria-pressed="false">Lace</button>
+          <button class="chip" data-w="4ply" aria-pressed="false">4 ply</button>
+          <button class="chip" data-w="dk" aria-pressed="false">DK</button>
+          <button class="chip" data-w="aran" aria-pressed="false">Aran</button>
+          <button class="chip" data-w="chunky" aria-pressed="false">Chunky</button>
+          <button class="chip" data-w="other" aria-pressed="false">Needles &amp; other</button>
+        </div>
+        <div class="filters" role="group" aria-label="Filter by kind of deal">
+          <span class="lab">Deal:</span>
+          <button class="chip" data-m="all" aria-pressed="true">Any</button>
+          <button class="chip" data-m="swap" aria-pressed="false">Swap</button>
+          <button class="chip" data-m="sell" aria-pressed="false">Sell &pound;</button>
+          <button class="chip" data-m="free" aria-pressed="false">Free</button>
+        </div>
+        <div id="binCount" role="status" aria-live="polite"></div>
+        <table class="bin">
+          <thead><tr><th scope="col">What</th><th scope="col">Swap</th><th scope="col">Sell &pound;</th><th scope="col">Free</th></tr></thead>
+          <tbody id="binBody"></tbody>
+        </table>
+        <div class="hr" role="presentation"></div>
+        <p class="small">Weights and yardages are what the label says or what I measured on the kitchen scales. If a dye lot is not given, ask. Mixed lots are marked. Prices are in pounds sterling and are never haggled over before tea.</p>
+      </section>
+
+      <!-- MAP -->
+      <section id="map" role="tabpanel" aria-labelledby="t-map" hidden>
+        <h2 class="pg">Near You</h2>
+        <p>Who is selling and swapping around Little Wetherby? I drew this myself, from memory and the Ordnance Survey map in the hall. Pick your village, or type your postcode, and I will work out the miles.</p>
+        <div class="mapctl">
+          <div><label for="vsel">Your village</label><select id="vsel"></select></div>
+          <form id="pcform" autocomplete="off">
+            <div><label for="pc">or postcode-ish (try LW5 2AB)</label><input id="pc" type="text" inputmode="text" maxlength="9" placeholder="LW1 1AA"></div>
+            <button class="btn small" type="submit">Go</button>
+          </form>
+        </div>
+        <p id="pcMsg" role="status" aria-live="polite"></p>
+        <div class="mapbox" id="mapbox">
+          <svg id="mapsvg" viewBox="0 0 640 440" role="group" aria-label="Hand-drawn map of the countryside around Little Wetherby with seller pins">
+            <defs>
+              <pattern id="grass" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#dff3e4"/><path d="M3 9l1-3 1 3M10 4l1-3 1 3" stroke="#9fcfae" stroke-width="1" fill="none"/></pattern>
+              <pattern id="field" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#c4e8b0"/><path d="M0 8L8 0" stroke="#a7d68f" stroke-width="1"/></pattern>
+            </defs>
+            <rect width="640" height="440" fill="url(#grass)"/>
+            <!-- hills -->
+            <g fill="none" stroke="#8fbf9f" stroke-width="2" stroke-linecap="round"><path d="M20 40q30-30 60 0q25-22 50 0M60 70q25-20 50 0"/><path d="M560 400q25-26 50 0M520 420q20-16 40 0"/></g>
+            <!-- fields -->
+            <g stroke="#7aa88a" stroke-width="1.5"><path d="M20 320l60-14 20 46-64 18z" fill="#f5efc8"/><path d="M430 230l70-14 16 36-70 20z" fill="#f2e8bb"/><path d="M200 20l60 8-6 46-56-8z" fill="#f5efc8"/></g>
+            <!-- sheep field -->
+            <path d="M388 104l92-6 6 58-96 8z" fill="url(#field)" stroke="#1c2b5a" stroke-width="2" stroke-dasharray="1 4" stroke-linecap="round"/>
+            <path d="M388 104l92-6 6 58-96 8z" fill="none" stroke="#6a8a3a" stroke-width="3" stroke-dasharray="2 6" opacity=".6"/>
+            <use href="#sh" x="398" y="112" width="24" height="18"/><use href="#sh" x="430" y="124" width="22" height="16"/><use href="#sh" x="452" y="104" width="24" height="18"/><use href="#sh" x="408" y="140" width="20" height="15"/><use href="#sh" x="456" y="136" width="22" height="16"/>
+            <text x="392" y="182" font-family="Patrick Hand,Segoe Print,cursive" font-size="15" fill="#1c2b5a">Pudding Lane sheep field</text>
+            <!-- woods -->
+            <g fill="#8cc79d" stroke="#1c2b5a" stroke-width="1.5">
+              <circle cx="58" cy="372" r="12"/><circle cx="76" cy="380" r="11"/><circle cx="46" cy="390" r="10"/><circle cx="68" cy="398" r="12"/>
+              <circle cx="560" cy="362" r="12"/><circle cx="580" cy="372" r="11"/><circle cx="548" cy="380" r="9"/>
+              <circle cx="250" cy="30" r="9"/><circle cx="268" cy="38" r="10"/><circle cx="270" cy="212" r="8"/>
+            </g>
+            <text x="30" y="420" font-family="Patrick Hand,Segoe Print,cursive" font-size="14" fill="#1c2b5a">Hobb's Wood</text>
+            <!-- lanes -->
+            <g fill="none" stroke="#fffdf6" stroke-width="5" stroke-linecap="round">
+              <path d="M130 120C190 135 250 120 330 70"/><path d="M320 220C250 260 220 300 200 330"/><path d="M320 220C420 205 490 170 560 190"/><path d="M560 190C545 150 520 120 500 90"/><path d="M520 300C470 260 400 235 320 220"/><path d="M90 260C150 250 250 235 320 220"/><path d="M250 130C270 160 300 190 320 220"/><path d="M420 380C470 360 500 330 520 300"/><path d="M420 380C330 400 250 380 200 330"/>
+            </g>
+            <g fill="none" stroke="#1c2b5a" stroke-width="1" stroke-dasharray="4 3">
+              <path d="M130 120C190 135 250 120 330 70"/><path d="M320 220C250 260 220 300 200 330"/><path d="M320 220C420 205 490 170 560 190"/><path d="M560 190C545 150 520 120 500 90"/><path d="M520 300C470 260 400 235 320 220"/><path d="M90 260C150 250 250 235 320 220"/><path d="M250 130C270 160 300 190 320 220"/><path d="M420 380C470 360 500 330 520 300"/><path d="M420 380C330 400 250 380 200 330"/>
+            </g>
+            <!-- river -->
+            <path d="M0 150C110 170 210 250 335 238S520 262 640 335" fill="none" stroke="#1c2b5a" stroke-width="15" stroke-linecap="round" opacity=".18"/>
+            <path d="M0 150C110 170 210 250 335 238S520 262 640 335" fill="none" stroke="#a9d6f0" stroke-width="11" stroke-linecap="round"/>
+            <path d="M0 150C110 170 210 250 335 238S520 262 640 335" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="10 14" stroke-linecap="round"/>
+            <text x="38" y="177" font-family="Patrick Hand,Segoe Print,cursive" font-size="15" font-style="italic" fill="#1c2b5a" transform="rotate(10 38 177)">River Wether</text>
+            <!-- B road -->
+            <path id="broad" d="M330 0V70C330 140 308 170 320 222C332 280 400 330 420 380L440 440" fill="none" stroke="#1c2b5a" stroke-width="9" stroke-linecap="round"/>
+            <path d="M330 0V70C330 140 308 170 320 222C332 280 400 330 420 380L440 440" fill="none" stroke="#fde68a" stroke-width="6" stroke-linecap="round"/>
+            <rect x="290" y="10" width="34" height="16" rx="3" fill="#fff" stroke="#1c2b5a" stroke-width="1.5"/><text x="307" y="22" font-family="Verdana,sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#1c2b5a">B4012</text>
+            <!-- bridge -->
+            <rect x="311" y="228" width="22" height="14" fill="#fff" stroke="#1c2b5a" stroke-width="2" transform="rotate(-8 322 235)"/>
+            <!-- church -->
+            <g transform="translate(262 186)" stroke="#1c2b5a" stroke-width="1.6" stroke-linejoin="round">
+              <rect x="0" y="12" width="24" height="16" fill="#fff"/><rect x="24" y="2" width="12" height="26" fill="#f8d4e0"/>
+              <path d="M24 2 30 -16 36 2z" fill="#ddd0f0"/><path d="M30 -16v-8M27 -21h6" fill="none"/>
+              <path d="M0 12l12-8 12 8" fill="#cfe6f7"/><path d="M28 28v-8a2 2 0 0 1 4 0v8" fill="#1c2b5a"/>
+            </g>
+            <text x="212" y="226" font-family="Patrick Hand,Segoe Print,cursive" font-size="14" fill="#1c2b5a">St Oswin's</text>
+            <!-- town blocks -->
+            <g fill="#fff" stroke="#1c2b5a" stroke-width="1.5"><rect x="338" y="198" width="14" height="12"/><rect x="356" y="196" width="14" height="14"/><rect x="340" y="214" width="16" height="12"/><rect x="298" y="190" width="12" height="12"/><rect x="296" y="206" width="14" height="10"/></g>
+            <!-- compass + scale + cartouche -->
+            <g transform="translate(596 52)" stroke="#1c2b5a" stroke-width="1.5"><circle r="26" fill="#fffdf6"/><path d="M0 -22L5 0 0 22 -5 0z" fill="#f8d4e0"/><path d="M-22 0L0 -5 22 0 0 5z" fill="#cfe6f7"/><text y="-28" text-anchor="middle" font-family="Chewy,cursive" font-size="14" fill="#1c2b5a" stroke="none">N</text></g>
+            <g transform="translate(24 20)"><rect width="152" height="40" fill="#fffdf6" stroke="#1c2b5a" stroke-width="2"/><text x="76" y="17" text-anchor="middle" font-family="Chewy,Comic Sans MS,cursive" font-size="16" fill="#1c2b5a">Round Wetherby Way</text><text x="76" y="32" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="12" fill="#1c2b5a">drawn by M. Pennick, not to scale</text></g>
+            <g transform="translate(130 420)"><path d="M0 0h70M0 -4v8M70 -4v8M35 -2v4" stroke="#1c2b5a" stroke-width="2"/><rect x="0" y="-3" width="35" height="6" fill="#1c2b5a"/><text x="35" y="-8" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="13" fill="#1c2b5a">1 mile</text></g>
+            <g id="villages"></g>
+            <g id="pins"></g>
+            <g id="you" pointer-events="none"></g>
+          </svg>
+        </div>
+        <div class="legend" aria-label="Map key">
+          <span><svg viewBox="0 0 20 20"><use href="#ic-porch"/></svg>Front-porch box</span>
+          <span><svg viewBox="0 0 20 20"><use href="#ic-market"/></svg>Saturday (or other) market</span>
+          <span><svg viewBox="0 0 20 20"><use href="#ic-cafe"/></svg>Caf&eacute; knitting group</span>
+          <span>Pink ring = picked</span>
+        </div>
+        <div class="maplower">
+          <div>
+            <h3 style="margin-top:4px">Nearest first</h3>
+            <ul id="sellerList"></ul>
+            <p class="small" style="margin-top:6px">Distances are as the crow flies, so add a bit for the lanes and a lot for tractors.</p>
+          </div>
+          <div id="detail" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- GUESTBOOK -->
+      <section id="guest" role="tabpanel" aria-labelledby="t-guest" hidden>
+        <h2 class="pg">My Guestbook</h2>
+        <p>Please sign! Nice things, helpful things and "where do I get 2.25 mm needles" things are all welcome. I read every one with my second cup of tea.</p>
+        <form class="gform box l" id="gform">
+          <div class="row">
+            <div><label for="gn">Your name</label><input id="gn" required maxlength="40" autocomplete="off"></div>
+            <div><label for="gp">Where from?</label><input id="gp" maxlength="40" autocomplete="off" placeholder="village or town"></div>
+          </div>
+          <div><label for="gm">Your message</label><textarea id="gm" rows="3" required maxlength="400"></textarea></div>
+          <div><button class="btn small" type="submit">Sign the guestbook</button> <span id="gstat" class="hand" role="status"></span></div>
+        </form>
+        <div class="hr" role="presentation"></div>
+        <div id="entries"></div>
+      </section>
+
+      <!-- RULES -->
+      <section id="rules" role="tabpanel" aria-labelledby="t-rules" hidden>
+        <h2 class="pg">Swap Rules</h2>
+        <p>Not rules, exactly. More the things I wish somebody had told me in 2005 before the Great Moth Incident.</p>
+        <ol class="rules">
+          <li><b>Be honest about the wool.</b> Say what it is: fibre, weight, grams left, yardage if you know it. "Some kind of green" is a start, but not a good one.</li>
+          <li><b>Mention the dye lot.</b> Two balls from different lots will stripe your jumper in a way you did not plan. If you have lost the label, say so, and I will not tell anyone.</li>
+          <li><b>Smell it.</b> A bag from the loft that smells of the loft goes in the freezer for 48 hours before it goes anywhere near my cupboard. Moths are not welcome at the bin.</li>
+          <li><b>Swaps should feel fair.</b> A 100 g skein for a 100 g skein, DK for DK, or something near enough. If you are not sure, a biscuit helps.</li>
+          <li><b>Keep prices kind.</b> We are not a shop. Charge what you paid, or less, and do not ask for postage you have not worked out.</li>
+          <li><b>Meet somewhere sensible.</b> Porches, the market, the caf&eacute;. If you are meeting a stranger for needles, tell someone where you are. Bring a friend if you can, and knit.</li>
+          <li><b>Needles: say the size twice.</b> In millimetres and in the old UK number, and the US one if you can: 4 mm / UK 8 / US 6. It saves tears.</li>
+          <li><b>Wind it before you hand it over.</b> A tangled hank is a gift of work. Wind it into a ball or a cake, or at least tie it loosely in four places.</li>
+          <li><b>Say thank you.</b> Sign the guestbook and tell me what you made. I want to see the photographs, even the ones where the sleeve is odd.</li>
+          <li><b>If it goes wrong, be nice.</b> Everyone here is somebody's nan, or somebody's grandson, or the vicar. We all started with dropped stitches.</li>
+        </ol>
+        <div class="hr" role="presentation"></div>
+        <p class="hand">That's all! Now go and rummage. &mdash; Margery</p>
+      </section>
+    </main>
+  </div>
+  <footer>
+    <div class="hr" role="presentation" style="margin-top:0"></div>
+    <div>&copy; 2005&ndash;2026 Margery Pennick, Ewe Green. All rights reserved, but please do ask. Pictures drawn by me and my nephew.</div>
+    <div><span class="ring">Knitting Webring: Prev</span> <span class="ring">Random</span> <span class="ring">Next</span></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+
+/* ---------- data ---------- */
+var VILL={
+  lw:{n:"Little Wetherby",x:320,y:220,pc:"LW1",big:1},
+  np:{n:"Nether Pudsey",x:130,y:120,pc:"LW2"},
+  uf:{n:"Upper Fleecing",x:500,y:90,pc:"LW3"},
+  bc:{n:"Bramblecombe",x:520,y:300,pc:"LW4"},
+  eg:{n:"Ewe Green",x:200,y:330,pc:"LW5"},
+  cm:{n:"Cobbold Magna",x:90,y:260,pc:"LW6"},
+  td:{n:"Thistledown",x:420,y:380,pc:"LW7"},
+  me:{n:"Mossop End",x:560,y:190,pc:"LW8"},
+  hc:{n:"Hatherby Cross",x:330,y:70,pc:"LW9"},
+  lt:{n:"Lower Tuppence",x:250,y:130,pc:"LW10"}
+};
+var PXMILE=70;
+var TYPES={porch:{n:"Front-porch box",ic:"ic-porch",c:"#f8d4e0"},market:{n:"Market stall",ic:"ic-market",c:"#ddd0f0"},cafe:{n:"Café knitting group",ic:"ic-cafe",c:"#cfe6f7"}};
+var SELL=[
+ {id:"s1",name:"Margery Pennick",v:"eg",dx:-12,dy:14,t:"porch",when:"Any day, 9 to 5",where:"The porch at 4 Church Lane, Ewe Green",note:"Honesty box on the shelf. Ring the bell if you want a cuppa and a look at the good stuff."},
+ {id:"s2",name:"Dot Hobbs",v:"lw",dx:28,dy:-26,t:"market",when:"Saturdays, 8 to 1",where:"Corn Exchange yard, Little Wetherby",note:"Trestle table next to the fish van. Lots of 4 ply and the odd mystery bag."},
+ {id:"s3",name:"Knit & Natter Group",v:"lw",dx:-24,dy:20,t:"cafe",when:"Thursdays, 2 to 4",where:"The Copper Kettle, High Street",note:"Bring a bag. Leave with a different bag. Cake is separate."},
+ {id:"s4",name:"Beryl Okonkwo",v:"np",dx:14,dy:-14,t:"porch",when:"Weekday evenings",where:"Blue gate, Mill Row, Nether Pudsey",note:"Needles by the dozen, mostly bamboo. Text me first, I am often in the garden."},
+ {id:"s5",name:"Gwen Tattersall",v:"uf",dx:-14,dy:16,t:"porch",when:"Mornings, not Tuesdays",where:"The Old Dairy, Upper Fleecing",note:"Fine yarns and laceweight. Dogs on the premises, friendly ones."},
+ {id:"s6",name:"Pip Ashworth",v:"bc",dx:18,dy:-10,t:"market",when:"First Saturday of the month, 10 to 12",where:"Bramblecombe Village Hall",note:"Hand-dyed bits and the best flapjacks in the parish."},
+ {id:"s7",name:"Janet Moorcroft",v:"me",dx:-10,dy:-18,t:"porch",when:"Afternoons",where:"Rose Cottage, Mossop End",note:"Undyed and natural wools from my own neighbour's flock."},
+ {id:"s8",name:"Thistledown Stitch Group",v:"td",dx:-22,dy:-16,t:"cafe",when:"Wednesdays, 10 to 12",where:"Thistledown Tearoom",note:"Chatty. Mostly socks. Very good at untangling things."},
+ {id:"s9",name:"Sunita Bhatt",v:"hc",dx:16,dy:18,t:"market",when:"Second Sunday of the month",where:"Hatherby Cross farmers' market",note:"Patterns and books on the cheese stall's end of the row."},
+ {id:"s10",name:"Colin Dunmore",v:"cm",dx:20,dy:-16,t:"market",when:"Tuesdays, 9 to 2",where:"By the green, Cobbold Magna",note:"Chunky wools and tools. Tuesday, not Monday! Everybody asks."},
+ {id:"s11",name:"Ruth Penhale",v:"lt",dx:-8,dy:-18,t:"porch",when:"Saturdays and Sundays",where:"2 Tuppence Cottages",note:"Finished samples and knitted baby things I cannot stop making."}
+];
+var SBY={};SELL.forEach(function(s){SBY[s.id]=s;s.x=VILL[s.v].x+s.dx;s.y=VILL[s.v].y+s.dy});
+
+var LIST=[
+ {id:1,w:"aran",nm:"Hollin Beck Aran, heathered green",sp:"5 x 100 g, 180 m / 197 yds per 100 g, 100% British wool, dye lot 4471 (all matching). Needles 5 mm / UK 6 / US 8.",m:"swap",want:"DK in blue or grey, or sock yarn, weight for weight",s:"s1"},
+ {id:2,w:"lace",nm:"Wetherby Mill Lace, ivory",sp:"2 x 50 g, 400 m / 437 yds per 50 g, 50% silk 50% merino, dye lot A19. Needles 2.5 mm / UK 12 / US 1.",m:"sell",p:9,note:"for both",s:"s5"},
+ {id:3,w:"4ply",nm:"Odds-and-ends sock bag",sp:"11 part-balls of superwash 4 ply, about 480 g in all, 75% wool 25% nylon, mixed dye lots. Needles 2.75 mm / UK 12 / US 2.",m:"free",s:"s2"},
+ {id:4,w:"chunky",nm:"Chunky Shetland-cross, mustard",sp:"3 x 100 g, 100 m / 109 yds per 100 g, 100% wool, dye lot 22B. Needles 8 mm / UK 0 / US 11.",m:"sell",p:12,note:"the lot",s:"s10"},
+ {id:5,w:"other",nm:"Bamboo straight needles, 35 cm",sp:"One pair, 4 mm / UK 8 / US 6. Good condition, one tiny scratch.",m:"swap",want:"2.5 mm / UK 12 / US 1 double-pointed needles",s:"s4"},
+ {id:6,w:"dk",nm:"Sea-blue DK cotton",sp:"8 x 50 g, 115 m / 126 yds per 50 g, 100% cotton, dye lot 7. Needles 4 mm / UK 8 / US 6.",m:"sell",p:14,note:"all eight",s:"s6"},
+ {id:7,w:"other",nm:"Circular needle set, 80 cm",sp:"Five fixed circulars: 3.5 mm / UK 9 / US 4, 4 mm / UK 8 / US 6, 4.5 mm / UK 7 / US 7, 5 mm / UK 6 / US 8, 5.5 mm / UK 5 / US 9.",m:"sell",p:6,note:"the set",s:"s4"},
+ {id:8,w:"other",nm:"Finished sample: baby cardigan",sp:"Size 6 to 12 months, DK washable wool in primrose, 4 mm / UK 8 / US 6, buttons from my button tin. Was a shop sample.",m:"sell",p:15,s:"s11"},
+ {id:9,w:"other",nm:"Nine 1990s pattern booklets",sp:"Aran jumpers, Fair Isle tank tops and one regrettable tank top with a swan. Some pencil notes.",m:"free",s:"s9"},
+ {id:10,w:"dk",nm:"Natural Jacob DK, undyed",sp:"4 x 100 g, 225 m / 246 yds per 100 g, 100% Jacob wool, no dye lot (undyed). Needles 4 mm / UK 8 / US 6. Hairy in a nice way.",m:"swap",want:"grey 4 ply, any amount over 200 g",s:"s7"},
+ {id:11,w:"aran",nm:"Variegated Aran, 'Hedgerow'",sp:"2 x 100 g, 170 m / 186 yds per 100 g, 80% wool 20% nylon, dye lot H88. Needles 5.5 mm / UK 5 / US 9.",m:"sell",p:8,note:"pair",s:"s4"},
+ {id:12,w:"lace",nm:"Mohair-silk lace, dusty pink",sp:"1 x 25 g, 210 m / 230 yds, 70% kid mohair 30% silk, dye lot 3. Needles 3.25 mm / UK 10 / US 3.",m:"swap",want:"any gradient 4 ply (one skein)",s:"s2"},
+ {id:13,w:"chunky",nm:"Chunky remnants, rainbow",sp:"7 part skeins, about 350 g, acrylic-wool blend, mixed lots. Good for toys and hats on 6.5 mm / UK 3 / US 10.5.",m:"free",s:"s3"},
+ {id:14,w:"4ply",nm:"Hand-dyed 4 ply, 'Plum Crumble'",sp:"100 g, 400 m / 437 yds, 75% merino 25% nylon, dye lot batch 6. Needles 3.25 mm / UK 10 / US 3.",m:"sell",p:11,s:"s6"}
+];
+
+var GB=[
+ {n:"Mavis",p:"Nether Pudsey",d:"23 Oct 2026",m:"Lovely to see this still going! I got my first ever skein of mohair here in 2006 and have never looked back. Please never change the sheep."},
+ {n:"kniTTer_kev",p:"somewhere in Leeds",d:"19 Oct 2026",m:"found u via the forum?? brilliant site. swapped 3 balls of dk w/ margery, she even put a biscuit in the parcel. 10/10 would swap again"},
+ {n:"Dr P. Hargreaves (ret.)",p:"Thistledown",d:"14 Oct 2026",m:"A most useful resource. I would respectfully suggest the page be given an index. The cardigan pattern in the news column also has an error at row 14."},
+ {n:"Tanya",p:"Bramblecombe",d:"9 Oct 2026",m:"Dropped a bag of acrylic at the cafe group and a lady called it 'character-building'. Rude but fair. Got a gorgeous merino for it though. Cheers!"},
+ {n:"Ellie (age 9, with Nan)",p:"Ewe Green",d:"2 Oct 2026",m:"Nan says hello. I made a scarf. It is 3 metres long. Do you want it? From Ellie xx"},
+ {n:"Colin D.",p:"Cobbold Magna",d:"27 Sep 2026",m:"Stall is TUESDAYS now not Mondays, tell your readers. Also does anyone know where to get 2.25 mm dpns this side of the county? Ta."}
+];
+
+/* ---------- tabs ---------- */
+var tabs=$$(".tab"), panels=$$("main > section");
+function show(id,focus){
+  if(!document.getElementById(id))id="home";
+  tabs.forEach(function(t){var on=t.dataset.tab===id;t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1});
+  panels.forEach(function(p){p.hidden=p.id!==id});
+  try{history.replaceState(null,"","#"+id)}catch(e){}
+  store("bgb-tab",id);
+  if(id==="map")drawMapOnce();
+}
+tabs.forEach(function(t,i){
+  t.addEventListener("click",function(){show(t.dataset.tab)});
+  t.addEventListener("keydown",function(e){
+    var k=e.key,j=-1;
+    if(k==="ArrowDown"||k==="ArrowRight")j=(i+1)%tabs.length;
+    else if(k==="ArrowUp"||k==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;
+    if(j>=0){e.preventDefault();tabs[j].focus();show(tabs[j].dataset.tab)}
+  });
+});
+$$("[data-go]").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();show(a.dataset.go)})});
+$$("[data-soon]").forEach(function(b){b.addEventListener("click",function(){$("#soonNote").textContent=b.dataset.soon})});
+
+/* ---------- counter ---------- */
+(function(){
+  var n=48213, v=parseInt(store("bgb-visits")||"0",10)||0; v++; store("bgb-visits",String(v));
+  var s=String(n+v-1); while(s.length<7)s="0"+s;
+  $("#counter").innerHTML=s.split("").map(function(c){return "<b>"+c+"</b>"}).join("");
+  $("#counter").setAttribute("aria-label","Visitor number "+s);
+})();
+
+/* ---------- the bin ---------- */
+var fw="all", fm="all", asked={};
+try{asked=JSON.parse(store("bgb-asked")||"{}")||{}}catch(e){asked={}}
+function renderBin(){
+  var rows=LIST.filter(function(x){return (fw==="all"||x.w===fw)&&(fm==="all"||x.m===fm)});
+  var h=rows.map(function(x){
+    var s=SBY[x.s], isA=!!asked[x.id];
+    var wl={lace:"Lace","4ply":"4 ply",dk:"DK",aran:"Aran",chunky:"Chunky",other:"Other"}[x.w];
+    return '<tr><td><span class="nm">'+esc(x.nm)+'</span><span class="sp"><span class="tag">'+wl+'</span>'+esc(x.sp)+'</span>'+
+      '<span class="sp">Seller: <b>'+esc(s.name)+'</b>, '+esc(VILL[s.v].n)+'</span>'+
+      '<button class="askb" data-ask="'+x.id+'" aria-pressed="'+isA+'">'+(isA?"Asked, fingers crossed":"Ask about this")+'</button></td>'+
+      (x.m==="swap"?'<td class="k swap on" data-l="Swap">Wanted: '+esc(x.want)+'</td>':'<td class="k swap empty">&ndash;</td>')+
+      (x.m==="sell"?'<td class="k sell on" data-l="Sell">&pound;'+x.p+'<br><small>'+esc(x.note||"")+'</small></td>':'<td class="k sell empty">&ndash;</td>')+
+      (x.m==="free"?'<td class="k free on" data-l="Free">Free to a good home</td>':'<td class="k free empty">&ndash;</td>')+'</tr>';
+  }).join("");
+  $("#binBody").innerHTML=h||'<tr><td colspan="4" class="empty">Nothing in the bin matches that. Try another filter, dear.</td></tr>';
+  $("#binCount").textContent="Showing "+rows.length+" of "+LIST.length+" things in the bin.";
+}
+$$("[data-w]").forEach(function(b){b.addEventListener("click",function(){fw=b.dataset.w;$$("[data-w]").forEach(function(c){c.setAttribute("aria-pressed",c===b)});renderBin()})});
+$$("[data-m]").forEach(function(b){b.addEventListener("click",function(){fm=b.dataset.m;$$("[data-m]").forEach(function(c){c.setAttribute("aria-pressed",c===b)});renderBin()})});
+$("#binBody").addEventListener("click",function(e){
+  var b=e.target.closest("[data-ask]"); if(!b)return;
+  var id=b.dataset.ask; if(asked[id])delete asked[id]; else asked[id]=1;
+  store("bgb-asked",JSON.stringify(asked));
+  b.setAttribute("aria-pressed",!!asked[id]); b.textContent=asked[id]?"Asked, fingers crossed":"Ask about this";
+});
+
+/* ---------- map ---------- */
+var me="lw", selId=null, drawn=false;
+var NS="http://www.w3.org/2000/svg";
+function dist(s){var v=VILL[me];return Math.hypot(s.x-v.x,s.y-v.y)/PXMILE}
+function fmt(d){return d<0.05?"right here":d.toFixed(1)+" mi"}
+function drawMapOnce(){
+  if(drawn)return; drawn=true;
+  var vs="";
+  Object.keys(VILL).forEach(function(k){
+    var v=VILL[k];
+    vs+='<circle cx="'+v.x+'" cy="'+v.y+'" r="'+(v.big?5:3.5)+'" fill="#1c2b5a"/>'+
+      '<text x="'+v.x+'" y="'+(v.y+(v.big?24:19))+'" text-anchor="middle" font-family="Chewy,Comic Sans MS,cursive" font-size="'+(v.big?17:13)+'" fill="#1c2b5a" stroke="#fffdf6" stroke-width="3" paint-order="stroke" stroke-linejoin="round">'+esc(v.n)+'</text>';
+  });
+  $("#villages").innerHTML=vs;
+  $("#pins").innerHTML=SELL.map(function(s){
+    var T=TYPES[s.t];
+    return '<g class="pin" id="pin-'+s.id+'" data-id="'+s.id+'" tabindex="0" role="button" aria-label="'+esc(s.name)+', '+T.n+', '+esc(VILL[s.v].n)+'" transform="translate('+s.x+' '+s.y+')">'+
+      '<circle class="hit" r="20" cy="-8"/>'+
+      '<g class="bub"><path d="M0 0L-7 -9A12 12 0 1 1 7 -9z" transform="translate(0 0)" fill="'+T.c+'" stroke="#1c2b5a" stroke-width="2"/>'+
+      '<use href="#'+T.ic+'" x="-8" y="-24" width="16" height="16"/></g>'+
+      '<circle class="ring" r="19" cy="-14"/>'+
+      '<text class="lbl" y="-34" text-anchor="middle" font-family="Chewy,cursive" font-size="14" fill="#1c2b5a" stroke="#fffdf6" stroke-width="4" paint-order="stroke">'+esc(s.name)+'</text></g>';
+  }).join("");
+  $$("#pins .pin").forEach(function(p){
+    p.addEventListener("click",function(){pick(p.dataset.id,"pin")});
+    p.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(p.dataset.id,"pin")}});
+  });
+  var sel=$("#vsel");
+  sel.innerHTML=Object.keys(VILL).sort(function(a,b){return VILL[a].n<VILL[b].n?-1:1}).map(function(k){return '<option value="'+k+'">'+esc(VILL[k].n)+'</option>'}).join("");
+  sel.value=me;
+  relocate();
+}
+function relocate(msg){
+  var v=VILL[me];
+  $("#you").innerHTML='<g transform="translate('+v.x+' '+v.y+')"><circle r="13" fill="#c2185b" opacity=".25"/><circle r="7" fill="#c2185b" stroke="#fff" stroke-width="2"/>'+
+    '<g transform="translate(0 -32)"><rect x="-44" y="-12" width="88" height="20" rx="3" fill="#c2185b" stroke="#fff" stroke-width="2"/><path d="M-5 8h10l-5 8z" fill="#c2185b"/><text y="3" text-anchor="middle" font-family="Chewy,cursive" font-size="13" fill="#fff">You are here</text></g></g>';
+  $("#vsel").value=me;
+  if(msg!==undefined)$("#pcMsg").textContent=msg;
+  renderList();
+  if(!selId){var first=sorted()[0];selId=first.id}
+  paintSel();
+}
+function sorted(){return SELL.slice().sort(function(a,b){return dist(a)-dist(b)})}
+function renderList(){
+  $("#sellerList").innerHTML=sorted().map(function(s,i){
+    var T=TYPES[s.t];
+    return '<li><button type="button" data-id="'+s.id+'" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><use href="#'+T.ic+'"/></svg>'+
+      '<span>'+esc(s.name)+'<small>'+esc(VILL[s.v].n)+' &middot; '+T.n+'</small></span><span class="mi">'+fmt(dist(s))+'</span></button></li>';
+  }).join("");
+  $$("#sellerList button").forEach(function(b){b.addEventListener("click",function(){pick(b.dataset.id,"list")})});
+}
+function pick(id,from){selId=id;paintSel(from)}
+function paintSel(from){
+  $$("#pins .pin").forEach(function(p){p.classList.toggle("sel",p.dataset.id===selId)});
+  var sp=$("#pin-"+selId); if(sp)sp.parentNode.appendChild(sp);
+  $$("#sellerList button").forEach(function(b){
+    var on=b.dataset.id===selId; b.setAttribute("aria-pressed",on);
+    if(on&&from==="pin"){try{b.scrollIntoView({block:"nearest"})}catch(e){}}
+  });
+  var s=SBY[selId]; if(!s)return; var T=TYPES[s.t];
+  var items=LIST.filter(function(x){return x.s===s.id});
+  $("#detail").innerHTML='<h3>'+esc(s.name)+'</h3>'+
+    '<p><svg viewBox="0 0 20 20" width="20" height="20" style="vertical-align:-5px" aria-hidden="true"><use href="#'+T.ic+'"/></svg> <b>'+T.n+'</b><br>'+esc(s.where)+'<br><b>When:</b> '+esc(s.when)+'<br><b>'+fmt(dist(s))+'</b> from '+esc(VILL[me].n)+'</p>'+
+    '<p>'+esc(s.note)+'</p>'+
+    (items.length?'<p><b>In the bin from here:</b></p><ul>'+items.map(function(x){return '<li>'+esc(x.nm)+'</li>'}).join("")+'</ul>':'<p class="small">Nothing listed in the bin right now; turn up and see.</p>')+
+    '<button class="btn small" type="button" id="seeBin">Go to the Bin</button>';
+  $("#seeBin").addEventListener("click",function(){show("bin")});
+}
+$("#vsel").addEventListener("change",function(){me=this.value;store("bgb-me",me);relocate("Centred on "+VILL[me].n+".")});
+$("#pcform").addEventListener("submit",function(e){
+  e.preventDefault();
+  var raw=$("#pc").value.trim(), q=raw.toUpperCase().replace(/\s+/g,""), found=null;
+  var tok=raw.toUpperCase().split(/\s+/)[0];var m=tok.match(/^LW(\d{1,2})$/)||q.match(/^LW(10)\d[A-Z]{2}$/)||q.match(/^LW(\d)\d[A-Z]{2}$/);
+  if(m){Object.keys(VILL).forEach(function(k){if(VILL[k].pc==="LW"+m[1])found=k})}
+  if(!found&&q.length>2){Object.keys(VILL).forEach(function(k){if(VILL[k].n.toUpperCase().replace(/\s+/g,"").indexOf(q)===0)found=k})}
+  if(found){me=found;store("bgb-me",me);relocate("Postcode "+raw.toUpperCase()+" is near "+VILL[found].n+", so that is where you are.")}
+  else $("#pcMsg").textContent=raw?"Hmm, I don't know that one. Try LW1 to LW10, or choose your village from the list.":"Type a postcode first, dear.";
+});
+var savedMe=store("bgb-me"); if(savedMe&&VILL[savedMe])me=savedMe;
+
+/* ---------- guestbook ---------- */
+var extra=[];
+try{extra=JSON.parse(store("bgb-gb")||"[]")||[]}catch(e){extra=[]}
+function renderGB(){
+  var all=extra.concat(GB);
+  $("#entries").innerHTML=all.map(function(g,i){
+    return '<div class="entry"><div class="eh"><span><b>'+esc(g.n)+'</b>'+(g.p?' from '+esc(g.p):'')+'</span><span>'+esc(g.d)+'</span></div><div class="eb">'+esc(g.m)+'</div></div>';
+  }).join("");
+}
+$("#gform").addEventListener("submit",function(e){
+  e.preventDefault();
+  var n=$("#gn").value.trim(), m=$("#gm").value.trim(); if(!n||!m)return;
+  var d=new Date(), mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];
+  extra.unshift({n:n,p:$("#gp").value.trim(),m:m,d:d.getDate()+" "+mo+" "+d.getFullYear()});
+  store("bgb-gb",JSON.stringify(extra.slice(0,30)));
+  renderGB(); this.reset(); $("#gstat").textContent="Thank you, dear! You're at the top.";
+});
+
+renderBin(); renderGB();
+var first=(location.hash||"").replace("#","")||store("bgb-tab")||"home";
+show(["home","bin","map","guest","rules"].indexOf(first)>=0?first:"home");
+})();
+</script>
+</body>
+</html>
