@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Swap Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Gochi+Hand&family=Kalam:wght@400;700&family=Nanum+Pen+Script&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#8aa896; --wall-d:#6f8d7b; --ink-ui:#1d1a14;
+  --wood:#6a4223; --wood-d:#3d2412;
+  --tomato:#e5412d; --yellow:#f5c400; --kelly:#22a04a; --cobalt:#1f4fd1;
+  --ui:"Bitter","Rockwell","Georgia",serif;
+  --h-reenie:"Reenie Beanie","Bradley Hand","Segoe Print","Comic Sans MS",cursive;
+  --h-gochi:"Gochi Hand","Marker Felt","Comic Sans MS",cursive;
+  --h-kalam:"Kalam","Segoe Print","Bradley Hand",cursive;
+  --h-nanum:"Nanum Pen Script","Bradley Hand","Segoe Print",cursive;
+}
+*{box-sizing:border-box}
+html{background:#8aa896;overflow-x:clip}
+body{margin:0;background:#8aa896;color:#1d1a14;font-family:var(--ui);font-size:16px;line-height:1.45;overflow-x:clip;padding-bottom:90px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:#fff;color:#000;padding:8px 12px;z-index:3000}
+.skip:focus{top:8px}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+
+/* header */
+.top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px 40px;align-items:end;padding-top:28px;padding-bottom:22px}
+.plate{background:#f7f7f2;padding:18px 22px 16px;max-width:560px;transform:rotate(-.8deg);box-shadow:1px 2px 0 rgba(0,0,0,.2),5px 9px 12px -5px rgba(0,0,0,.4);border-top:6px solid var(--cobalt)}
+.plate h1{margin:0;font-weight:700;font-size:clamp(2rem,5.2vw,3.3rem);line-height:1;letter-spacing:-.01em}
+.plate p{margin:10px 0 0;font-size:.95rem;max-width:44ch}
+.plate p.small{font-size:.82rem;margin-top:8px;border-top:1px solid #bbb;padding-top:8px}
+.ledge{background:var(--wood-d);color:#f2ead6;padding:12px 14px 14px;box-shadow:0 5px 0 #26160a, 0 12px 14px -6px rgba(0,0,0,.45);border-radius:2px}
+.ledge h2{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px;font-weight:500;color:#cdbf9f}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.fbtn{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1.5px solid #8b6a47;color:#f2ead6;padding:6px 10px 6px 8px;cursor:pointer;font-size:.9rem;border-radius:2px}
+.fbtn:hover{background:#4e3220}
+.fbtn[aria-pressed="true"]{background:#f2ead6;color:#1d1a14;border-color:#f2ead6}
+.fbtn i{width:14px;height:14px;border-radius:50%;background:var(--c,#ccc);box-shadow:inset -2px -2px 0 rgba(0,0,0,.25),inset 1px 1px 0 rgba(255,255,255,.5);flex:none}
+.fbtn b{font-weight:500;opacity:.7;font-size:.8rem}
+.ledge :focus-visible{outline-color:#fff}
+.actions{display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--tomato);color:#fff;border:0;padding:9px 15px;font-weight:700;cursor:pointer;border-radius:2px;box-shadow:0 3px 0 #8f2314}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #8f2314}
+.btn.alt{background:transparent;color:inherit;box-shadow:none;border:1.5px solid currentColor;font-weight:500}
+.hint{font-size:.8rem;color:#cdbf9f;margin:0}
+
+/* form */
+#formPanel{margin:0 0 22px}
+#formPanel[hidden]{display:none}
+.formsheet{background:#fdfdfb;max-width:640px;padding:18px 20px 20px;box-shadow:1px 2px 0 rgba(0,0,0,.2),6px 10px 14px -6px rgba(0,0,0,.45);transform:rotate(.4deg);border-left:6px solid var(--tomato)}
+.formsheet h2{margin:0 0 4px;font-size:1.3rem}
+.formsheet .sub{margin:0 0 14px;font-size:.88rem;color:#444}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:block;margin:0 0 12px;font-size:.82rem;font-weight:700}
+.fld input,.fld textarea,.fld select{display:block;width:100%;margin-top:4px;padding:7px 8px;border:1.5px solid #6b6b6b;background:#fff;font-weight:400;font-size:1rem;border-radius:0}
+.fld textarea{min-height:84px;resize:vertical}
+fieldset{border:0;margin:0 0 12px;padding:0}
+legend{font-size:.82rem;font-weight:700;padding:0;margin-bottom:5px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{position:relative;display:inline-flex;align-items:center;gap:7px;padding:5px 9px 5px 6px;border:1.5px solid #aaa;cursor:pointer;font-size:.85rem;background:#fff}
+.opt input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.opt:has(:checked){border-color:#111;box-shadow:2px 2px 0 #111}
+.opt:has(:focus-visible){outline:3px solid var(--cobalt);outline-offset:2px}
+.sw{width:18px;height:18px;border:1px solid rgba(0,0,0,.4);flex:none}
+.sw.pin{border-radius:50%}
+.formbtns{display:flex;gap:10px;margin-top:6px}
+.formbtns .btn.alt{color:#222}
+
+/* board */
+#boardwrap{position:relative}
+#board{position:relative;background-color:#a8743f;
+  background-image:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.014 .02' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .22 0 0 0 0 .11 0 0 0 0 .03 0 0 0 .9 -.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .18 0 0 0 0 .09 0 0 0 0 .02 0 0 0 1.5 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='.3' numOctaves='1' seed='21'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .78 0 0 0 0 .52 0 0 0 1.2 -.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  border:14px solid var(--wood);border-bottom-width:18px;outline:1px solid var(--wood-d);
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.35),inset 4px 6px 22px rgba(0,0,0,.4),0 14px 24px -10px rgba(0,0,0,.55);
+  min-height:2040px}
+
+.notice{position:absolute;left:var(--x);top:var(--y);width:var(--w);transform:rotate(var(--r,0deg));filter:drop-shadow(1px 3px 1.5px rgba(30,15,0,.4));
+  transition:transform .25s ease,opacity .3s ease;color:var(--ink,#222);cursor:grab;touch-action:none;
+  --pin:#8a8a8a}
+.notice.dragging{cursor:grabbing;transform:rotate(calc(var(--r) * .3)) scale(1.035);filter:drop-shadow(6px 14px 6px rgba(30,15,0,.4));transition:none;user-select:none}
+.notice.zoom{transform:rotate(0deg) scale(1.15);filter:drop-shadow(8px 16px 8px rgba(30,15,0,.45))}
+.notice.dim{opacity:.22;filter:grayscale(1) drop-shadow(1px 2px 1px rgba(30,15,0,.3))}
+.notice:focus-visible{outline:3px solid #fff;outline-offset:6px;box-shadow:0 0 0 9px #111}
+.notice.fresh{animation:drop .6s cubic-bezier(.2,.8,.3,1.2)}
+@keyframes drop{from{transform:translateY(-60px) rotate(calc(var(--r) - 8deg)) scale(1.2);opacity:0}to{opacity:1}}
+.cat-yarn{--pin:var(--tomato)}.cat-needles{--pin:var(--yellow)}.cat-patterns{--pin:var(--kelly)}.cat-wanted{--pin:var(--cobalt)}
+
+.sheet{position:relative;padding:20px 16px 14px;min-height:120px;overflow-wrap:anywhere}
+.pin{position:absolute;top:-7px;left:var(--px,50%);width:20px;height:20px;margin-left:-10px;border-radius:50%;background:var(--pin);z-index:3;
+  box-shadow:inset -3px -3px 0 rgba(0,0,0,.25),inset 2px 2px 0 rgba(255,255,255,.5),3px 6px 3px rgba(30,15,0,.4)}
+.tape{position:absolute;width:76px;height:22px;z-index:2;opacity:.9}
+.tape.tl{top:-6px;left:-22px;transform:rotate(-36deg)}
+.tape.tr{top:-6px;right:-24px;transform:rotate(34deg)}
+.tape.bl{bottom:30px;left:-26px;transform:rotate(28deg)}
+.tp-a{background:repeating-linear-gradient(90deg,#7fd0b4 0 7px,#c9efe2 7px 14px)}
+.tp-b{background:repeating-linear-gradient(45deg,#f08fa5 0 6px,#f9d0da 6px 12px)}
+.tp-c{background:rgba(250,222,90,.8)}
+
+.f-reenie{font-family:var(--h-reenie);font-size:25px;line-height:1.08}
+.f-gochi{font-family:var(--h-gochi);font-size:18px;line-height:1.25}
+.f-kalam{font-family:var(--h-kalam);font-size:15px;line-height:1.35}
+.f-nanum{font-family:var(--h-nanum);font-size:23px;line-height:1.1}
+.ttl{margin:0 0 6px;font-weight:400;font-size:1.28em;line-height:1.02}
+.f-kalam .ttl{font-weight:700;font-size:1.15em}
+.txt p{margin:0 0 .5em}
+.txt s{text-decoration-thickness:2px}
+.foot{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:6px}
+.sig{margin:0}
+.kind{font:700 9.5px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;padding:3px 5px;border:1.5px solid var(--pin);background:rgba(255,255,255,.6);color:#222;transform:rotate(2deg);flex:none}
+
+.p-lined{background-color:#fcfcfa;background-image:linear-gradient(90deg,transparent 34px,#e98b8b 34px 35px,transparent 35px),repeating-linear-gradient(180deg,transparent 0 26px,#9dbfe0 26px 27px);padding-left:46px;--ink:#1a3d9c;background-position:0 0,0 19px}
+.p-lined .txt p,.p-legal .txt p{line-height:26px;margin:0}
+.p-lined .txt p+p,.p-legal .txt p+p{text-indent:1.4em}
+.p-lined .ttl,.p-legal .ttl{line-height:26px;margin:0}
+.p-legal{background-color:#f9ee8f;background-image:linear-gradient(90deg,transparent 22px,#d65b5b 22px 23px,transparent 23px 26px,#d65b5b 26px 27px,transparent 27px),repeating-linear-gradient(180deg,transparent 0 26px,#b9ba5e 26px 27px);background-position:0 0,0 19px;padding:26px 14px 14px 40px;--ink:#1c1c1c;
+  clip-path:polygon(-50% 6px,0 5px,6% 0,13% 5px,21% 1px,30% 6px,38% 2px,47% 5px,55% 0,64% 4px,72% 1px,81% 6px,90% 2px,100% 5px,150% 6px,150% 300%,-50% 300%)}
+.p-graph{background-color:#f3f8f2;background-image:linear-gradient(#a5cdb5 1px,transparent 1px),linear-gradient(90deg,#a5cdb5 1px,transparent 1px);background-size:16px 16px;--ink:#14613a}
+.p-graph .txt p{background:rgba(243,248,242,.7)}
+.p-carbon{background:#f4c3ca;--ink:#3b2a79;padding-top:24px}
+.p-carbon::after{content:"";position:absolute;right:0;bottom:0;width:46%;height:38%;background:radial-gradient(ellipse at 70% 80%,rgba(120,70,140,.14),transparent 70%);pointer-events:none}
+.p-index{background:#fffffa;background-image:linear-gradient(180deg,transparent 30px,#d94a4a 30px 31.5px,transparent 31.5px),repeating-linear-gradient(180deg,transparent 0 22px,#b6cbe6 22px 23px);background-position:0 0,0 40px;--ink:#111;padding-top:38px;border-radius:2px}
+.p-index .ttl{position:absolute;top:4px;left:16px;right:16px;line-height:28px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:1.15em}
+.p-sugar{background:#b8e0be;--ink:#10361c}
+.p-neon{background:#ffe94a;--ink:#16130a;padding-top:22px}
+.p-neon .ttl{font:700 1.45rem/1.05 var(--ui);letter-spacing:-.01em;margin-bottom:8px;text-transform:uppercase}
+.p-print{background:#f8f8f4;--ink:#222;font:500 .86rem/1.4 var(--ui);border:2px solid #222}
+.p-print .ttl{font:700 .95rem var(--ui);text-transform:uppercase}
+
+.tabs{display:flex;margin:12px -2px -4px;border-top:2px dashed var(--ink,#333)}
+.tab{flex:1 1 0;min-width:0;writing-mode:vertical-rl;min-height:96px;padding:9px 1px;border:0;border-left:1px dashed rgba(0,0,0,.45);background:transparent;color:var(--ink,#222);font-family:inherit;font-size:.82em;line-height:1.1;cursor:pointer;text-align:start;transform-origin:50% 0}
+.tab:first-child{border-left:0}
+.tab:hover{background:rgba(0,0,0,.07)}
+.tab:focus-visible{outline:3px solid #111;outline-offset:-3px;background:rgba(255,255,255,.55)}
+.tab.tearing{animation:tear .75s cubic-bezier(.45,0,.9,.6) forwards;pointer-events:none;position:relative;z-index:4}
+.tab.gone{visibility:hidden}
+@keyframes tear{0%{transform:none;opacity:1}22%{transform:rotate(-5deg) translate(1px,4px);opacity:1}100%{transform:translate(30px,110px) rotate(26deg);opacity:0}}
+
+/* clipboard (sign-up) */
+.clip{--ink:#13234f}
+.clipboard{background:#7b5a3b;padding:34px 12px 12px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.clipboard::before{content:"";position:absolute;top:-4px;left:50%;margin-left:-44px;width:88px;height:30px;background:#a4a9ae;border:2px solid #6b7075;border-radius:3px;z-index:1}
+.clipboard .sheet{background-color:#fff;background-image:repeating-linear-gradient(180deg,transparent 0 27px,#a9c4e0 27px 28px);background-position:0 8px;padding:14px 14px 12px}
+.clip h2{font:700 1.15rem/1.1 var(--ui);margin:0 0 2px;color:#111}
+.clip .when{font:500 .85rem var(--ui);margin:0 0 8px;color:#333}
+.clip ol{list-style:none;margin:0;padding:0}
+.clip li{display:flex;gap:8px;line-height:28px;height:28px;font-size:19px;white-space:nowrap;overflow:hidden}
+.clip li .n{font-family:var(--h-nanum);flex:none;font-size:23px}
+.clip li .b{font-family:var(--h-kalam);font-size:13px;color:#444;overflow:hidden;text-overflow:ellipsis}
+.clip li.blank{color:#9ab;}
+.clip li.blank span{font-family:var(--ui);font-size:11px}
+.clip form{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.clip form input{width:100%;padding:5px 6px;border:1.5px solid #555;background:#fff;font-size:.85rem;min-width:0}
+.clip form .btn{grid-column:1/-1;padding:6px 10px;font-size:.85rem;background:var(--kelly);box-shadow:0 3px 0 #11662b}
+.clip .count{font:500 .75rem var(--ui);margin:6px 0 0;color:#333}
+
+/* lost property */
+.lost .sheet{background:#d8bf8b;--ink:#2a1e0a;padding-top:22px;border:2px solid #8f7440}
+.lost h2{font:700 1.05rem/1.1 var(--ui);margin:0 0 3px;letter-spacing:.02em;text-transform:uppercase}
+.lost .sub{font:500 .8rem var(--ui);margin:0 0 10px}
+.skeins{display:grid;gap:12px}
+.sk{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start}
+.sk svg{display:block;transform:rotate(var(--sr,0deg))}
+.sk .tag{background:#fffdf4;padding:5px 8px 6px;font-family:var(--h-gochi);font-size:16px;line-height:1.2;border:1px solid #8f7440;position:relative;clip-path:polygon(0 0,100% 0,100% 100%,10px 100%,0 calc(100% - 10px))}
+.sk .tag button{display:inline-block;margin-top:4px;background:#2a1e0a;color:#fffdf4;border:0;padding:3px 8px;font:500 .74rem var(--ui);cursor:pointer}
+.sk .tag button[disabled]{background:#6d5d3c;cursor:default}
+
+/* pocket */
+#pocket{position:fixed;right:16px;bottom:16px;z-index:2500;width:min(330px,calc(100vw - 32px));display:flex;flex-direction:column;align-items:flex-end}
+#pocketBtn{background:#2c4670;color:#fff;border:2px dashed #aebfdc;outline:3px solid #2c4670;outline-offset:0;padding:9px 14px;cursor:pointer;font-weight:700;display:flex;gap:10px;align-items:center;border-radius:2px 2px 14px 14px}
+#pocketBtn:focus-visible{outline-color:#fff;outline-offset:2px;box-shadow:0 0 0 6px #111}
+#pocketBtn .cnt{background:var(--yellow);color:#111;min-width:24px;height:24px;border-radius:12px;display:inline-grid;place-items:center;font-size:.85rem;padding:0 6px}
+#pocketBtn.bump{animation:bump .5s}
+@keyframes bump{30%{transform:translateY(-8px) rotate(-3deg)}60%{transform:translateY(2px)}}
+#pocketPanel{width:100%;background:#2c4670;color:#fff;border:2px dashed #aebfdc;outline:3px solid #2c4670;margin-bottom:10px;padding:12px 14px;max-height:55vh;overflow:auto;box-shadow:0 10px 20px -6px rgba(0,0,0,.5)}
+#pocketPanel[hidden]{display:none}
+#pocketPanel h2{font-size:.78rem;margin:0 0 8px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#c3d1ea}
+#pocketPanel ul{list-style:none;margin:0;padding:0}
+#pocketPanel li{background:#fbfbf5;color:#1a1a1a;margin:0 0 8px;padding:7px 9px;font-size:.88rem;display:flex;gap:8px;justify-content:space-between;align-items:flex-start;box-shadow:1px 2px 0 rgba(0,0,0,.35);transform:rotate(var(--sr,0deg))}
+#pocketPanel li small{display:block;color:#444;font-size:.78rem}
+#pocketPanel li button{background:none;border:0;text-decoration:underline;cursor:pointer;font-size:.78rem;flex:none;padding:2px}
+#pocketPanel .empty{color:#d4dff2;font-size:.88rem;margin:0}
+
+/* desktop vs phone */
+@media (min-width:761px) and (pointer:fine){
+  .notice{touch-action:none}
+}
+@media (max-width:900px){
+  .top{grid-template-columns:1fr;align-items:start}
+  .plate{max-width:none}
+}
+@media (max-width:760px){
+  #board{min-height:0;border-width:8px;border-bottom-width:12px;padding:28px 0 12px;display:flow-root}
+  .notice{position:relative;left:auto;top:auto;width:86%;margin:0 0 30px var(--ml,0%);cursor:default;touch-action:auto}
+  .notice.dim{display:none}
+  .notice.zoom{transform:rotate(0deg) scale(1.04)}
+  .row{grid-template-columns:1fr}
+  .fbtn{padding:8px 10px 8px 8px}
+  .tab{min-height:104px}
+}
+@media (max-width:420px){
+  .notice{width:90%}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#board">Skip to the board</a>
+<div class="wrap">
+  <header class="top">
+    <div class="plate">
+      <h1>The Swap Board</h1>
+      <p>St Aldhelm's Hall, back wall by the tea hatch. Leftover yarn, needles and finished samples, swapped between the Tuesday circle. Nobody pays anybody.</p>
+      <p class="small">Tabs along the bottom of a notice tear off. Take the number, ring them, be nice about it.</p>
+    </div>
+    <div class="ledge">
+      <h2>Pin colour</h2>
+      <div class="filters" role="group" aria-label="Filter notices by pin colour">
+        <button type="button" class="fbtn" data-f="all" aria-pressed="true"><i style="--c:#f2ead6"></i>All <b id="c-all"></b></button>
+        <button type="button" class="fbtn" data-f="yarn" aria-pressed="false"><i style="--c:var(--tomato)"></i>Yarn <b id="c-yarn"></b></button>
+        <button type="button" class="fbtn" data-f="needles" aria-pressed="false"><i style="--c:var(--yellow)"></i>Needles <b id="c-needles"></b></button>
+        <button type="button" class="fbtn" data-f="patterns" aria-pressed="false"><i style="--c:var(--kelly)"></i>Patterns <b id="c-patterns"></b></button>
+        <button type="button" class="fbtn" data-f="wanted" aria-pressed="false"><i style="--c:var(--cobalt)"></i>Wanted <b id="c-wanted"></b></button>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn" id="pinBtn" aria-expanded="false" aria-controls="formPanel">Pin a notice</button>
+        <p class="hint">Drag to shuffle. Click one to bring it forward.</p>
+      </div>
+    </div>
+  </header>
+
+  <section id="formPanel" hidden aria-labelledby="formH">
+    <form class="formsheet" id="noteForm" autocomplete="off">
+      <h2 id="formH">Pin your own</h2>
+      <p class="sub">Say what it is, how much, what you'd like back. Weight, yardage and fibre help people more than adjectives.</p>
+      <fieldset>
+        <legend>Pin colour</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="cat" value="yarn" checked><span class="sw pin" style="background:var(--tomato)"></span>Yarn</label>
+          <label class="opt"><input type="radio" name="cat" value="needles"><span class="sw pin" style="background:var(--yellow)"></span>Needles</label>
+          <label class="opt"><input type="radio" name="cat" value="patterns"><span class="sw pin" style="background:var(--kelly)"></span>Patterns</label>
+          <label class="opt"><input type="radio" name="cat" value="wanted"><span class="sw pin" style="background:var(--cobalt)"></span>Wanted</label>
+        </div>
+      </fieldset>
+      <div class="row">
+        <label class="fld">Heading<input name="title" required maxlength="44" placeholder="e.g. Worsted, 3 balls, charcoal"></label>
+        <label class="fld">Your name<input name="who" required maxlength="20" placeholder="e.g. Maureen"></label>
+      </div>
+      <label class="fld">The details<textarea name="body" required maxlength="420" placeholder="Approx 300 yds per ball, 100% wool. Would swap for..."></textarea></label>
+      <div class="row">
+        <fieldset>
+          <legend>Paper</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="paper" value="p-lined" checked><span class="sw" style="background:#fcfcfa"></span>Lined</label>
+            <label class="opt"><input type="radio" name="paper" value="p-legal"><span class="sw" style="background:#f9ee8f"></span>Legal pad</label>
+            <label class="opt"><input type="radio" name="paper" value="p-graph"><span class="sw" style="background:#cfe5d6"></span>Graph</label>
+            <label class="opt"><input type="radio" name="paper" value="p-carbon"><span class="sw" style="background:#f4c3ca"></span>Carbon</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Handwriting</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="hand" value="f-reenie" checked><span style="font-family:var(--h-reenie);font-size:21px;line-height:1">Scratchy</span></label>
+            <label class="opt"><input type="radio" name="hand" value="f-gochi"><span style="font-family:var(--h-gochi);font-size:16px">Marker</span></label>
+            <label class="opt"><input type="radio" name="hand" value="f-kalam"><span style="font-family:var(--h-kalam);font-size:14px">Neat</span></label>
+            <label class="opt"><input type="radio" name="hand" value="f-nanum"><span style="font-family:var(--h-nanum);font-size:20px;line-height:1">Biro</span></label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="formbtns">
+        <button class="btn" type="submit">Pin it up</button>
+        <button class="btn alt" type="button" id="cancelForm">Never mind</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<main class="wrap" id="boardwrap">
+  <div id="board" aria-label="Notice board"></div>
+</main>
+
+<div id="pocket">
+  <div id="pocketPanel" hidden role="region" aria-label="My pocket">
+    <h2>In your pocket</h2>
+    <p class="empty" id="pocketEmpty">Nothing yet. Tear a tab off a notice and it lands here.</p>
+    <ul id="pocketList"></ul>
+  </div>
+  <button type="button" id="pocketBtn" aria-expanded="false" aria-controls="pocketPanel">My pocket <span class="cnt" id="pocketCnt">0</span></button>
+</div>
+<div class="sr" id="live" aria-live="polite" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+var board=document.getElementById('board');
+var live=document.getElementById('live');
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+var narrow=window.matchMedia('(max-width: 760px)');
+var zTop=10, filter='all', uid=100;
+var CAT={yarn:'Yarn',needles:'Needles',patterns:'Patterns',wanted:'Wanted'};
+function say(t){live.textContent='';setTimeout(function(){live.textContent=t},30)}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+
+/* ---------- notices ---------- */
+var N=[
+{id:'n1',cat:'yarn',paper:'p-legal',hand:'f-reenie',rot:-2,x:2,y:30,w:22.5,px:38,tape:'tl tp-a',title:'Shetland 4-ply, natural moorit',
+ html:'<p>Six 25 g balls, the brown one. Roughly 100 yds each so about 600 yds all told. Left over from a yoke I am never going to finish, it has been three winters.</p><p>Smells a bit of cedar. No moths, I checked twice. Would like anything green, or a tape measure that starts at zero.</p>',
+ name:'Marion',tabs:[['Marion','01632 960114','Shetland 4-ply, 6 balls'],['Marion','01632 960114','Shetland 4-ply, 6 balls'],['Marion','01632 960114','Shetland 4-ply, 6 balls']]},
+{id:'su',kind:'signup',x:26.5,y:16,w:25,rot:1.2,px:50},
+{id:'n2',cat:'wanted',paper:'p-index',hand:'f-kalam',rot:1.8,x:54.5,y:44,w:20.5,px:70,tape:'tr tp-b',title:'WANTED: dye lot 2231',
+ html:'<p>One more ball of the DK tweed in Seaweed. Ran out on the second sleeve. The shop only has 2240 which is visibly bluer, I held it up to the window.</p><p>Will swap anything from my stash. Or cake.</p>',
+ name:'Priya (Thursdays too)',tabs:[['Priya','01632 960221','Wanted: DK tweed, Seaweed, lot 2231']]},
+{id:'n6',cat:'wanted',paper:'p-neon',hand:'f-gochi',rot:-2.6,x:76.5,y:8,w:22,px:30,title:'Hats for the maternity unit',
+ html:'<p>Premature baby hats please. 4-ply cotton or soft acrylic only, 3.5 mm needles, about 12 cm flat across the brim.</p><p><b>CO 64 sts, 10 rows 1x1 rib, 20 rows st st, k2tog all round twice more, 8 left. Thread through, sew up.</b> Tweak it, it is not sacred.</p><p>In the basket by the door before 14 Nov. Sue counts on Fridays.</p>',
+ name:'Sue',tabs:[['Sue','01632 960612','Hat drive pattern, printed'],['Sue','01632 960612','Hat drive pattern, printed'],['Sue','01632 960612','Hat drive pattern, printed'],['Sue','01632 960612','Hat drive pattern, printed']]},
+{id:'n3',cat:'needles',paper:'p-graph',hand:'f-gochi',rot:-1.2,x:3,y:610,w:22,px:60,tape:'tr tp-c',title:'Needles, assorted',
+ html:'<p>4.5 mm / US 7 circs, 80 cm cable, bamboo. Tip a bit scratched but yarn still slides.</p><p>3.25 mm / US 3 DPNs, 20 cm. Set of five, so four now (one went down the back of the minibus seat).</p><p>Free to anyone who will use them.</p>',
+ name:'Tom',tabs:[['Tom','01632 960332','4.5 mm circs, 80 cm'],['Tom','01632 960332','3.25 mm DPNs, four'],['Tom','01632 960332','Both sets of needles']]},
+{id:'n4',cat:'yarn',paper:'p-sugar',hand:'f-nanum',rot:1,x:27.5,y:620,w:22,px:24,title:'Acrylic for charity blankets',
+ html:'<p>9 balls DK acrylic, 100 g, approx 295 yds each. Lime, grey and one sad orange. Machine washable, which is the whole point.</p><p>They go to the food bank as 20 cm squares. Leave in the hall cupboard marked BEV.</p>',
+ name:'Bev',tabs:[['Bev','01632 960058','Charity acrylic: lime'],['Bev','01632 960058','Charity acrylic: grey'],['Bev','01632 960058','Charity acrylic: the orange']]},
+{id:'lf',kind:'lost',x:52,y:440,w:22.5,rot:-1.4,px:42},
+{id:'n5',cat:'patterns',paper:'p-carbon',hand:'f-kalam',rot:-1.6,x:76.5,y:560,w:22,px:60,tape:'tl tp-a',title:'Raglan in aran, size M',
+ html:'<p>Finished sample of the top-down raglan, aran weight, 16 sts = 10 cm on 5 mm. Pattern is my photocopy with pencil all over it, mistakes included. Row 38 is wrong in the original, fixed in mine.</p><p>Swap for a toe-up sock pattern with a heel I can follow.</p>',
+ name:'Delphine',tabs:[['Delphine','01632 960407','Raglan sample + pattern'],['Delphine','01632 960407','Raglan sample + pattern']]},
+{id:'n7',cat:'yarn',paper:'p-index',hand:'f-nanum',rot:2,x:2.5,y:1050,w:21.5,px:28,title:'Sock yarn, Kingfisher',
+ html:'<p>75% superwash merino, 25% nylon. 100 g, approx 420 yds / 385 m. Two skeins, one wound into a cake (sorry).</p><p>Swap for anything <s>blue</s> green. I have enough blue. I always say that.</p>',
+ name:'Hilda',tabs:[['Hilda','01632 960190','Sock yarn, Kingfisher, 2 skeins'],['Hilda','01632 960190','Sock yarn, Kingfisher, 2 skeins']]},
+{id:'n8',cat:'needles',paper:'p-lined',hand:'f-reenie',rot:-1.4,x:27,y:1110,w:23,px:72,tape:'bl tp-b',title:'Interchangeable set, one tip short',
+ html:'<p>US 6 to 10 (4 mm to 6 mm), five-inch tips, two cables (60 and 100 cm). Aluminium, a bit squeaky. The 5.5 mm tip is missing and I have made my peace with it.</p><p>Wanted in return: a cable needle that is not bent.</p>',
+ name:'Ron',tabs:[['Ron','01632 960777','Interchangeable set, US 6 to 10'],['Ron','01632 960777','Interchangeable set, US 6 to 10']]},
+{id:'n9',cat:'patterns',paper:'p-legal',hand:'f-gochi',rot:1.5,x:53,y:880,w:22,px:50,title:'1970s chunky booklets',
+ html:'<p>Three men\'s cardigan booklets, chunky, 10 mm / US 15. Foxed pages, one with a gravy stain. The shawl collar one is lovely.</p><p>Swap for a modern fingering shawl pattern, charted please, I cannot read paragraphs.</p>',
+ name:'Gus',tabs:[['Gus','01632 960845','1970s chunky cardigan booklets'],['Gus','01632 960845','1970s chunky cardigan booklets'],['Gus','01632 960845','1970s chunky cardigan booklets']]},
+{id:'n10',cat:'wanted',paper:'p-lined',hand:'f-nanum',rot:-2,x:77,y:960,w:21.5,px:44,tape:'tr tp-c',title:'WANTED: 2.25 mm circ',
+ html:'<p>2.25 mm / US 1, 40 cm circular, fixed cable, for sock toes. I have snapped two.</p><p>Also wanted: someone who understands short rows. I will bring cake. I will bring two cakes.</p>',
+ name:'Jo',tabs:[['Jo','01632 960884','Wanted: 2.25 mm 40 cm circ'],['Jo','01632 960884','Short rows tutor (cake)']]},
+{id:'n11',cat:'yarn',paper:'p-index',hand:'f-reenie',rot:1.4,x:4,y:1500,w:22,px:60,tape:'tl tp-c',title:'Alpaca and silk, lace weight',
+ html:'<p>Four 50 g balls, 70% alpaca / 30% silk, approx 437 yds each, pale sky. Soft, no itch. From my aunt\'s stash and she would want it knitted, not stored.</p><p>Needs a good shawl. Swap for worsted I can make a hat from.</p>',
+ name:'Chris',tabs:[['Chris','01632 960319','Alpaca/silk lace, 4 balls'],['Chris','01632 960319','Alpaca/silk lace, 4 balls']]},
+{id:'n12',cat:'yarn',paper:'p-lined',hand:'f-kalam',rot:-1.7,x:52.5,y:1400,w:22.5,px:35,title:'Chunky wool, 5 balls',
+ html:'<p>100% wool, chunky, 100 g, approx 87 yds a ball so about 435 yds. Heathered grey. Wants 8 mm / US 11.</p><p>Enough for a cowl and a hat. Not enough for a jumper, I looked.</p>',
+ name:'Pauline',tabs:[['Pauline','01632 960563','Chunky grey wool, 5 balls'],['Pauline','01632 960563','Chunky grey wool, 5 balls']]},
+{id:'cm',kind:'print',x:77,y:1480,w:20,rot:1,px:50,tape:'tr tp-a'}
+];
+
+var SK=[['#d9a521','#f2d36a','Mustard, DK-ish wool, no band. Under chair 4.','a mustard DK skein (under chair 4)'],
+        ['#7b8087','#b9bec4','Grey tweed, half a ball, crochet hook still in it.','the half ball of grey tweed (hook included)'],
+        ['#d6307a','#f58cb7','Hot pink, mohair, has got on everything.','the hot pink mohair skein']];
+function skein(a,b){
+  return '<svg viewBox="0 0 64 64" width="60" height="60" aria-hidden="true"><ellipse cx="32" cy="34" rx="25" ry="26" fill="'+a+'"/>'+
+  '<path d="M9 28C22 12 44 12 56 28" fill="none" stroke="'+b+'" stroke-width="2"/><path d="M8 38C22 22 46 24 57 40" fill="none" stroke="'+b+'" stroke-width="2"/>'+
+  '<path d="M12 50C24 36 44 36 54 52" fill="none" stroke="'+b+'" stroke-width="2"/><path d="M20 12C12 30 14 48 24 58" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/>'+
+  '<path d="M32 8C30 4 36 2 40 5" fill="none" stroke="#fffdf4" stroke-width="1.5"/></svg>';
+}
+
+function setPos(n,item){
+  n.style.setProperty('--x',item.x+'%');n.style.setProperty('--y',item.y+'px');n.style.setProperty('--w',item.w+'%');
+  n.style.setProperty('--r',item.rot+'deg');n.style.setProperty('--px',(item.px||50)+'%');
+}
+function decorate(n,item){
+  var p=el('span','pin');n.appendChild(p);
+  if(item.tape){var t=item.tape.split(' ');n.appendChild(el('span','tape '+t[0]+' '+t[1]))}
+}
+function tabsBlock(list){
+  var d=el('div','tabs');
+  list.forEach(function(t){
+    var b=el('button','tab');b.type='button';
+    b.dataset.who=t[0];b.dataset.tel=t[1];b.dataset.about=t[2];
+    b.textContent=t[0]+' '+t[1].slice(-6).replace(/(\d{3})(\d{3})/,'$1 $2');
+    b.setAttribute('aria-label','Tear off tab: '+t[0]+', '+t[2]);
+    d.appendChild(b);
+  });
+  return d;
+}
+function buildNotice(item){
+  var n=el('article','notice');
+  n.tabIndex=0;n.setAttribute('role','group');
+  setPos(n,item);n.dataset.id=item.id;
+  if(item.kind==='signup'){n.classList.add('clip');n.setAttribute('aria-label','Sign-up sheet for the next swap meet');buildSignup(n);decorate(n,Object.assign({},item,{tape:null}));n.querySelector('.pin').style.setProperty('--pin','#8a8a8a');n.querySelector('.pin').style.display='none';return n}
+  if(item.kind==='lost'){n.classList.add('lost');n.setAttribute('aria-label','Lost property: orphan skeins');buildLost(n);decorate(n,item);n.querySelector('.pin').style.setProperty('--pin','#111');n.querySelector('.pin').style.background='#111';return n}
+  if(item.kind==='print'){
+    n.setAttribute('aria-label','Notice from the committee');
+    var s=el('div','sheet p-print','<h2 class="ttl">Please</h2><p style="margin:0">Do not pin over other people\'s notices. Take your drawing pins home with you. Tea hatch shuts at 8.45 sharp.</p><p style="margin:.5em 0 0">The Committee</p>');
+    n.appendChild(s);decorate(n,item);n.querySelector('.pin').style.background='#555';return n;
+  }
+  n.classList.add('cat-'+item.cat);n.dataset.cat=item.cat;
+  n.setAttribute('aria-label',CAT[item.cat]+' notice: '+item.title+', from '+item.name+'. Enter brings it forward. Arrow keys move it.');
+  var s2=el('div','sheet '+item.paper+' '+item.hand);
+  s2.appendChild(el('h2','ttl')).textContent=item.title;
+  var tx=el('div','txt');
+  if(item.html)tx.innerHTML=item.html;
+  else item.text.split(/\n+/).forEach(function(l){var p=document.createElement('p');p.textContent=l;tx.appendChild(p)});
+  s2.appendChild(tx);
+  var f=el('div','foot');var sg=el('p','sig');sg.textContent=item.name.indexOf('WANTED')===0?item.name:'— '+item.name;
+  f.appendChild(sg);f.appendChild(el('span','kind',CAT[item.cat]));s2.appendChild(f);
+  s2.appendChild(tabsBlock(item.tabs));
+  n.appendChild(s2);decorate(n,item);
+  if(item.paper==='p-neon'&&item.cat)n.querySelector('.pin').style.setProperty('left','24px');
+  return n;
+}
+
+/* sign-up sheet */
+var signers=[['Marion','Shetland, tea urn key'],['Priya','hunting dye lot 2231'],['Bev','charity acrylic, 2 bags'],['Dot','biscuits (the good ones)'],['Delphine','raglan sample'],['Hilda','just here for the gossip']];
+var MAXS=12;
+function buildSignup(n){
+  var cb=el('div','clipboard');var s=el('div','sheet');
+  s.innerHTML='<h2>Next swap meet</h2><p class="when">Tuesday 3 Nov, 7 to 9, small hall. Bring a bag. Label what you bring: weight, yardage, fibre.</p><ol id="suList"></ol>'+
+   '<form id="suForm" autocomplete="off"><input name="n" required maxlength="18" aria-label="Your name" placeholder="Your name"><input name="b" maxlength="30" aria-label="What you are bringing" placeholder="Bringing..."><button class="btn" type="submit">Put my name down</button></form><p class="count" id="suCount"></p>';
+  cb.appendChild(s);n.appendChild(cb);
+  setTimeout(function(){renderSignup()},0);
+  s.querySelector('#suForm').addEventListener('submit',function(e){
+    e.preventDefault();var f=e.target;var nm=f.n.value.trim();if(!nm||signers.length>=MAXS)return;
+    signers.push([nm,f.b.value.trim()]);f.reset();renderSignup();say(nm+' is on the list.');
+  });
+}
+function renderSignup(){
+  var ol=document.getElementById('suList');if(!ol)return;ol.innerHTML='';
+  for(var i=0;i<MAXS;i++){
+    var li=document.createElement('li');
+    if(signers[i]){li.innerHTML='<span class="n"></span><span class="b"></span>';li.firstChild.textContent=signers[i][0];li.lastChild.textContent=signers[i][1]?'– '+signers[i][1]:''}
+    else{li.className='blank';li.innerHTML='<span aria-hidden="true">'+(i+1)+'.</span>'}
+    ol.appendChild(li);
+  }
+  var c=document.getElementById('suCount'),f=document.getElementById('suForm');
+  c.textContent=signers.length>=MAXS?'Full. Ask Marion about a waiting list.':(MAXS-signers.length)+' places left of '+MAXS+'.';
+  Array.prototype.forEach.call(f.elements,function(x){x.disabled=signers.length>=MAXS});
+}
+
+/* lost property */
+function buildLost(n){
+  var s=el('div','sheet');
+  s.innerHTML='<h2>Lost property</h2><p class="sub">Orphan skeins in the biscuit tin. Describe the colour and the sin.</p>';
+  var g=el('div','skeins');
+  SK.forEach(function(k,i){
+    var d=el('div','sk');d.style.setProperty('--sr',(i*7-6)+'deg');
+    d.innerHTML=skein(k[0],k[1]);
+    var t=el('div','tag');var p=document.createElement('span');p.textContent=k[2];t.appendChild(p);t.appendChild(document.createElement('br'));
+    var b=el('button',null,'That is mine');b.type='button';b.setAttribute('aria-label','Claim '+k[3]);
+    b.addEventListener('click',function(){
+      if(b.disabled)return;b.disabled=true;b.textContent='In your pocket';
+      addPocket('Dot at the tea hatch','Lost property tin','Collect '+k[3]);
+    });
+    t.appendChild(b);d.appendChild(t);g.appendChild(d);
+  });
+  s.appendChild(g);n.appendChild(s);
+}
+
+/* ---------- mount ---------- */
+var mlist=[0,9,3,13,5,11,1,7];
+N.forEach(function(it,i){var n=buildNotice(it);n.style.setProperty('--ml',mlist[i%mlist.length]+'%');board.appendChild(n)});
+updateCounts();
+
+function updateCounts(){
+  var c={all:0,yarn:0,needles:0,patterns:0,wanted:0};
+  board.querySelectorAll('.notice[data-cat]').forEach(function(n){c.all++;c[n.dataset.cat]++});
+  Object.keys(c).forEach(function(k){document.getElementById('c-'+k).textContent=c[k]});
+}
+
+/* ---------- filter ---------- */
+function applyFilter(f){
+  filter=f;
+  document.querySelectorAll('.fbtn').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.f===f))});
+  var shown=0;
+  board.querySelectorAll('.notice[data-cat]').forEach(function(n){
+    var off=f!=='all'&&n.dataset.cat!==f;
+    n.classList.toggle('dim',off);
+    if(off){n.setAttribute('inert','');n.classList.remove('zoom')}else{n.removeAttribute('inert');shown++}
+  });
+  say(f==='all'?'Showing every notice.':'Showing '+shown+' '+CAT[f].toLowerCase()+' notices.');
+}
+document.querySelector('.filters').addEventListener('click',function(e){var b=e.target.closest('.fbtn');if(b)applyFilter(b.dataset.f)});
+
+/* ---------- zoom, drag, keyboard ---------- */
+function unzoom(){board.querySelectorAll('.zoom').forEach(function(z){z.classList.remove('zoom')})}
+function toggleZoom(n){
+  if(n.classList.contains('zoom')){n.classList.remove('zoom');return}
+  unzoom();n.style.zIndex=++zTop;n.classList.add('zoom');
+}
+var drag=null;
+board.addEventListener('pointerdown',function(e){
+  var n=e.target.closest('.notice');
+  if(!n||e.button!==0)return;
+  if(e.target.closest('button,input,textarea,select,a,label'))return;
+  if(narrow.matches){return}
+  drag={n:n,sx:e.clientX,sy:e.clientY,ox:n.offsetLeft,oy:n.offsetTop,moved:false,id:e.pointerId};
+  try{n.setPointerCapture(e.pointerId)}catch(_){}
+});
+board.addEventListener('pointermove',function(e){
+  if(!drag||e.pointerId!==drag.id)return;
+  var dx=e.clientX-drag.sx,dy=e.clientY-drag.sy,n=drag.n;
+  if(!drag.moved&&Math.hypot(dx,dy)<5)return;
+  if(!drag.moved){drag.moved=true;n.classList.add('dragging');n.classList.remove('zoom');n.style.zIndex=++zTop}
+  var maxX=board.clientWidth-n.offsetWidth+10,maxY=board.clientHeight-80;
+  n.style.setProperty('--x',Math.max(-10,Math.min(maxX,drag.ox+dx))+'px');
+  n.style.setProperty('--y',Math.max(0,Math.min(maxY,drag.oy+dy))+'px');
+});
+function endDrag(e){
+  if(!drag||(e&&e.pointerId!==drag.id))return;
+  var n=drag.n,moved=drag.moved;drag=null;
+  n.classList.remove('dragging');
+  if(moved){n.style.setProperty('--x',(n.offsetLeft/board.clientWidth*100).toFixed(2)+'%')}
+  else if(e&&e.type==='pointerup'){toggleZoom(n)}
+}
+board.addEventListener('pointerup',endDrag);
+board.addEventListener('pointercancel',endDrag);
+board.addEventListener('click',function(e){
+  if(narrow.matches){
+    var n=e.target.closest('.notice');
+    if(n&&!e.target.closest('button,input,textarea,select,a,label,.tab'))toggleZoom(n);
+  }
+});
+document.addEventListener('click',function(e){if(!e.target.closest('.notice'))unzoom()});
+board.addEventListener('keydown',function(e){
+  var n=e.target;if(!n.classList||!n.classList.contains('notice'))return;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleZoom(n)}
+  else if(e.key==='Escape'){n.classList.remove('zoom')}
+  else if(e.key.indexOf('Arrow')===0&&!narrow.matches){
+    e.preventDefault();var s=e.shiftKey?40:14,x=n.offsetLeft,y=n.offsetTop;
+    if(e.key==='ArrowLeft')x-=s;if(e.key==='ArrowRight')x+=s;if(e.key==='ArrowUp')y-=s;if(e.key==='ArrowDown')y+=s;
+    x=Math.max(-10,Math.min(board.clientWidth-n.offsetWidth+10,x));y=Math.max(0,Math.min(board.clientHeight-80,y));
+    n.style.setProperty('--x',(x/board.clientWidth*100).toFixed(2)+'%');n.style.setProperty('--y',y+'px');n.style.zIndex=++zTop;
+  }
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){unzoom()}});
+
+/* ---------- tear-off tabs and pocket ---------- */
+var pocket=[],pBtn=document.getElementById('pocketBtn'),pPanel=document.getElementById('pocketPanel');
+board.addEventListener('click',function(e){
+  var t=e.target.closest('.tab');if(!t||t.classList.contains('gone')||t.classList.contains('tearing'))return;
+  e.stopPropagation();
+  var done=false;
+  function finish(){
+    if(done)return;done=true;
+    t.classList.remove('tearing');t.classList.add('gone');t.disabled=true;t.setAttribute('tabindex','-1');
+    addPocket(t.dataset.who,t.dataset.tel,t.dataset.about);
+  }
+  if(reduce.matches){finish();return}
+  t.classList.add('tearing');
+  t.addEventListener('animationend',finish,{once:true});
+  setTimeout(finish,1000);
+});
+function addPocket(who,tel,about){
+  pocket.push({id:++uid,who:who,tel:tel,about:about,r:(Math.random()*4-2).toFixed(1)});
+  renderPocket();
+  if(!reduce.matches){pBtn.classList.remove('bump');void pBtn.offsetWidth;pBtn.classList.add('bump')}
+  say('In your pocket: '+about+', '+who+', '+tel+'.');
+}
+function renderPocket(){
+  var ul=document.getElementById('pocketList');ul.innerHTML='';
+  pocket.forEach(function(p){
+    var li=document.createElement('li');li.style.setProperty('--sr',p.r+'deg');
+    var d=document.createElement('div');var b=document.createElement('strong');b.textContent=p.about;d.appendChild(b);
+    var s=document.createElement('small');s.textContent=p.who+', '+p.tel;d.appendChild(s);
+    var x=document.createElement('button');x.type='button';x.textContent='Drop it';x.setAttribute('aria-label','Drop '+p.about+' from pocket');
+    x.addEventListener('click',function(){pocket=pocket.filter(function(q){return q.id!==p.id});renderPocket()});
+    li.appendChild(d);li.appendChild(x);ul.appendChild(li);
+  });
+  document.getElementById('pocketCnt').textContent=pocket.length;
+  document.getElementById('pocketEmpty').hidden=pocket.length>0;
+}
+pBtn.addEventListener('click',function(){
+  var open=pPanel.hidden;pPanel.hidden=!open;pBtn.setAttribute('aria-expanded',String(open));
+});
+renderPocket();
+
+/* ---------- pin your own ---------- */
+var panel=document.getElementById('formPanel'),pinBtn=document.getElementById('pinBtn'),form=document.getElementById('noteForm');
+function openForm(o){
+  panel.hidden=!o;pinBtn.setAttribute('aria-expanded',String(o));
+  if(o){panel.scrollIntoView({block:'start',behavior:reduce.matches?'auto':'smooth'});form.elements.title.focus({preventScroll:true})}
+  else pinBtn.focus();
+}
+pinBtn.addEventListener('click',function(){openForm(panel.hidden)});
+document.getElementById('cancelForm').addEventListener('click',function(){openForm(false)});
+panel.addEventListener('keydown',function(e){if(e.key==='Escape')openForm(false)});
+var pinX=[4,10,18,30,44,58,66];
+form.addEventListener('submit',function(e){
+  e.preventDefault();
+  var v=function(k){return form.elements[k].value.trim()};
+  var ink={'p-lined':'p-lined','p-legal':'p-legal','p-graph':'p-graph','p-carbon':'p-carbon'};
+  var who=v('who')||'Someone';
+  var item={id:'u'+(++uid),cat:v('cat')||document.querySelector('input[name=cat]:checked').value,
+    paper:document.querySelector('input[name=paper]:checked').value,hand:document.querySelector('input[name=hand]:checked').value,
+    rot:+(Math.random()*5-2.5).toFixed(1),x:pinX[Math.floor(Math.random()*pinX.length)],y:16+Math.round(Math.random()*70),w:23,
+    px:30+Math.round(Math.random()*40),title:v('title'),text:v('body'),name:who,
+    tabs:[[who,'Find me at Tuesday circle','Ask '+who+': '+v('title')]]};
+  item.tabs[0][0]=who;
+  if(filter!=='all'&&filter!==item.cat)applyFilter('all');
+  var n=buildNotice(item);
+  n.classList.add('fresh');
+  n.style.setProperty('--ml','6%');
+  n.style.zIndex=++zTop;
+  board.insertBefore(n,board.firstChild);
+  n.querySelectorAll('.tab').forEach(function(t){t.textContent='Ask '+who+' Tue'});
+  updateCounts();form.reset();openForm(false);
+  setTimeout(function(){
+    n.scrollIntoView({block:'center',behavior:reduce.matches?'auto':'smooth'});
+    n.focus({preventScroll:true});
+  },40);
+  say('Pinned: '+item.title+'.');
+});
+})();
+</script>
+</body>
+</html>
